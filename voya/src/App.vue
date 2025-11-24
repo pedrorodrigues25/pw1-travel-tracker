@@ -4,7 +4,8 @@
       <div class="left-panel"></div>
 
       <div class="login-card">
-        <h2>Login to your account</h2>
+        <img src="/src/img/logo.png" alt="Voya Logo" style="width: 20%" />
+        <p style="font-size: 20px; color: #014f76">Login to your account</p>
 
         <label>Email</label>
         <input type="email" v-model="email" placeholder="youremailhere@gmail.com" />
@@ -35,7 +36,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useAuthStore } from './stores/auth'
-import Destinations from './components/Destinations.vue'
+import Destinations from './components/DestinationsList.vue'
 import { useSelectionsStore } from './stores/selections'
 
 const auth = useAuthStore()

@@ -23,7 +23,7 @@
         <div class="social-row">
           <div class="social-btn">G</div>
           <div class="social-btn">f</div>
-          <div class="social-btn"></div> d
+          <div class="social-btn"></div>
         </div>
       </div>
     </div>

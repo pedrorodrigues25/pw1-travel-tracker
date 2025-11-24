@@ -5,7 +5,7 @@
 
       <div class="login-card">
         <img src="/src/img/Vector.png" alt="Decorative flight vector" class="vector-art" />
-        <img src="/src/img/logo.png" alt="Voya Logo" style="width: 20%" />
+        <img src="/src/img/logo.svg" alt="Voya Logo" style="width: 20%" />
         <p style="font-size: 20px; color: #014f76">Login to your account</p>
 
         <label>Email</label>

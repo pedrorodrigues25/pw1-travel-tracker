@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+html {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Container geral */
+.container {
+  display: flex;
+  height: 97.5vh;
+  width: 100%;
+  background-image: url('/src/img/fundo-login.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+}
+
+/* Painel esquerdo ocupando todo o ecrã */
+.left-panel {
+  flex: 1;
+  /* left panel is left transparent so the main container background shows through */
+  background: transparent;
+}
+
+/* Card de login */
+.login-card {
+  width: 34%;
+  min-height: 75vh; /* MAIS ALTO */
+  background: #fff;
+  padding: 50px;
+  border-radius: 20px;
+  margin: auto;
+  box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.15);
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.login-card h2 {
+  margin-bottom: 10px;
+  font-size: 22px;
+  color: #003b49;
+}
+
+/* Inputs */
+input {
+  border: 1px solid #d4d4d4;
+  padding: 12px;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 15px;
+}
+
+/* Botão de login MAIS PEQUENO */
+.login-btn {
+  width: 55%; /* MENOR */
+  margin: 10px auto;
+  padding: 12px 0;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(to right, #ff8b61, #ffa27d);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Register */
+.register {
+  text-align: center;
+  margin-top: 5px;
+  font-size: 14px;
+}
+.register span {
+  font-weight: bold;
+  color: #0066cc;
+  cursor: pointer;
+}
+
+/* Divider */
+.divider {
+  text-align: center;
+  font-size: 13px;
+  color: #888;
+  margin-top: 5px;
+}
+
+/* Social buttons */
+.social-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.social-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  border: 1px solid #dcdcdc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: #f8f8f8;
+  font-size: 20px;
+}

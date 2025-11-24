@@ -51,7 +51,6 @@ function submit() {
   if (!email.value) return alert('Escreve um email')
   const normalized = email.value.trim().toLowerCase()
   auth.login(normalized)
-  // garantir que as selections do utilizador são carregadas imediatamente
   const selections = useSelectionsStore()
   selections.load(normalized)
   email.value = ''

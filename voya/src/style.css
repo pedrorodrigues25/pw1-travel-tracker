@@ -33,7 +33,7 @@ html {
 .login-card {
   position: relative;
   width: 460px;
-  min-height: 620px;
+  min-height: 620px; /* altura consistente entre login e register */
   background: #ffffff;
   padding: 50px 46px 42px;
   border-radius: 28px;
@@ -47,11 +47,23 @@ html {
   backdrop-filter: blur(2px);
 }
 
-.login-card h2 {
-  margin-bottom: 10px;
-  font-size: 22px;
-  color: #003b49;
+.login-logo {
+  width: 120px; /* tamanho fixo do logo para alinhamento previsível */
+  height: auto;
+  display: block;
+  margin: 0 auto 2px;
 }
+
+/* Título comum de auth */
+.auth-title {
+  font-size: 20px;
+  color: #014f76;
+  font-weight: 600;
+  margin: 12px 0 4px;
+}
+
+/* Ajuste para espaço extra quando há mais campos (register) */
+.login-card.register-mode { gap: 16px; }
 
 /* Inputs */
 input {
@@ -111,6 +123,15 @@ input:focus { border-color:#02679f; box-shadow:0 0 0 3px rgba(1,79,118,.15); }
   color: #0066cc;
   cursor: pointer;
 }
+.register a {
+  text-decoration: none;
+  color: inherit;
+}
+.register a span {
+  font-weight: bold;
+  color: #0066cc;
+  cursor: pointer;
+}
 
 .Disable {
   color: red;
@@ -166,5 +187,5 @@ input:focus { border-color:#02679f; box-shadow:0 0 0 3px rgba(1,79,118,.15); }
 @media (max-width: 850px) {
   .container { justify-content:center; }
   .vector-art { display:none; }
-  .login-card { margin-right:0; width:92%; max-width:460px; }
+  .login-card { margin-right:0; width:92%; max-width:460px; min-height: auto; }
 }

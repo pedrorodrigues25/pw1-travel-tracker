@@ -112,6 +112,12 @@ input:focus { border-color:#02679f; box-shadow:0 0 0 3px rgba(1,79,118,.15); }
   cursor: pointer;
 }
 
+.Disable {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
 /* Divisor */
 .divider {
   text-align: center;

@@ -25,6 +25,7 @@
           <div class="social-btn">f</div>
           <div class="social-btn"></div>
         </div>
+        <p class="Disable">Not Working for now!!</p>
       </div>
     </div>
 

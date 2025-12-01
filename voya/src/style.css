@@ -139,6 +139,19 @@ input:focus { border-color:#02679f; box-shadow:0 0 0 3px rgba(1,79,118,.15); }
   margin-top: 10px;
 }
 
+.error-message {
+  color: #d32f2f;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px;
+  background-color: #ffebee;
+  border-radius: 6px;
+  text-align: center;
+  width: 100%;
+  max-width: 340px;
+  margin: 8px auto;
+}
+
 /* Divisor */
 .divider {
   text-align: center;

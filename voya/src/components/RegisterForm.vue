@@ -19,6 +19,8 @@
       <label>Username</label>
       <input type="text" v-model="username" placeholder="username" />
 
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+
       <button class="login-btn" @click="submit">Continue</button>
 
       <p class="register">Already have an account? <router-link to="/login"><span>Login</span></router-link></p>
@@ -47,20 +49,41 @@ const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const username = ref('')
+const errorMessage = ref('')
 
 function submit() {
-  if (!email.value) return alert('Escreve um email')
-  if (!password.value) return alert('Escreve uma password')
-  if (password.value !== confirmPassword.value) return alert('As passwords não coincidem')
-  if (!username.value) return alert('Escreve um username')
+  errorMessage.value = ''
+  
+  if (!email.value) {
+    errorMessage.value = 'Escreve um email'
+    return
+  }
+  
+  if (!password.value) {
+    errorMessage.value = 'Escreve uma password'
+    return
+  }
+  
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = 'As passwords não coincidem'
+    return
+  }
+  
+  if (!username.value) {
+    errorMessage.value = 'Escreve um username'
+    return
+  }
 
-  const normalized = email.value.trim().toLowerCase()
-  auth.login(normalized)
-  router.push('/login')
-  email.value = ''
-  password.value = ''
-  confirmPassword.value = ''
-  username.value = ''
+  try {
+    auth.register(email.value, password.value, username.value)
+    email.value = ''
+    password.value = ''
+    confirmPassword.value = ''
+    username.value = ''
+    router.push('/login')
+  } catch (error) {
+    errorMessage.value = error.message
+  }
 }
 </script>
 

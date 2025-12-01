@@ -13,6 +13,8 @@
       <label>Password</label>
       <input type="password" v-model="password" />
 
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+
       <button class="login-btn" @click="submit">Login</button>
 
       <p class="register">Don't have an account? <router-link to="/register"><span>Register Now</span></router-link></p>
@@ -40,16 +42,31 @@ const auth = useAuthStore()
 
 const email = ref('')
 const password = ref('')
+const errorMessage = ref('')
 
 function submit() {
-  if (!email.value) return alert('Escreve um email')
-  const normalized = email.value.trim().toLowerCase()
-  auth.login(normalized)
-  const selections = useSelectionsStore()
-  selections.load(normalized)
-  email.value = ''
-  password.value = ''
-  router.push('/destinations')
+  errorMessage.value = ''
+  
+  if (!email.value) {
+    errorMessage.value = 'Escreve um email'
+    return
+  }
+  
+  if (!password.value) {
+    errorMessage.value = 'Escreve uma password'
+    return
+  }
+
+  try {
+    auth.login(email.value, password.value)
+    const selections = useSelectionsStore()
+    selections.load(email.value.trim().toLowerCase())
+    email.value = ''
+    password.value = ''
+    router.push('/destinations')
+  } catch (error) {
+    errorMessage.value = error.message
+  }
 }
 </script>
 

@@ -21,7 +21,7 @@
 
       <button class="login-btn" @click="submit">Continue</button>
 
-      <p class="register">Already have an account? <router-link to="/"><span>Login</span></router-link></p>
+      <p class="register">Already have an account? <router-link to="/login"><span>Login</span></router-link></p>
 
       <div class="divider">OR</div>
 
@@ -56,7 +56,7 @@ function submit() {
 
   const normalized = email.value.trim().toLowerCase()
   auth.login(normalized)
-  router.push('/')
+  router.push('/login')
   email.value = ''
   password.value = ''
   confirmPassword.value = ''

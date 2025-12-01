@@ -1,20 +1,9 @@
 <template>
-  <div v-if="!isLogged">
-    <router-view />
-  </div>
-  <div v-else>
-    <Destinations />
-  </div>
+  <router-view />
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useAuthStore } from './stores/auth'
-import Destinations from './components/DestinationsList.vue'
-
-const auth = useAuthStore()
-
-const isLogged = computed(() => !!(auth.user && auth.user.email))
+// Root simply renders the current route view.
 </script>
 
 <style src="./style.css"></style>

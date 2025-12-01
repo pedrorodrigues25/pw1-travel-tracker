@@ -31,8 +31,11 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
+
+const router = useRouter()
 const auth = useAuthStore()
 
 const email = ref('')
@@ -46,6 +49,7 @@ function submit() {
   selections.load(normalized)
   email.value = ''
   password.value = ''
+  router.push('/destinations')
 }
 </script>
 

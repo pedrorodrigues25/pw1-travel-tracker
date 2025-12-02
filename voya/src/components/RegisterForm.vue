@@ -25,14 +25,7 @@
 
       <p class="register">Already have an account? <router-link to="/login"><span>Login</span></router-link></p>
 
-      <div class="divider">OR</div>
-
-      <div class="social-row">
-        <div class="social-btn">G</div>
-        <div class="social-btn">f</div>
-        <div class="social-btn"></div>
-      </div>
-      <p class="Disable">Not Working for now!!</p>
+      
     </div>
   </div>
 </template>

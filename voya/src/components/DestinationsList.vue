@@ -3,7 +3,7 @@
     <header class="dest-header">
       <h2>Escolher Destinos</h2>
       <div class="user-actions">
-        <span class="user-email">{{ user.email }}</span>
+        <span class="user-email">{{ user.username || user.email }}</span>
         <button @click="logout" class="btn small">Logout</button>
       </div>
     </header>

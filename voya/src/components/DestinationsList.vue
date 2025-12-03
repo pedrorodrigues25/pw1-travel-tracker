@@ -58,9 +58,11 @@
 
 <script setup>
 import { reactive, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
 
+const router = useRouter()
 const auth = useAuthStore()
 const selections = useSelectionsStore()
 
@@ -131,6 +133,7 @@ function remove(id) {
 
 function logout() {
   auth.logout()
+  router.push('/login')
 }
 
 // save on unload (just in case)

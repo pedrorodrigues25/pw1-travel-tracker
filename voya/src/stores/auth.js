@@ -32,25 +32,30 @@ export const useAuthStore = defineStore('auth', () => {
 
   function register(email, password, username) {
     const normalizedEmail = email.trim().toLowerCase()
-    
-    // Verificar se o email já existe
+    const normalizedUsername = username.trim().toLowerCase()
+
     if (users.value.some(u => u.email === normalizedEmail)) {
       throw new Error('Email já registado')
     }
 
-    // Verificar se o username já existe
-    if (users.value.some(u => u.username === username)) {
+    if (users.value.some(u => u.username.toLowerCase() === normalizedUsername)) {
       throw new Error('Username já existe')
     }
 
-    // Criar novo utilizador
-    const newUser = { email: normalizedEmail, password, username }
+    const newUser = {
+      email: normalizedEmail,
+      password,
+      username: normalizedUsername
+    }
+
     users.value.push(newUser)
     saveUsers()
     return newUser
   }
 
   function login(email, password) {
+    loadUsers()
+
     const normalizedEmail = email.trim().toLowerCase()
     const foundUser = users.value.find(u => u.email === normalizedEmail)
 
@@ -62,7 +67,11 @@ export const useAuthStore = defineStore('auth', () => {
       throw new Error('Password incorreta')
     }
 
-    user.value = { email: foundUser.email, username: foundUser.username }
+    user.value = {
+      email: foundUser.email,
+      username: foundUser.username
+    }
+
     localStorage.setItem(STORAGE_KEY, JSON.stringify(user.value))
     return user.value
   }
@@ -77,4 +86,3 @@ export const useAuthStore = defineStore('auth', () => {
 
   return { user, users, register, login, logout }
 })
-

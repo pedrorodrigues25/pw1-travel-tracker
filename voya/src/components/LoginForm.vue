@@ -40,12 +40,12 @@ const errorMessage = ref('')
 
 function submit() {
   errorMessage.value = ''
-  
+
   if (!email.value) {
     errorMessage.value = 'Escreve um email'
     return
   }
-  
+
   if (!password.value) {
     errorMessage.value = 'Escreve uma password'
     return
@@ -53,15 +53,19 @@ function submit() {
 
   try {
     auth.login(email.value, password.value)
+
     const selections = useSelectionsStore()
     selections.load(email.value.trim().toLowerCase())
+
     email.value = ''
     password.value = ''
+
     router.push('/destinations')
   } catch (error) {
     errorMessage.value = error.message
   }
 }
 </script>
+
 
 <style src="../style.css"></style>

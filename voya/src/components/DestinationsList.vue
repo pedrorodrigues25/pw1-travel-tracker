@@ -3,7 +3,13 @@
     <header class="dest-header">
       <h2>Escolher Destinos</h2>
       <div class="user-actions">
-        <span class="user-email">{{ user.username || user.email }}</span>
+        <div class="user-info">
+          <span class="user-email">{{ user.username || user.email }}</span>
+          <div class="progress-container">
+            <div class="progress-bar" :style="{ width: progressPercentage + '%' }"></div>
+          </div>
+          <span class="progress-text">{{ selections.count }}/10 viagens</span>
+        </div>
         <button @click="logout" class="btn small">Logout</button>
       </div>
     </header>
@@ -82,6 +88,17 @@ const editing = ref(false)
 const editId = ref(null)
 const editForm = reactive({ destination: '', notes: '' })
 
+// Computar o percentual de progresso (0-100%)
+const progressPercentage = ref(0)
+
+watch(
+  () => selections.count,
+  (count) => {
+    progressPercentage.value = (count % 10) * 10
+  },
+  { immediate: true }
+)
+
 function ensureLoaded() {
   if (user && user.email) selections.load(user.email)
 }
@@ -155,6 +172,34 @@ window.addEventListener('beforeunload', () => {
   display: flex;
   gap: 8px;
   align-items: center;
+}
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
+}
+.user-email {
+  font-weight: 600;
+  color: #014f76;
+}
+.progress-container {
+  width: 150px;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #ff8b61 0%, #ffa27d 100%);
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+.progress-text {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
 }
 .create {
   margin-top: 12px;

@@ -3,7 +3,13 @@
     <header class="dest-header">
       <h2>Escolher Destinos</h2>
       <div class="user-actions">
-        <span class="user-email">{{ user.username || user.email }}</span>
+        <div class="user-info">
+          <span class="user-email">{{ user.username || user.email }}</span>
+          <div class="progress-container">
+            <div class="progress-bar" :style="{ width: progressPercentage + '%' }"></div>
+          </div>
+          <span class="progress-text">{{ selections.count }}/10 viagens</span>
+        </div>
         <button @click="logout" class="btn small">Logout</button>
       </div>
     </header>
@@ -58,9 +64,11 @@
 
 <script setup>
 import { reactive, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
 
+const router = useRouter()
 const auth = useAuthStore()
 const selections = useSelectionsStore()
 
@@ -79,6 +87,17 @@ const form = reactive({ destination: '', notes: '' })
 const editing = ref(false)
 const editId = ref(null)
 const editForm = reactive({ destination: '', notes: '' })
+
+// Computar o percentual de progresso (0-100%)
+const progressPercentage = ref(0)
+
+watch(
+  () => selections.count,
+  (count) => {
+    progressPercentage.value = (count % 10) * 10
+  },
+  { immediate: true }
+)
 
 function ensureLoaded() {
   if (user && user.email) selections.load(user.email)
@@ -131,6 +150,7 @@ function remove(id) {
 
 function logout() {
   auth.logout()
+  router.push('/login')
 }
 
 // save on unload (just in case)
@@ -139,64 +159,4 @@ window.addEventListener('beforeunload', () => {
 })
 </script>
 
-<style scoped>
-.destinations {
-  padding: 18px;
-}
-.dest-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.user-actions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-.create {
-  margin-top: 12px;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-.list {
-  margin-top: 18px;
-}
-.list ul {
-  list-style: none;
-  padding: 0;
-}
-.list li {
-  border: 1px solid #eee;
-  padding: 8px;
-  margin-bottom: 8px;
-}
-.item-main {
-  display: flex;
-  justify-content: space-between;
-}
-.item-notes {
-  color: #555;
-}
-.item-actions {
-  margin-top: 8px;
-  display: flex;
-  gap: 8px;
-}
-.edit-panel {
-  margin-top: 16px;
-  border-top: 1px dashed #ccc;
-  padding-top: 12px;
-}
-.btn {
-  padding: 6px 10px;
-  cursor: pointer;
-}
-.btn.small {
-  padding: 4px 8px;
-  font-size: 0.9em;
-}
-.btn.danger {
-  background: #ffdddd;
-}
-</style>
+<style src="../css/DestinationsList.css"></style>

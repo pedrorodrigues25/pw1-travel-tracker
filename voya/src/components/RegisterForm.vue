@@ -1,5 +1,10 @@
 <template>
   <div class="container">
+    <!-- Quote overlay above background image -->
+    <div class="register-quote" aria-hidden="true">
+      <h3 class="quote-title">travel</h3>
+      <p class="quote-sub">is the only purchase that enriches<br/>you in ways beyond material<br/>wealth</p>
+    </div>
     <div class="left-panel"></div>
 
     <div class="login-card register-mode">
@@ -81,3 +86,4 @@ function submit() {
 </script>
 
 <style src="../style.css"></style>
+<style src="../css/RegisterForm.css"></style>

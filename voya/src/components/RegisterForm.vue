@@ -74,11 +74,13 @@ function submit() {
 
   try {
     auth.register(email.value, password.value, username.value)
+    // Auto-login after registration
+    auth.login(email.value, password.value)
     email.value = ''
     password.value = ''
     confirmPassword.value = ''
     username.value = ''
-    router.push('/login')
+    router.push('/interests')
   } catch (error) {
     errorMessage.value = error.message
   }

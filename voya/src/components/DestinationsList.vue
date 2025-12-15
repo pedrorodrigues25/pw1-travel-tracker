@@ -4,7 +4,7 @@
       <h2>Escolher Destinos</h2>
       <div class="user-actions">
         <div class="user-info">
-          <span class="user-email">{{ user.username || user.email }}</span>
+          <span class="user-email clickable" @click="goToProfile">{{ user.username || user.email }}</span>
           <div class="progress-container">
             <div class="progress-bar" :style="{ width: progressPercentage + '%' }"></div>
           </div>
@@ -151,6 +151,10 @@ function remove(id) {
 function logout() {
   auth.logout()
   router.push('/login')
+}
+
+function goToProfile() {
+  router.push('/profile')
 }
 
 // save on unload (just in case)

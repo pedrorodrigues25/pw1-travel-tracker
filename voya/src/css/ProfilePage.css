@@ -153,6 +153,35 @@
   background: rgba(1, 79, 118, 0.2);
 }
 
+/* Interests */
+.profile-interests {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.interests-heading {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0c3959;
+  margin: 0 0 12px 0;
+  text-align: left;
+}
+
+.interests-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.interest-chip {
+  padding: 6px 14px;
+  background: rgba(1, 79, 118, 0.1);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #014f76;
+}
+
 /* Progress */
 .profile-progress {
   width: 100%;

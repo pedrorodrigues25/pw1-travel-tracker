@@ -35,6 +35,16 @@
           </div>
         </div>
 
+        <!-- Interests -->
+        <div class="profile-interests" v-if="userInterests.length > 0">
+          <h3 class="interests-heading">Os meus interesses</h3>
+          <div class="interests-list">
+            <span v-for="interest in userInterests" :key="interest" class="interest-chip">
+              {{ interest }}
+            </span>
+          </div>
+        </div>
+
         <!-- Progress -->
         <div class="profile-progress">
           <div class="progress-header">
@@ -61,14 +71,23 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
+import { useInterestsStore } from '../stores/interests'
 
 const router = useRouter()
 const auth = useAuthStore()
 const selections = useSelectionsStore()
+const interestsStore = useInterestsStore()
+
+// Load interests on mount
+onMounted(() => {
+  if (auth.user?.email) {
+    interestsStore.load(auth.user.email)
+  }
+})
 
 const user = computed(() => auth.user)
 
@@ -85,8 +104,11 @@ const userInitial = computed(() => {
 const tripCount = computed(() => selections.count || 0)
 
 const interestsCount = computed(() => {
-  // For now, return a placeholder - can be connected to actual interests store later
-  return 0
+  return interestsStore.items.length
+})
+
+const userInterests = computed(() => {
+  return interestsStore.items
 })
 
 const progressPercentage = computed(() => {

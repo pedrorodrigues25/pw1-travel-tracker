@@ -33,8 +33,12 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
+import { useInterestsStore } from '../stores/interests'
 
 const router = useRouter()
+const auth = useAuthStore()
+const interestsStore = useInterestsStore()
 
 const availableInterests = [
   'Traveling with Friends',
@@ -61,8 +65,11 @@ function toggleInterest(interest) {
 }
 
 function handleContinue() {
-  // Save interests to user profile if needed
-  // For now, just navigate to destinations
+  // Save interests to user profile
+  const userEmail = auth.user?.email
+  if (userEmail) {
+    interestsStore.setInterests(selectedInterests.value, userEmail)
+  }
   router.push('/destinations')
 }
 </script>

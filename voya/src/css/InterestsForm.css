@@ -8,14 +8,16 @@
   overflow: hidden;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
   font-family: 'Montserrat', sans-serif;
-}
-
-/* Left Panel - Destination Image */
-.destination-panel {
-  flex: 1;
   background-image: url('/src/img/mountains.png');
   background-size: cover;
   background-position: center;
+  position: relative;
+}
+
+/* Left Panel - Destination Text Overlay */
+.destination-panel {
+  flex: 1;
+  background: transparent;
   position: relative;
   display: flex;
   align-items: flex-start;
@@ -52,13 +54,16 @@
 /* Right Panel - Interests Card */
 .interests-card {
   flex: 1;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
   padding: 60px 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   overflow-y: auto;
+  margin: 20px;
+  border-radius: 20px;
 }
 
 .vector-art-interests {

@@ -13,38 +13,40 @@
 /* Left Panel - Destination Image */
 .destination-panel {
   flex: 1;
-  background-image: url('/src/img/fundo-login.png');
+  background-image: url('/src/img/mountains.png');
   background-size: cover;
   background-position: center;
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  padding-top: 80px;
 }
 
 .destination-content {
   text-align: center;
   padding: 40px;
-  max-width: 400px;
+  width: 513px;
+  height: 89px;
 }
 
 .destination-title {
-  font-size: 28px;
+  color: #014f76;
+  text-align: center;
+  font-family: Syncopate;
+  font-size: 24px;
+  font-style: normal;
   font-weight: 700;
-  color: #0c3959;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin: 0 0 12px 0;
+  line-height: 149.146%; /* 35.795px */
 }
 
 .destination-caption {
-  font-size: 16px;
+  color: #014f76;
+  font-family: Syncopate;
+  font-size: 20px;
+  font-style: normal;
   font-weight: 400;
-  font-style: italic;
-  color: #0c3959;
-  opacity: 0.85;
-  margin: 0;
-  line-height: 1.5;
+  line-height: 149.146%;
 }
 
 /* Right Panel - Interests Card */
@@ -125,7 +127,9 @@
   font-size: 15px;
   letter-spacing: 0.3px;
   cursor: pointer;
-  transition: filter 0.25s, transform 0.25s;
+  transition:
+    filter 0.25s,
+    transform 0.25s;
   margin-top: auto;
 }
 

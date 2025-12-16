@@ -26,6 +26,16 @@
   color: #014f76;
 }
 
+.user-email.clickable {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.user-email.clickable:hover {
+  color: #ff8b61;
+  text-decoration: underline;
+}
+
 .progress-container {
   width: 150px;
   height: 8px;

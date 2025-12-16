@@ -1,5 +1,10 @@
 <template>
   <div class="interests-container">
+    <!-- Back button -->
+    <button class="back-btn" @click="goBack">
+      <span class="back-icon">←</span>
+    </button>
+
     <!-- Left Panel - Destination Image -->
     <div class="destination-panel">
       <div class="destination-content">
@@ -71,6 +76,10 @@ function handleContinue() {
     interestsStore.setInterests(selectedInterests.value, userEmail)
   }
   router.push('/destinations')
+}
+
+function goBack() {
+  router.push('/register')
 }
 </script>
 

@@ -40,13 +40,6 @@ export const useInterestsStore = defineStore('interests', () => {
     items.value = []
   }
 
-  const count = ref(0)
-  
-  // Use a getter that updates count reactively
-  function getCount() {
-    return items.value.length
-  }
-
   return {
     items,
     load,

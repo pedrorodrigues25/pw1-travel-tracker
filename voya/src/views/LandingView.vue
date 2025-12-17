@@ -5,6 +5,7 @@
         <img src="@/img/logo_deitada.png" alt="Voya" class="logo" />
       </div>
       <nav class="auth-nav">
+        <a class="link small-caps visitor-link" @click="enterAsGuest">GUEST</a>
         <router-link class="link small-caps" to="/register">SIGN IN</router-link>
         <router-link class="btn btn-primary" to="/login">LOG IN</router-link>
       </nav>
@@ -61,7 +62,16 @@
 </template>
 
 <script setup>
-// View renders landing layout directly.
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
+
+const router = useRouter()
+const auth = useAuthStore()
+
+function enterAsGuest() {
+  auth.enterAsGuest()
+  router.push('/destinations')
+}
 </script>
 
 <style src="../css/LandingPage.css"></style>

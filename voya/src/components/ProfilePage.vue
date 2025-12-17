@@ -9,7 +9,6 @@
 
       <!-- Profile Card -->
       <div class="profile-card">
-        <img src="/src/img/Vector.png" alt="Decorative flight vector" class="vector-art-profile" />
         
         <!-- User Avatar -->
         <div class="avatar-container">

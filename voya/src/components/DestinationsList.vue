@@ -1,34 +1,44 @@
 <template>
   <div class="destinations">
     <header class="dest-header">
-      <h2>Escolher Destinos</h2>
-      <div class="user-actions">
+      <h2>Choose Destinations</h2>
+      <div class="user-actions" v-if="!auth.isGuest">
         <div class="user-info">
-          <span class="user-email clickable" @click="goToProfile">{{ user.username || user.email }}</span>
+          <span class="user-email clickable" @click="goToProfile">{{ user?.username || user?.email }}</span>
           <div class="progress-container">
             <div class="progress-bar" :style="{ width: progressPercentage + '%' }"></div>
           </div>
-          <span class="progress-text">{{ selections.count }}/10 viagens</span>
+          <span class="progress-text">{{ selections.count }}/10 trips</span>
         </div>
         <button @click="logout" class="btn small">Logout</button>
       </div>
+      <div class="user-actions" v-else>
+        <span class="guest-badge">Guest Mode</span>
+        <router-link to="/login" class="btn small btn-login">Log In</router-link>
+      </div>
     </header>
 
+    <!-- Alert for guests -->
+    <div v-if="showLoginAlert" class="login-alert">
+      <p>⚠️ You need to <router-link to="/login">log in</router-link> to save trips!</p>
+      <button @click="showLoginAlert = false" class="close-alert">✕</button>
+    </div>
+
     <section class="create">
-      <label>Destino:</label>
+      <label>Destination:</label>
       <select v-model="form.destination">
-        <option disabled value="">-- selecione --</option>
+        <option disabled value="">-- select --</option>
         <option v-for="opt in options" :key="opt" :value="opt">{{ opt }}</option>
       </select>
 
-      <label>Notas (opcional):</label>
-      <input v-model="form.notes" placeholder="Notas sobre a viagem" />
+      <label>Notes (optional):</label>
+      <input v-model="form.notes" placeholder="Notes about the trip" />
 
-      <button class="btn" @click="addSelection" :disabled="!form.destination">Guardar</button>
+      <button class="btn" @click="addSelection" :disabled="!form.destination">Save</button>
     </section>
 
     <section class="list">
-      <h3>Minhas escolhas ({{ selections.count }})</h3>
+      <h3>My selections ({{ selections.count }})</h3>
       <ul>
         <li v-for="it in selections.items" :key="it.id">
           <div class="item-main">
@@ -37,26 +47,26 @@
           </div>
           <div class="item-notes">{{ it.notes }}</div>
           <div class="item-actions">
-            <button class="btn small" @click="startEdit(it)">Editar</button>
-            <button class="btn small danger" @click="remove(it.id)">Apagar</button>
+            <button class="btn small" @click="startEdit(it)">Edit</button>
+            <button class="btn small danger" @click="remove(it.id)">Delete</button>
           </div>
         </li>
       </ul>
-      <div v-if="selections.count === 0">Ainda não guardaste nenhum destino.</div>
+      <div v-if="selections.count === 0">You haven't saved any destinations yet.</div>
     </section>
 
     <section v-if="editing" class="edit-panel">
-      <h3>Editar escolha</h3>
-      <label>Destino:</label>
+      <h3>Edit selection</h3>
+      <label>Destination:</label>
       <select v-model="editForm.destination">
-        <option disabled value="">-- selecione --</option>
+        <option disabled value="">-- select --</option>
         <option v-for="opt in options" :key="opt" :value="opt">{{ opt }}</option>
       </select>
-      <label>Notas:</label>
+      <label>Notes:</label>
       <input v-model="editForm.notes" />
       <div class="edit-actions">
-        <button class="btn" @click="confirmEdit">Salvar</button>
-        <button class="btn small" @click="cancelEdit">Cancelar</button>
+        <button class="btn" @click="confirmEdit">Save</button>
+        <button class="btn small" @click="cancelEdit">Cancel</button>
       </div>
     </section>
   </div>
@@ -73,6 +83,7 @@ const auth = useAuthStore()
 const selections = useSelectionsStore()
 
 const user = auth.user
+const showLoginAlert = ref(false)
 
 const options = [
   'Lisboa, Portugal',
@@ -88,7 +99,7 @@ const editing = ref(false)
 const editId = ref(null)
 const editForm = reactive({ destination: '', notes: '' })
 
-// Computar o percentual de progresso (0-100%)
+// Compute the progress percentage (0-100%)
 const progressPercentage = ref(0)
 
 watch(
@@ -113,13 +124,23 @@ watch(
 )
 
 function addSelection() {
-  if (!user || !user.email) return alert('Faz login primeiro')
+  // If guest, show alert
+  if (auth.isGuest) {
+    showLoginAlert.value = true
+    return
+  }
+  if (!user || !user.email) return alert('Please log in first')
   selections.add({ destination: form.destination, notes: form.notes }, user.email)
   form.destination = ''
   form.notes = ''
 }
 
 function startEdit(item) {
+  // If guest, show alert
+  if (auth.isGuest) {
+    showLoginAlert.value = true
+    return
+  }
   editing.value = true
   editId.value = item.id
   editForm.destination = item.destination
@@ -127,6 +148,10 @@ function startEdit(item) {
 }
 
 function confirmEdit() {
+  if (auth.isGuest) {
+    showLoginAlert.value = true
+    return
+  }
   if (!editId.value) return
   selections.update(
     editId.value,
@@ -144,7 +169,12 @@ function cancelEdit() {
 }
 
 function remove(id) {
-  if (!confirm('Apagar esta escolha?')) return
+  // If guest, show alert
+  if (auth.isGuest) {
+    showLoginAlert.value = true
+    return
+  }
+  if (!confirm('Delete this selection?')) return
   selections.remove(id, user.email)
 }
 

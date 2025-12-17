@@ -40,6 +40,15 @@
   font-size: 12px;
 }
 
+.visitor-link {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.visitor-link:hover {
+  opacity: 0.7;
+}
+
 .btn {
   border: none;
   padding: 10px 18px;

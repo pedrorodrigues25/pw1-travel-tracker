@@ -7,6 +7,7 @@ const USERS_STORAGE_KEY = 'voya_users'
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
   const users = ref([])
+  const isGuest = ref(false)
 
   function loadUsers() {
     try {
@@ -78,11 +79,18 @@ export const useAuthStore = defineStore('auth', () => {
 
   function logout() {
     user.value = null
+    isGuest.value = false
+    localStorage.removeItem(STORAGE_KEY)
+  }
+
+  function enterAsGuest() {
+    user.value = null
+    isGuest.value = true
     localStorage.removeItem(STORAGE_KEY)
   }
 
   loadUsers()
   load()
 
-  return { user, users, register, login, logout }
+  return { user, users, isGuest, register, login, logout, enterAsGuest }
 })

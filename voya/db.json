@@ -1,16 +1,47 @@
 {
   "users": [
     {
-      "id": "4c9a",
-      "email": "miguld@gmail.com",
+      "id": "8217",
+      "email": "miguel@gmail.com",
       "password": "123",
-      "username": "caldas9"
+      "username": "rabanadas"
     },
     {
-      "id": "6b70",
-      "email": "caldas@gmail.com",
+      "id": "b05b",
+      "email": "miguelmeniciocaldas@gmail.com",
       "password": "123",
-      "username": "caldas123"
+      "username": "caldas"
+    }
+  ],
+  "selections": [],
+  "interests": [
+    {
+      "id": "9808",
+      "interest": "Road Trips"
+    },
+    {
+      "id": "8716",
+      "interest": "Cultural Experiences"
+    },
+    {
+      "id": "a908",
+      "interest": "Photography"
+    },
+    {
+      "id": "3f11",
+      "interest": "Nature & Hiking"
+    },
+    {
+      "id": "c68e",
+      "interest": "Traveling with Friends"
+    },
+    {
+      "id": "be95",
+      "interest": "Family Trips"
+    },
+    {
+      "id": "863a",
+      "interest": "City Exploration"
     }
   ]
 }

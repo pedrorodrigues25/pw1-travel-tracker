@@ -38,8 +38,8 @@
         <div class="profile-interests" v-if="userInterests.length > 0">
           <h3 class="interests-heading">Os meus interesses</h3>
           <div class="interests-list">
-            <span v-for="interest in userInterests" :key="interest" class="interest-chip">
-              {{ interest }}
+            <span v-for="interest in userInterests" :key="interest.id || interest" class="interest-chip">
+              {{ typeof interest === 'object' ? interest.interest : interest }}
             </span>
           </div>
         </div>

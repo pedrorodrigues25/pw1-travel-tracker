@@ -85,6 +85,54 @@
       "status": "upcoming",
       "userEmail": "arroz@gmail.com",
       "createdAt": "2025-12-27T21:00:58.233Z"
+    },
+    {
+      "id": "fee9",
+      "destination": "Funchal, Madeira",
+      "notes": "",
+      "status": "upcoming",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-27T22:34:12.107Z"
+    },
+    {
+      "id": "d3d5",
+      "destination": "Armenia",
+      "notes": "cool",
+      "status": "completed",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-27T22:40:49.043Z"
+    },
+    {
+      "id": "3c71",
+      "destination": "Portugal",
+      "notes": "",
+      "status": "upcoming",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-27T22:46:00.287Z"
+    },
+    {
+      "id": "9d6a",
+      "destination": "Portugal",
+      "notes": "",
+      "status": "upcoming",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-27T22:48:36.753Z"
+    },
+    {
+      "id": "e6a1",
+      "destination": "Portugal",
+      "notes": "",
+      "status": "upcoming",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-27T22:50:17.441Z"
+    },
+    {
+      "id": "fc37",
+      "destination": "Portugal",
+      "notes": "",
+      "status": "upcoming",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-27T23:00:59.293Z"
     }
   ]
 }

@@ -4,6 +4,8 @@ Voya é um travel tracker que ajuda os utilizadores a guardarem memórias das su
 
 # Como utilizar:
 
+npx json-server --watch db.json --port 3001
+
 Blablablabla
 
 # Tecnologias utilizadas:

@@ -12,7 +12,8 @@ export const useInterestsStore = defineStore('interests', () => {
       return
     }
     try {
-      items.value = await getInterests(email)
+      const all = await getInterests(email)
+      items.value = all.filter(i => i.userEmail === email)
     } catch (e) {
       console.error('failed to load interests', e)
       items.value = []
@@ -23,9 +24,24 @@ export const useInterestsStore = defineStore('interests', () => {
 
   async function setInterests(interests, email) {
     if (!email) return
-    items.value = [...interests]
+    // 1. Carregar interesses antigos do utilizador
+    const antigos = await getInterests(email)
+    // 2. Apagar todos os interesses antigos (DELETE por id)
+    for (const antigo of antigos) {
+      if (antigo.id) {
+        await fetch(`http://localhost:3001/interests/${antigo.id}`, { method: 'DELETE' })
+      }
+    }
+    // 3. Guardar os novos interesses, cada um com id único, interest e userEmail
+    items.value = []
     for (const interest of interests) {
-      await saveInterest({ interest })
+      const obj = {
+        id: Date.now().toString() + Math.random().toString(36).substring(2, 8),
+        interest,
+        userEmail: email
+      }
+      const saved = await saveInterest(obj)
+      if (saved) items.value.push(saved)
     }
   }
 

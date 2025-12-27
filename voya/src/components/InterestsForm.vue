@@ -69,11 +69,11 @@ function toggleInterest(interest) {
   }
 }
 
-function handleContinue() {
+async function handleContinue() {
   // Save interests to user profile
   const userEmail = auth.user?.email
   if (userEmail) {
-    interestsStore.setInterests(selectedInterests.value, userEmail)
+    await interestsStore.setInterests(selectedInterests.value, userEmail)
   }
   router.push('/destinations')
 }

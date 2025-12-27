@@ -296,7 +296,8 @@ window.addEventListener('beforeunload', () => {
   overflow-y: auto;
   position: absolute;
   z-index: 10;
-  width: 90%;
+  width: 350px;
+  min-width: 220px;
 }
 .country-suggestions li {
   padding: 7px 12px;

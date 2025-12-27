@@ -38,7 +38,7 @@ const email = ref('')
 const password = ref('')
 const errorMessage = ref('')
 
-function submit() {
+async function submit() {
   errorMessage.value = ''
 
   if (!email.value) {
@@ -52,10 +52,10 @@ function submit() {
   }
 
   try {
-    auth.login(email.value, password.value)
+    await auth.login(email.value, password.value)
 
     const selections = useSelectionsStore()
-    selections.load(email.value.trim().toLowerCase())
+    await selections.load(email.value.trim().toLowerCase())
 
     email.value = ''
     password.value = ''

@@ -5,6 +5,12 @@
       "email": "caldas@gmail.com",
       "password": "123",
       "username": "caldas"
+    },
+    {
+      "id": "1929",
+      "email": "arroz@gmail.com",
+      "password": "123",
+      "username": "arroz"
     }
   ],
   "interests": [
@@ -12,6 +18,16 @@
       "id": "1766860613451icu2rl",
       "interest": "Road Trips",
       "userEmail": "caldas@gmail.com"
+    },
+    {
+      "id": "1766869227450wv2fks",
+      "interest": "Road Trips",
+      "userEmail": "arroz@gmail.com"
+    },
+    {
+      "id": "1766869227462twr3wh",
+      "interest": "Food & Gastronomy",
+      "userEmail": "arroz@gmail.com"
     }
   ],
   "selections": [
@@ -61,6 +77,14 @@
       "status": "upcoming",
       "userEmail": "caldas@gmail.com",
       "createdAt": "2025-12-27T18:43:30.003Z"
+    },
+    {
+      "id": "9704",
+      "destination": "Porto, Portugal",
+      "notes": "vrwejkewcywdvghbjnipo+phugyftdjcgvkhbljçiu8yp7t9o6ridjfcghvjuçwdyoqboyeqwvcoyweqc",
+      "status": "upcoming",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-27T21:00:58.233Z"
     }
   ]
 }

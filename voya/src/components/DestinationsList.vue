@@ -47,19 +47,26 @@
       <h3>My selections ({{ selections.count }})</h3>
       <div class="cards-container">
         <div v-for="it in selections.items" :key="it.id" class="trip-card">
-          <div class="card-header">Destination</div>
-          <div class="card-body">
-            <div class="card-destination">{{ it.destination }}</div>
-            <div class="card-status">
-              <span v-if="it.status === 'completed'" class="status completed">Concluída</span>
-              <span v-else class="status upcoming">Upcoming</span>
-            </div>
-            <div class="card-date">{{ new Date(it.createdAt).toLocaleString() }}</div>
-            <div class="card-notes">{{ it.notes }}</div>
+          <div class="card-image">
+            <img :src="it.imageUrl || '/src/img/placeholder.jpg'" alt="Destination image" />
           </div>
-          <div class="card-actions">
-            <button class="btn small" @click="startEdit(it)">Edit</button>
-            <button class="btn small danger" @click="remove(it.id)">Delete</button>
+          <div class="card-content">
+            <div class="card-row card-title-row">
+              <span class="card-title">{{ it.destination }}</span>
+              <span class="card-status" :class="it.status === 'completed' ? 'completed' : 'upcoming'">
+                {{ it.status === 'completed' ? 'Concluída' : 'Upcoming' }}
+              </span>
+            </div>
+            <div class="card-row card-notes-row" v-if="it.notes">
+              <span class="card-notes">{{ it.notes }}</span>
+            </div>
+            <div class="card-bottom-row">
+              <span class="card-date">{{ new Date(it.createdAt).toLocaleString() }}</span>
+              <div class="card-actions-row">
+                <button class="btn small" @click="startEdit(it)">Edit</button>
+                <button class="btn small danger" @click="remove(it.id)">Delete</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

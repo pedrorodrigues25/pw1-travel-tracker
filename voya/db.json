@@ -29,6 +29,38 @@
       "status": "completed",
       "userEmail": "caldas@gmail.com",
       "createdAt": "2025-12-27T18:37:13.798Z"
+    },
+    {
+      "id": "55cd",
+      "destination": "Porto, Portugal",
+      "notes": "",
+      "status": "upcoming",
+      "userEmail": "caldas@gmail.com",
+      "createdAt": "2025-12-27T18:42:15.145Z"
+    },
+    {
+      "id": "fd21",
+      "destination": "Porto, Portugal",
+      "notes": "",
+      "status": "upcoming",
+      "userEmail": "caldas@gmail.com",
+      "createdAt": "2025-12-27T18:43:24.587Z"
+    },
+    {
+      "id": "4471",
+      "destination": "Lisboa, Portugal",
+      "notes": "",
+      "status": "upcoming",
+      "userEmail": "caldas@gmail.com",
+      "createdAt": "2025-12-27T18:43:27.104Z"
+    },
+    {
+      "id": "3e08",
+      "destination": "Faro, Algarve",
+      "notes": "",
+      "status": "upcoming",
+      "userEmail": "caldas@gmail.com",
+      "createdAt": "2025-12-27T18:43:30.003Z"
     }
   ]
 }

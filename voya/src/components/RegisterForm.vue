@@ -49,7 +49,7 @@ const confirmPassword = ref('')
 const username = ref('')
 const errorMessage = ref('')
 
-function submit() {
+async function submit() {
   errorMessage.value = ''
   
   if (!email.value) {
@@ -73,9 +73,9 @@ function submit() {
   }
 
   try {
-    auth.register(email.value, password.value, username.value)
+    await auth.register(email.value, password.value, username.value)
     // Auto-login after registration
-    auth.login(email.value, password.value)
+    await auth.login(email.value, password.value)
     email.value = ''
     password.value = ''
     confirmPassword.value = ''

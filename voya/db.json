@@ -1,0 +1,27 @@
+{
+  "users": [
+    {
+      "id": "15cb",
+      "email": "miguel12@gmail.com",
+      "password": "123",
+      "username": "caldsa"
+    },
+    {
+      "id": "fedb",
+      "email": "miguel123@gmail.com",
+      "password": "123",
+      "username": "caldas1"
+    }
+  ],
+  "selections": [],
+  "interests": [
+    {
+      "id": "2a26",
+      "interest": "City Exploration"
+    },
+    {
+      "id": "0789",
+      "interest": "Photography"
+    }
+  ]
+}

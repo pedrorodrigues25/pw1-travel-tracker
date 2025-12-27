@@ -1,96 +1,88 @@
+
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { getUsers, saveUser } from '../api/api'
 
-const STORAGE_KEY = 'voya_current_user'
-const USERS_STORAGE_KEY = 'voya_users'
+// const STORAGE_KEY = 'voya_current_user' // removido, não é mais necessário
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
   const users = ref([])
   const isGuest = ref(false)
 
-  function loadUsers() {
+
+  async function loadUsers() {
     try {
-      const raw = localStorage.getItem(USERS_STORAGE_KEY)
-      if (raw) users.value = JSON.parse(raw)
+      users.value = await getUsers();
     } catch (e) {
-      console.error('failed to load users from storage', e)
+      console.error('failed to load users from db.json', e);
     }
   }
 
-  function load() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY)
-      if (raw) user.value = JSON.parse(raw)
-    } catch (e) {
-      console.error('failed to load auth from storage', e)
-    }
-  }
 
-  function saveUsers() {
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users.value))
-  }
 
-  function register(email, password, username) {
-    const normalizedEmail = email.trim().toLowerCase()
-    const normalizedUsername = username.trim().toLowerCase()
+
+  // saveUsers removido, pois agora é feito via saveUser
+
+  async function register(email, password, username) {
+    await loadUsers();
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedUsername = username.trim().toLowerCase();
 
     if (users.value.some(u => u.email === normalizedEmail)) {
-      throw new Error('Email já registado')
+      throw new Error('Email já registado');
     }
 
     if (users.value.some(u => u.username.toLowerCase() === normalizedUsername)) {
-      throw new Error('Username já existe')
+      throw new Error('Username já existe');
     }
 
     const newUser = {
       email: normalizedEmail,
       password,
       username: normalizedUsername
-    }
+    };
 
-    users.value.push(newUser)
-    saveUsers()
-    return newUser
+    const saved = await saveUser(newUser);
+    if (!saved) {
+      throw new Error('Erro ao guardar utilizador');
+    }
+    users.value.push(saved);
+    user.value = saved; // Atualiza o utilizador autenticado com todos os campos
+    return saved;
   }
 
-  function login(email, password) {
-    loadUsers()
-
-    const normalizedEmail = email.trim().toLowerCase()
-    const foundUser = users.value.find(u => u.email === normalizedEmail)
+  async function login(email, password) {
+    await loadUsers();
+    const normalizedEmail = email.trim().toLowerCase();
+    const foundUser = users.value.find(u => u.email === normalizedEmail);
 
     if (!foundUser) {
-      throw new Error('Email não registado')
+      throw new Error('Email não registado');
     }
 
     if (foundUser.password !== password) {
-      throw new Error('Password incorreta')
+      throw new Error('Password incorreta');
     }
 
-    user.value = {
-      email: foundUser.email,
-      username: foundUser.username
-    }
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(user.value))
-    return user.value
+    user.value = foundUser; // Guarda o utilizador completo, incluindo id
+    return user.value;
   }
 
   function logout() {
     user.value = null
     isGuest.value = false
-    localStorage.removeItem(STORAGE_KEY)
+    // Não remover mais user do localStorage
   }
 
   function enterAsGuest() {
     user.value = null
     isGuest.value = true
-    localStorage.removeItem(STORAGE_KEY)
+    // Não remover mais user do localStorage
   }
 
-  loadUsers()
-  load()
+
+  // Não chamar loadUsers automaticamente, pois agora é assíncrono
 
   return { user, users, isGuest, register, login, logout, enterAsGuest }
 })

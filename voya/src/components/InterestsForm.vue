@@ -26,7 +26,7 @@
           :class="['interest-tag', { selected: selectedInterests.includes(interest) }]"
           @click="toggleInterest(interest)"
         >
-          {{ interest }}
+          {{ typeof interest === 'object' ? interest.interest : interest }}
         </button>
       </div>
 

@@ -1,61 +1,58 @@
+
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-
-function storageKeyFor(email) {
-  return `voya_selections_${email}`
-}
+import { getSelections, saveSelection } from '../api/api'
 
 export const useSelectionsStore = defineStore('selections', () => {
   const items = ref([])
 
-  function load(email) {
+  async function load(email) {
     if (!email) {
       items.value = []
       return
     }
     try {
-      const raw = localStorage.getItem(storageKeyFor(email))
-      items.value = raw ? JSON.parse(raw) : []
+      items.value = await getSelections(email)
     } catch (e) {
       console.error('failed to load selections', e)
       items.value = []
     }
   }
 
-  function save(email) {
+  // save removido, agora é feito via API
+
+  async function add(selection, email) {
     if (!email) return
-    try {
-      localStorage.setItem(storageKeyFor(email), JSON.stringify(items.value))
-    } catch (e) {
-      console.error('failed to save selections', e)
+    const newSelection = {
+      ...selection,
+      userEmail: email,
+      createdAt: new Date().toISOString()
     }
+    const saved = await saveSelection(newSelection)
+    if (saved) items.value.push(saved)
   }
 
-  function add(selection, email) {
-    const id = Date.now().toString()
-    items.value.push({ id, ...selection, createdAt: new Date().toISOString() })
-    save(email)
-  }
-
-  function update(id, patch, email) {
+  // update pode ser implementado via API se necessário
+  function update(id, patch) {
     const idx = items.value.findIndex((i) => i.id === id)
     if (idx !== -1) {
       items.value[idx] = { ...items.value[idx], ...patch }
-      save(email)
+      // TODO: implementar PATCH via API
     }
   }
 
-  function remove(id, email) {
+  // remove pode ser implementado via API se necessário
+  function remove(id) {
     items.value = items.value.filter((i) => i.id !== id)
-    save(email)
+    // TODO: implementar DELETE via API
   }
 
-  function clear(email) {
+  function clear() {
     items.value = []
-    save(email)
+    // TODO: implementar clear via API
   }
 
   const count = computed(() => items.value.length)
 
-  return { items, count, load, save, add, update, remove, clear }
+  return { items, count, load, add, update, remove, clear }
 })

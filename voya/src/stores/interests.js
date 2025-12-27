@@ -1,49 +1,42 @@
+
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-
-function storageKeyFor(email) {
-  return `voya_interests_${email}`
-}
+import { getInterests, saveInterest } from '../api/api'
 
 export const useInterestsStore = defineStore('interests', () => {
   const items = ref([])
 
-  function load(email) {
+  async function load(email) {
     if (!email) {
       items.value = []
       return
     }
     try {
-      const raw = localStorage.getItem(storageKeyFor(email))
-      items.value = raw ? JSON.parse(raw) : []
+      items.value = await getInterests(email)
     } catch (e) {
       console.error('failed to load interests', e)
       items.value = []
     }
   }
 
-  function save(email) {
-    if (!email) return
-    try {
-      localStorage.setItem(storageKeyFor(email), JSON.stringify(items.value))
-    } catch (e) {
-      console.error('failed to save interests', e)
-    }
-  }
+  // save removido, agora é feito via API
 
-  function setInterests(interests, email) {
+  async function setInterests(interests, email) {
+    if (!email) return
     items.value = [...interests]
-    save(email)
+    for (const interest of interests) {
+      await saveInterest({ interest })
+    }
   }
 
   function clear() {
     items.value = []
+    // TODO: implementar clear via API
   }
 
   return {
     items,
     load,
-    save,
     setInterests,
     clear,
     get count() {

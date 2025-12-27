@@ -1,9 +1,34 @@
 {
   "users": [
-    
+    {
+      "id": "6a75",
+      "email": "caldas@gmail.com",
+      "password": "123",
+      "username": "caldas"
+    }
   ],
   "interests": [
-    
+    {
+      "id": "1766860613451icu2rl",
+      "interest": "Road Trips",
+      "userEmail": "caldas@gmail.com"
+    }
   ],
-  "selections": []
+  "selections": [
+    {
+      "id": "367f",
+      "destination": "Funchal, Madeira",
+      "notes": "",
+      "userEmail": "arroba@gmail.com",
+      "createdAt": "2025-12-27T18:32:33.902Z"
+    },
+    {
+      "id": "ddd6",
+      "destination": "Porto, Portugal",
+      "notes": "",
+      "status": "completed",
+      "userEmail": "caldas@gmail.com",
+      "createdAt": "2025-12-27T18:37:13.798Z"
+    }
+  ]
 }

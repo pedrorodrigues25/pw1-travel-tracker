@@ -34,24 +34,35 @@
       <label>Notes (optional):</label>
       <input v-model="form.notes" placeholder="Notes about the trip" />
 
+      <label>Status:</label>
+      <select v-model="form.status">
+        <option value="upcoming">Upcoming</option>
+        <option value="completed">Completed</option>
+      </select>
+
       <button class="btn" @click="addSelection" :disabled="!form.destination">Save</button>
     </section>
 
     <section class="list">
       <h3>My selections ({{ selections.count }})</h3>
-      <ul>
-        <li v-for="it in selections.items" :key="it.id">
-          <div class="item-main">
-            <strong>{{ it.destination }}</strong>
-            <small>{{ new Date(it.createdAt).toLocaleString() }}</small>
+      <div class="cards-container">
+        <div v-for="it in selections.items" :key="it.id" class="trip-card">
+          <div class="card-header">Destination</div>
+          <div class="card-body">
+            <div class="card-destination">{{ it.destination }}</div>
+            <div class="card-status">
+              <span v-if="it.status === 'completed'" class="status completed">Concluída</span>
+              <span v-else class="status upcoming">Upcoming</span>
+            </div>
+            <div class="card-date">{{ new Date(it.createdAt).toLocaleString() }}</div>
+            <div class="card-notes">{{ it.notes }}</div>
           </div>
-          <div class="item-notes">{{ it.notes }}</div>
-          <div class="item-actions">
+          <div class="card-actions">
             <button class="btn small" @click="startEdit(it)">Edit</button>
             <button class="btn small danger" @click="remove(it.id)">Delete</button>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
       <div v-if="selections.count === 0">You haven't saved any destinations yet.</div>
     </section>
 
@@ -64,6 +75,11 @@
       </select>
       <label>Notes:</label>
       <input v-model="editForm.notes" />
+      <label>Status:</label>
+      <select v-model="editForm.status">
+        <option value="upcoming">Upcoming</option>
+        <option value="completed">Completed</option>
+      </select>
       <div class="edit-actions">
         <button class="btn" @click="confirmEdit">Save</button>
         <button class="btn small" @click="cancelEdit">Cancel</button>
@@ -93,11 +109,11 @@ const options = [
   'Braga, Portugal',
 ]
 
-const form = reactive({ destination: '', notes: '' })
+const form = reactive({ destination: '', notes: '', status: 'upcoming' })
 
 const editing = ref(false)
 const editId = ref(null)
-const editForm = reactive({ destination: '', notes: '' })
+const editForm = reactive({ destination: '', notes: '', status: 'upcoming' })
 
 // Compute the progress percentage (0-100%)
 const progressPercentage = ref(0)
@@ -130,9 +146,10 @@ function addSelection() {
     return
   }
   if (!user || !user.email) return alert('Please log in first')
-  selections.add({ destination: form.destination, notes: form.notes }, user.email)
+  selections.add({ destination: form.destination, notes: form.notes, status: form.status }, user.email)
   form.destination = ''
   form.notes = ''
+  form.status = 'upcoming'
 }
 
 function startEdit(item) {
@@ -145,6 +162,7 @@ function startEdit(item) {
   editId.value = item.id
   editForm.destination = item.destination
   editForm.notes = item.notes || ''
+  editForm.status = item.status || 'upcoming'
 }
 
 function confirmEdit() {
@@ -155,7 +173,7 @@ function confirmEdit() {
   if (!editId.value) return
   selections.update(
     editId.value,
-    { destination: editForm.destination, notes: editForm.notes },
+    { destination: editForm.destination, notes: editForm.notes, status: editForm.status },
     user.email,
   )
   cancelEdit()

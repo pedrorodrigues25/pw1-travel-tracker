@@ -164,6 +164,8 @@
   flex-wrap: wrap;
   gap: 32px;
   margin-top: 24px;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .trip-card {

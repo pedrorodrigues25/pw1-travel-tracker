@@ -32,107 +32,13 @@
   ],
   "selections": [
     {
-      "id": "367f",
-      "destination": "Funchal, Madeira",
-      "notes": "",
-      "userEmail": "arroba@gmail.com",
-      "createdAt": "2025-12-27T18:32:33.902Z"
-    },
-    {
-      "id": "ddd6",
-      "destination": "Porto, Portugal",
-      "notes": "",
-      "status": "completed",
-      "userEmail": "caldas@gmail.com",
-      "createdAt": "2025-12-27T18:37:13.798Z"
-    },
-    {
-      "id": "55cd",
-      "destination": "Porto, Portugal",
-      "notes": "",
-      "status": "upcoming",
-      "userEmail": "caldas@gmail.com",
-      "createdAt": "2025-12-27T18:42:15.145Z"
-    },
-    {
-      "id": "fd21",
-      "destination": "Porto, Portugal",
-      "notes": "",
-      "status": "upcoming",
-      "userEmail": "caldas@gmail.com",
-      "createdAt": "2025-12-27T18:43:24.587Z"
-    },
-    {
-      "id": "4471",
-      "destination": "Lisboa, Portugal",
-      "notes": "",
-      "status": "upcoming",
-      "userEmail": "caldas@gmail.com",
-      "createdAt": "2025-12-27T18:43:27.104Z"
-    },
-    {
-      "id": "3e08",
-      "destination": "Faro, Algarve",
-      "notes": "",
-      "status": "upcoming",
-      "userEmail": "caldas@gmail.com",
-      "createdAt": "2025-12-27T18:43:30.003Z"
-    },
-    {
-      "id": "9704",
-      "destination": "Porto, Portugal",
-      "notes": "vrwejkewcywdvghbjnipo+phugyftdjcgvkhbljçiu8yp7t9o6ridjfcghvjuçwdyoqboyeqwvcoyweqc",
-      "status": "upcoming",
-      "userEmail": "arroz@gmail.com",
-      "createdAt": "2025-12-27T21:00:58.233Z"
-    },
-    {
-      "id": "fee9",
-      "destination": "Funchal, Madeira",
+      "id": "96b3",
+      "destination": "Spain",
+      "city": "Madrid",
       "notes": "",
       "status": "upcoming",
       "userEmail": "arroz@gmail.com",
-      "createdAt": "2025-12-27T22:34:12.107Z"
-    },
-    {
-      "id": "d3d5",
-      "destination": "Armenia",
-      "notes": "cool",
-      "status": "completed",
-      "userEmail": "arroz@gmail.com",
-      "createdAt": "2025-12-27T22:40:49.043Z"
-    },
-    {
-      "id": "3c71",
-      "destination": "Portugal",
-      "notes": "",
-      "status": "upcoming",
-      "userEmail": "arroz@gmail.com",
-      "createdAt": "2025-12-27T22:46:00.287Z"
-    },
-    {
-      "id": "9d6a",
-      "destination": "Portugal",
-      "notes": "",
-      "status": "upcoming",
-      "userEmail": "arroz@gmail.com",
-      "createdAt": "2025-12-27T22:48:36.753Z"
-    },
-    {
-      "id": "e6a1",
-      "destination": "Portugal",
-      "notes": "",
-      "status": "upcoming",
-      "userEmail": "arroz@gmail.com",
-      "createdAt": "2025-12-27T22:50:17.441Z"
-    },
-    {
-      "id": "fc37",
-      "destination": "Portugal",
-      "notes": "",
-      "status": "upcoming",
-      "userEmail": "arroz@gmail.com",
-      "createdAt": "2025-12-27T23:00:59.293Z"
+      "createdAt": "2025-12-28T11:17:04.820Z"
     }
   ]
 }

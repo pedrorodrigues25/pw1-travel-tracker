@@ -30,3 +30,17 @@ export async function fetchCountryWikipediaSummary(countryName) {
     return { error: error.message };
   }
 }
+
+// Função para buscar cidades de um país via Wikidata
+export async function fetchCitiesByCountry(countryName) {
+  const endpoint = 'https://query.wikidata.org/sparql';
+  const query = `SELECT ?cityLabel WHERE { ?country rdfs:label "${countryName}"@en. ?city wdt:P31/wdt:P279* wd:Q515; wdt:P17 ?country. SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } } LIMIT 50`;
+  const url = endpoint + '?query=' + encodeURIComponent(query) + '&format=json';
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data.results.bindings.map(b => b.cityLabel.value);
+  } catch (e) {
+    return [];
+  }
+}

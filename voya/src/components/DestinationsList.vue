@@ -41,6 +41,18 @@
         </li>
       </ul>
 
+      <label v-if="form.destination">City:</label>
+      <input v-if="form.destination"
+        v-model="form.city"
+        @focus="showCitySuggestions = true"
+        placeholder="Type or select a city..."
+        autocomplete="off"
+        class="city-search-input"
+      />
+      <ul v-if="showCitySuggestions && cityResults.length" class="city-suggestions">
+        <li v-for="city in cityResults" :key="city" @click="selectCity(city)">{{ city }}</li>
+      </ul>
+
       <label>Notes (optional):</label>
       <input v-model="form.notes" placeholder="Notes about the trip" />
 
@@ -62,7 +74,10 @@
           </div>
           <div class="card-content">
             <div class="card-row card-title-row">
-              <span class="card-title">{{ it.destination }}</span>
+              <span class="card-title">
+                <template v-if="it.city">{{ it.city }}, {{ it.destination }}</template>
+                <template v-else>{{ it.destination }}</template>
+              </span>
               <span class="card-status" :class="it.status === 'completed' ? 'completed' : 'upcoming'">
                 {{ it.status === 'completed' ? 'Concluída' : 'Upcoming' }}
               </span>
@@ -133,7 +148,7 @@ const selections = useSelectionsStore()
 const user = auth.user
 const showLoginAlert = ref(false)
 
-const form = reactive({ destination: '', notes: '', status: 'upcoming' })
+const form = reactive({ destination: '', city: '', notes: '', status: 'upcoming' })
 
 const editing = ref(false)
 const editId = ref(null)
@@ -142,6 +157,9 @@ const editForm = reactive({ destination: '', notes: '', status: 'upcoming' })
 const countryQuery = ref('')
 const countryResults = ref([])
 const showSuggestions = ref(false)
+
+const cityResults = ref([])
+const showCitySuggestions = ref(false)
 
 // Compute the progress percentage (0-100%)
 const progressPercentage = ref(0)
@@ -167,8 +185,6 @@ watch(
   },
 )
 
-
-
 async function onCountryInput() {
   if (countryQuery.value.length < 2) {
     countryResults.value = []
@@ -179,10 +195,31 @@ async function onCountryInput() {
   showSuggestions.value = true
 }
 
-function selectCountry(country) {
+// Função para buscar cidades de um país via Wikidata
+async function searchCities(countryName) {
+  const endpoint = 'https://query.wikidata.org/sparql'
+  const query = `SELECT ?cityLabel WHERE { ?country rdfs:label "${countryName}"@en. ?city wdt:P31/wdt:P279* wd:Q515; wdt:P17 ?country. SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } } LIMIT 50`
+  const url = endpoint + '?query=' + encodeURIComponent(query) + '&format=json'
+  try {
+    const res = await fetch(url)
+    const data = await res.json()
+    return data.results.bindings.map(b => b.cityLabel.value)
+  } catch (e) {
+    return []
+  }
+}
+
+async function selectCountry(country) {
   form.destination = country.name
   countryQuery.value = country.name
   showSuggestions.value = false
+  cityResults.value = await searchCities(country.name)
+  showCitySuggestions.value = true
+}
+
+function selectCity(city) {
+  form.city = city
+  showCitySuggestions.value = false
 }
 
 document.addEventListener('click', (e) => {
@@ -205,8 +242,9 @@ function addSelection() {
     return
   }
   if (!user || !user.email) return alert('Please log in first')
-  selections.add({ destination: form.destination, notes: form.notes, status: form.status }, user.email)
+  selections.add({ destination: form.destination, city: form.city, notes: form.notes, status: form.status }, user.email)
   form.destination = ''
+  form.city = ''
   form.notes = ''
   form.status = 'upcoming'
   countryQuery.value = ''
@@ -315,5 +353,34 @@ window.addEventListener('beforeunload', () => {
   object-fit: contain;
   border-radius: 2px;
   box-shadow: 0 1px 2px #0001;
+}
+.city-search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+.city-suggestions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  max-height: 180px;
+  overflow-y: auto;
+  position: absolute;
+  z-index: 10;
+  width: 350px;
+  min-width: 220px;
+}
+.city-suggestions li {
+  padding: 7px 12px;
+  cursor: pointer;
+}
+.city-suggestions li:hover {
+  background: #f0f4fa;
 }
 </style>

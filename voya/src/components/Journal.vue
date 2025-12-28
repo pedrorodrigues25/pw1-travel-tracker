@@ -12,6 +12,19 @@
             <img v-for="n in 5" :key="n" :src="`/src/img/avatar${n}.png`" class="figma-avatar" alt="avatar" />
           </div>
         </div>
+        <!-- Wikipedia Info -->
+        <div v-if="wikiLoading" style="margin: 16px 0;">Carregando informações do país...</div>
+        <div v-else-if="wikiError" style="margin: 16px 0; color: red;">Erro: {{ wikiError }}</div>
+        <div v-else-if="wikiInfo" class="wiki-country-info" style="margin: 16px 0; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 16px;">
+          <div style="display: flex; align-items: flex-start; gap: 16px;">
+            <img v-if="wikiInfo.thumbnail?.source" :src="wikiInfo.thumbnail.source" :alt="wikiInfo.title" style="width: 80px; border-radius: 8px;" />
+            <div>
+              <h3 style="margin: 0 0 8px 0;">{{ wikiInfo.title }}</h3>
+              <p style="margin: 0 0 8px 0;">{{ wikiInfo.extract }}</p>
+              <a :href="wikiInfo.content_urls?.desktop?.page" target="_blank" rel="noopener" style="color: #0077cc;">Ver mais na Wikipedia</a>
+            </div>
+          </div>
+        </div>
         <div class="figma-journal-main">
           <div class="figma-journal-image-block"></div>
           <div class="figma-journal-day-block">
@@ -33,12 +46,31 @@
 </template>
 
 <script setup>
-defineOptions({ name: 'TripJournal' })
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useSelectionsStore } from '../stores/selections'
+import { fetchCountryWikipediaSummary } from '../api/countries'
 const props = defineProps({ tripId: [String, Number] })
 const selections = useSelectionsStore()
 const trip = computed(() => selections.items.find(t => t.id == props.tripId))
+
+const wikiInfo = ref(null)
+const wikiLoading = ref(false)
+const wikiError = ref(null)
+
+onMounted(async () => {
+  if (trip.value && trip.value.destination) {
+    wikiLoading.value = true
+    wikiError.value = null
+    wikiInfo.value = null
+    const result = await fetchCountryWikipediaSummary(trip.value.destination)
+    if (result.error) {
+      wikiError.value = result.error
+    } else {
+      wikiInfo.value = result
+    }
+    wikiLoading.value = false
+  }
+})
 </script>
 
 <style scoped>

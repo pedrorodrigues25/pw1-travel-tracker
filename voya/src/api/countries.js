@@ -17,3 +17,16 @@ export async function searchCountries(query) {
     return [];
   }
 }
+// Função para buscar resumo do país na Wikipedia API
+export async function fetchCountryWikipediaSummary(countryName) {
+  const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(countryName)}`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Não foi possível obter informações da Wikipedia');
+    }
+    return await response.json();
+  } catch (error) {
+    return { error: error.message };
+  }
+}

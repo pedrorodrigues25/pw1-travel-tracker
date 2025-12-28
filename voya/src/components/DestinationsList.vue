@@ -62,6 +62,11 @@
         <option value="completed">Completed</option>
       </select>
 
+      <label>Start Date:</label>
+      <input type="date" v-model="form.startDate" required />
+      <label>End Date:</label>
+      <input type="date" v-model="form.endDate" required />
+
       <button class="btn" @click="addSelection" :disabled="!form.destination">Save</button>
     </section>
 
@@ -140,6 +145,7 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
 import { searchCountries } from '../api/countries'
+import { fetchCountryWikipediaSummary } from '../api/countries'
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -148,7 +154,7 @@ const selections = useSelectionsStore()
 const user = auth.user
 const showLoginAlert = ref(false)
 
-const form = reactive({ destination: '', city: '', notes: '', status: 'upcoming' })
+const form = reactive({ destination: '', city: '', notes: '', status: 'upcoming', startDate: '', endDate: '' })
 
 const editing = ref(false)
 const editId = ref(null)
@@ -231,9 +237,13 @@ document.addEventListener('click', (e) => {
   }
 });
 
-function addSelection() {
+async function addSelection() {
   if (!form.destination) {
     alert('Escolhe um país!')
+    return
+  }
+  if (!form.startDate || !form.endDate) {
+    alert('Preencha as datas de início e fim!')
     return
   }
   // If guest, show alert
@@ -242,11 +252,20 @@ function addSelection() {
     return
   }
   if (!user || !user.email) return alert('Please log in first')
-  selections.add({ destination: form.destination, city: form.city, notes: form.notes, status: form.status }, user.email)
+  // Buscar imagem da Wikipedia
+  let wikiQuery = form.city || form.destination
+  let imageUrl = ''
+  try {
+    const wikiResult = await fetchCountryWikipediaSummary(wikiQuery)
+    imageUrl = wikiResult?.originalimage?.source || ''
+  } catch {}
+  selections.add({ destination: form.destination, city: form.city, notes: form.notes, status: form.status, startDate: form.startDate, endDate: form.endDate, imageUrl }, user.email)
   form.destination = ''
   form.city = ''
   form.notes = ''
   form.status = 'upcoming'
+  form.startDate = ''
+  form.endDate = ''
   countryQuery.value = ''
 }
 
@@ -311,6 +330,11 @@ function goToJournal(tripId) {
 window.addEventListener('beforeunload', () => {
   if (user && user.email) selections.save(user.email)
 })
+
+async function getWikiImage(query) {
+  const result = await fetchCountryWikipediaSummary(query)
+  return result?.originalimage?.source || '/src/img/placeholder.jpg'
+}
 </script>
 
 <style src="../css/DestinationsList.css"></style>

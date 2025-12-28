@@ -39,6 +39,94 @@
       "status": "upcoming",
       "userEmail": "arroz@gmail.com",
       "createdAt": "2025-12-28T11:17:04.820Z"
+    },
+    {
+      "id": "c99e",
+      "destination": "Portugal",
+      "city": "Porto",
+      "notes": "porto > lisboa",
+      "status": "upcoming",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-28T11:21:07.098Z"
+    },
+    {
+      "id": "7940",
+      "destination": "Germany",
+      "city": "",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2025-12-02",
+      "endDate": "2025-12-04",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-28T11:22:39.500Z"
+    },
+    {
+      "id": "c5dd",
+      "destination": "Portugal",
+      "city": "Lisbon",
+      "notes": "",
+      "status": "upcoming",
+      "startDate": "",
+      "endDate": "",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-28T11:24:49.939Z"
+    },
+    {
+      "id": "909f",
+      "destination": "Portugal",
+      "city": "Lixa",
+      "notes": "",
+      "status": "upcoming",
+      "startDate": "2025-12-10",
+      "endDate": "2025-12-18",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-28T11:26:50.954Z"
+    },
+    {
+      "id": "7b8e",
+      "destination": "Portugal",
+      "city": "Porto",
+      "notes": "fixe",
+      "status": "upcoming",
+      "startDate": "2025-12-02",
+      "endDate": "2025-12-24",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-28T11:28:29.855Z"
+    },
+    {
+      "id": "2f5a",
+      "destination": "Portugal",
+      "city": "Lisbon",
+      "notes": "",
+      "status": "upcoming",
+      "startDate": "2025-12-17",
+      "endDate": "2025-12-25",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-28T11:30:36.299Z"
+    },
+    {
+      "id": "a92b",
+      "destination": "Portugal",
+      "city": "Porto",
+      "notes": "",
+      "status": "upcoming",
+      "startDate": "2025-12-02",
+      "endDate": "2025-12-15",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Puente_Don_Luis_I%2C_Oporto%2C_Portugal%2C_2012-05-09%2C_DD_13.JPG",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-28T11:32:33.018Z"
+    },
+    {
+      "id": "b1c1",
+      "destination": "Portugal",
+      "city": "Lisbon",
+      "notes": "",
+      "status": "upcoming",
+      "startDate": "2025-12-14",
+      "endDate": "2025-12-16",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Lisboa_-_Portugal_%2852597836992%29.jpg",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-28T11:34:09.367Z"
     }
   ]
 }

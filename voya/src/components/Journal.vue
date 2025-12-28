@@ -4,33 +4,30 @@
       <div v-if="trip && trip.destination">
         <div class="figma-journal-header">
           <button class="figma-back-btn" @click="$router.back()">←</button>
-          <div class="figma-journal-title">{{ trip.destination || 'Destino' }}</div>
+          <div class="figma-journal-title">
+            <template v-if="trip.city">{{ trip.city }}, {{ trip.destination }}</template>
+            <template v-else>{{ trip.destination || 'Destino' }}</template>
+          </div>
           <div class="figma-journal-dates">
-            {{ trip.startDate || '21/07/2025' }} - {{ trip.endDate || '26/07/2025' }}
+            <template v-if="trip.startDate || trip.endDate">
+              <span v-if="trip.startDate">{{ trip.startDate }}</span>
+              <span v-if="trip.startDate && trip.endDate"> - </span>
+              <span v-if="trip.endDate">{{ trip.endDate }}</span>
+            </template>
           </div>
           <div class="figma-journal-avatars">
             <img v-for="n in 5" :key="n" :src="`/src/img/avatar${n}.png`" class="figma-avatar" alt="avatar" />
           </div>
         </div>
-        <!-- Wikipedia Info -->
-        <div v-if="wikiLoading" style="margin: 16px 0;">Carregando informações do país...</div>
-        <div v-else-if="wikiError" style="margin: 16px 0; color: red;">Erro: {{ wikiError }}</div>
-        <div v-else-if="wikiInfo" class="wiki-country-info" style="margin: 16px 0; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 16px;">
-          <div style="display: flex; align-items: flex-start; gap: 16px;">
-            <img v-if="wikiInfo.thumbnail?.source" :src="wikiInfo.thumbnail.source" :alt="wikiInfo.title" style="width: 80px; border-radius: 8px;" />
-            <div>
-              <h3 style="margin: 0 0 8px 0;">{{ wikiInfo.title }}</h3>
-              <p style="margin: 0 0 8px 0;">{{ wikiInfo.extract }}</p>
-              <a :href="wikiInfo.content_urls?.desktop?.page" target="_blank" rel="noopener" style="color: #0077cc;">Ver mais na Wikipedia</a>
-            </div>
-          </div>
-        </div>
         <div class="figma-journal-main">
-          <div class="figma-journal-image-block"></div>
+          <div class="figma-journal-image-block">
+            <img v-if="wikiInfo?.originalimage?.source" :src="wikiInfo.originalimage.source" :alt="wikiInfo.title" style="width:100%;height:100%;object-fit:cover;border-radius:16px;" />
+          </div>
           <div class="figma-journal-day-block">
-            <div class="figma-journal-day-title">1st day</div>
+            <div class="figma-journal-day-title">Sobre o destino</div>
             <div class="figma-journal-day-text">
-              {{ trip.notes || 'The adventure officially begins! Arrived to sunny (and slightly chaotic) London with the best crew ever. Feeling the zest of the city already. We checked into our posh pad, immediately dove into the streets, snacking to half chance (we finished so many memories to make that have cities to revisit, lots of cheering, laughing, and getting totally lost together. The journey starts now!)' }}
+              <template v-if="wikiInfo">{{ wikiInfo.extract }}</template>
+              <template v-else>Informações não disponíveis.</template>
             </div>
           </div>
         </div>
@@ -58,17 +55,18 @@ const wikiLoading = ref(false)
 const wikiError = ref(null)
 
 onMounted(async () => {
-  if (trip.value && trip.value.destination) {
-    wikiLoading.value = true
-    wikiError.value = null
-    wikiInfo.value = null
-    const result = await fetchCountryWikipediaSummary(trip.value.destination)
+  let query = trip.value?.city || trip.value?.destination;
+  if (query) {
+    wikiLoading.value = true;
+    wikiError.value = null;
+    wikiInfo.value = null;
+    const result = await fetchCountryWikipediaSummary(query);
     if (result.error) {
-      wikiError.value = result.error
+      wikiError.value = result.error;
     } else {
-      wikiInfo.value = result
+      wikiInfo.value = result;
     }
-    wikiLoading.value = false
+    wikiLoading.value = false;
   }
 })
 </script>

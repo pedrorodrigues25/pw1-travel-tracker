@@ -1,68 +1,67 @@
+
 <template>
-  <div class="profile-container">
-    <!-- Background with image -->
-    <div class="profile-wrapper">
-      <!-- Back button -->
-      <button class="back-btn" @click="goBack">
-        <span class="back-icon">←</span>
-      </button>
-
-      <!-- Profile Card -->
-      <div class="profile-card">
-        
-        <!-- User Avatar -->
-        <div class="avatar-container">
-          <div class="avatar">
-            <span class="avatar-letter">{{ userInitial }}</span>
+  <div class="profile-full-bg">
+    <nav class="navbar">
+      <router-link to="/" class="navbar-logo">
+        <img src="@/img/logo-pw1-voya.png" alt="Voya Logo" height="38" />
+      </router-link>
+      <div class="navbar-links">
+        <router-link to="/destinations" active-class="active">Home</router-link>
+        <a href="#" class="navbar-link">Recommendations</a>
+        <router-link to="/trips" active-class="active">Trips</router-link>
+        <a href="#" class="navbar-link">Friends</a>
+        <router-link to="/profile" active-class="active">Profile</router-link>
+      </div>
+    </nav>
+    <div class="profile-layout-columns">
+      <div class="profile-col-main">
+        <div class="profile-header-row">
+          <div class="profile-photo-circle">
+            <label class="profile-photo-label" v-if="editMode">
+              <input type="file" accept="image/*" @change="onPhotoChange" />
+              <span class="profile-photo-upload-btn">Alterar foto</span>
+            </label>
+            <img v-if="user.value?.photoUrl && !previewPhoto" :src="user.value.photoUrl" class="profile-photo-lg" alt="Profile Photo" />
+            <img v-else-if="previewPhoto" :src="previewPhoto" class="profile-photo-lg" alt="Preview" />
+            <div v-else class="profile-avatar-lg">{{ userInitial }}</div>
+          </div>
+          <div class="profile-header-info">
+            <div v-if="!editMode">
+              <h2 class="profile-username-lg-horizontal">{{ user?.username || 'User' }}</h2>
+              <p class="profile-email-lg-horizontal">{{ user?.email || '' }}</p>
+            </div>
+            <div v-else class="edit-fields-lg">
+              <input v-model="editUsername" placeholder="Novo username" />
+              <input v-model="editEmail" placeholder="Novo email" />
+            </div>
           </div>
         </div>
-
-        <!-- User Info -->
-        <h2 class="profile-username">{{ user?.username || 'User' }}</h2>
-        <p class="profile-email">{{ user?.email || '' }}</p>
-
-        <!-- Stats -->
-        <div class="profile-stats">
-          <div class="stat-item">
-            <span class="stat-number">{{ tripCount }}</span>
-            <span class="stat-label">Viagens</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-number">{{ interestsCount }}</span>
-            <span class="stat-label">Interesses</span>
-          </div>
-        </div>
-
-        <!-- Interests -->
-        <div class="profile-interests" v-if="userInterests.length > 0">
-          <h3 class="interests-heading">Os meus interesses</h3>
-          <div class="interests-list">
-            <span v-for="interest in userInterests" :key="interest.id || interest" class="interest-chip">
-              {{ typeof interest === 'object' ? interest.interest : interest }}
-            </span>
-          </div>
-        </div>
-
-        <!-- Progress -->
-        <div class="profile-progress">
-          <div class="progress-header">
+        <div class="profile-progress-card">
+          <div class="progress-header-lg">
             <span>Progresso</span>
             <span>{{ tripCount }}/10 viagens</span>
           </div>
-          <div class="progress-bar-container">
-            <div class="progress-bar-fill" :style="{ width: progressPercentage + '%' }"></div>
+          <div class="progress-bar-container-lg">
+            <div class="progress-bar-fill-lg" :style="{ width: progressPercentage + '%' }"></div>
           </div>
         </div>
-
-        <!-- Actions -->
-        <div class="profile-actions">
-          <button class="action-btn edit-btn" @click="editProfile">
-            Editar Perfil
-          </button>
-          <button class="action-btn logout-btn" @click="handleLogout">
-            Logout
-          </button>
+        <div class="profile-actions-lg">
+          <button v-if="!editMode" class="action-btn edit-btn" @click="editMode = true">Editar Perfil</button>
+          <button v-else class="action-btn save-btn" @click="saveProfile">Guardar</button>
+          <button class="action-btn logout-btn" @click="handleLogout">Logout</button>
+        </div>
+      </div>
+      <div class="profile-col-side">
+        <div class="profile-about-card">
+          <h3>About Me</h3>
+          <div class="profile-interests-lg" v-if="userInterests.length > 0">
+            <div class="interests-list-lg">
+              <span v-for="interest in userInterests" :key="interest.id || interest" class="interest-chip-lg">
+                {{ typeof interest === 'object' ? interest.interest : interest }}
+              </span>
+            </div>
+          </div>
+          <textarea v-model="aboutMe" placeholder="Fala um pouco sobre ti..." rows="4" class="about-me-textarea"></textarea>
         </div>
       </div>
     </div>
@@ -70,7 +69,8 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+const aboutMe = ref('')
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
@@ -81,7 +81,6 @@ const auth = useAuthStore()
 const selections = useSelectionsStore()
 const interestsStore = useInterestsStore()
 
-// Load interests on mount
 onMounted(() => {
   if (auth.user?.email) {
     interestsStore.load(auth.user.email)
@@ -89,6 +88,28 @@ onMounted(() => {
 })
 
 const user = computed(() => auth.user)
+const editMode = ref(false)
+const editUsername = ref(user.value?.username || '')
+const editEmail = ref(user.value?.email || '')
+const previewPhoto = ref('')
+
+function onPhotoChange(e) {
+  const file = e.target.files[0]
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = ev => {
+      previewPhoto.value = ev.target.result
+    }
+    reader.readAsDataURL(file)
+  }
+}
+
+function saveProfile() {
+  user.value.username = editUsername.value
+  user.value.email = editEmail.value
+  if (previewPhoto.value) user.value.photoUrl = previewPhoto.value
+  editMode.value = false
+}
 
 const userInitial = computed(() => {
   if (user.value?.username) {
@@ -101,27 +122,9 @@ const userInitial = computed(() => {
 })
 
 const tripCount = computed(() => selections.count || 0)
-
-const interestsCount = computed(() => {
-  return interestsStore.items.length
-})
-
-const userInterests = computed(() => {
-  return interestsStore.items
-})
-
-const progressPercentage = computed(() => {
-  return (tripCount.value % 10) * 10
-})
-
-function goBack() {
-  router.push('/destinations')
-}
-
-function editProfile() {
-  // TODO: Implement edit profile functionality
-  alert('Funcionalidade em desenvolvimento')
-}
+const interestsCount = computed(() => interestsStore.items.length)
+const userInterests = computed(() => interestsStore.items)
+const progressPercentage = computed(() => (tripCount.value % 10) * 10)
 
 function handleLogout() {
   auth.logout()

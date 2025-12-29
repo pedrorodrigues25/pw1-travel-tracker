@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap');
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  padding: 12px 0 0 0;
+}
+.navbar-logo img {
+  height: 38px;
+  margin-left: 32px;
+}
+.navbar-links {
+  display: flex;
+  gap: 32px;
+  margin-right: 40px;
+}
+.navbar-links a,
+.navbar-links .navbar-link {
+  color: #111;
+  text-decoration: none;
+  font-family: 'Syncopate', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+.navbar-links a.active,
+.navbar-links a:hover {
+  color: #000;
+  text-decoration: underline;
+}

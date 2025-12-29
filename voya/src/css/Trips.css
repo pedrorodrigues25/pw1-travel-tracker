@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap');
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  padding: 12px 0 0 0;
+}
+.navbar-logo img {
+  height: 38px;
+  margin-left: 32px;
+}
+.navbar-links {
+  display: flex;
+  gap: 32px;
+  margin-right: 40px;
+}
+.navbar-links a,
+.navbar-links .navbar-link {
+  color: #111;
+  text-decoration: none;
+  font-family: 'Syncopate', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+.navbar-links a.active,
+.navbar-links a:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+.country-search-input, .city-search-input, select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 4px;
+  background: #fff;
+  color: #222;
+}
+.country-suggestions, .city-suggestions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  max-height: 180px;
+  overflow-y: auto;
+  position: absolute;
+  z-index: 10;
+  width: 350px;
+  min-width: 220px;
+}
+.country-suggestions li, .city-suggestions li {
+  padding: 7px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.country-suggestions li:hover, .city-suggestions li:hover {
+  background: #f0f4fa;
+}
+.country-flag {
+  width: 22px;
+  height: 16px;
+  object-fit: contain;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px #0001;
+}
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin-top: 24px;
+  justify-content: center;
+  align-items: flex-start;
+}
+.trip-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #0001;
+  width: 320px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.card-image img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.card-content {
+  padding: 16px;
+}
+.card-title {
+  font-size: 1.1em;
+  font-weight: 700;
+}
+.card-status.completed {
+  color: #2ecc40;
+}
+.card-status.upcoming {
+  color: #0074d9;
+}
+.card-actions-row {
+  display: flex;
+  gap: 8px;
+}
+.btn {
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.btn.small {
+  padding: 4px 8px;
+  font-size: 0.9em;
+}
+.btn.danger {
+  background: #ffdddd;
+}
+.edit-panel {
+  margin-top: 16px;
+  border-top: 1px dashed #ccc;
+  padding-top: 12px;
+}

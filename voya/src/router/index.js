@@ -40,8 +40,12 @@ const router = createRouter({
       path: '/profile',
       component: ProfileView,
       name: 'Profile'
-    }
-    ,
+    },
+    {
+      path: '/trips',
+      component: () => import('../views/TripsView.vue'),
+      name: 'Trips'
+    },
     {
       path: '/journal/:tripId',
       component: JournalView,

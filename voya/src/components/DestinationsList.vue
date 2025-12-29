@@ -407,4 +407,14 @@ async function getWikiImage(query) {
 .city-suggestions li:hover {
   background: #f0f4fa;
 }
+select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 4px;
+  background: #fff;
+  color: #222;
+}
 </style>

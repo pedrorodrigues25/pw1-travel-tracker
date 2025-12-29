@@ -1,22 +1,18 @@
 <template>
   <div class="destinations">
-    <header class="dest-header">
-      <h2>Choose Destinations</h2>
-      <div class="user-actions" v-if="!auth.isGuest">
-        <div class="user-info">
-          <span class="user-email clickable" @click="goToProfile">{{ user?.username || user?.email }}</span>
-          <div class="progress-container">
-            <div class="progress-bar" :style="{ width: progressPercentage + '%' }"></div>
-          </div>
-          <span class="progress-text">{{ selections.count }}/10 trips</span>
-        </div>
-        <button @click="logout" class="btn small">Logout</button>
+    <nav class="navbar">
+      <router-link to="/" class="navbar-logo">
+        <img src="@/img/logo-pw1-voya.png" alt="Voya Logo" height="38" />
+      </router-link>
+      <div class="navbar-links">
+        <router-link to="/destinations" active-class="active">Home</router-link>
+        <a href="#" class="navbar-link">Recommendations</a>
+        <a href="#" class="navbar-link">Trips</a>
+        <a href="#" class="navbar-link">Friends</a>
+        <router-link to="/profile" active-class="active">Profile</router-link>
       </div>
-      <div class="user-actions" v-else>
-        <span class="guest-badge">Guest Mode</span>
-        <router-link to="/login" class="btn small btn-login">Log In</router-link>
-      </div>
-    </header>
+    </nav>
+    <h2 style="margin-top: 18px;">Choose Destinations</h2>
 
     <!-- Alert for guests -->
     <div v-if="showLoginAlert" class="login-alert">

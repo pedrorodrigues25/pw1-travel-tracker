@@ -1,3 +1,18 @@
+// Atualiza um utilizador existente (PATCH)
+async function updateUser(id, updatedFields) {
+	try {
+		const res = await fetch(`${API_BASE}/users/${id}`, {
+			method: 'PATCH',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(updatedFields)
+		});
+		if (!res.ok) throw new Error('Erro ao atualizar utilizador');
+		return await res.json();
+	} catch (e) {
+		console.error('Erro ao atualizar utilizador:', e);
+		return null;
+	}
+}
 // API para manipular utilizadores via json-server
 const API_BASE = 'http://localhost:3001';
 
@@ -82,4 +97,4 @@ async function saveInterest(interest) {
 	}
 }
 
-export { getUsers, saveUser, getSelections, saveSelection, getInterests, saveInterest };
+export { getUsers, saveUser, updateUser, getSelections, saveSelection, getInterests, saveInterest };

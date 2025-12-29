@@ -75,6 +75,7 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
 import { useInterestsStore } from '../stores/interests'
+import { updateUser } from '../api/api'
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -104,10 +105,26 @@ function onPhotoChange(e) {
   }
 }
 
-function saveProfile() {
-  user.value.username = editUsername.value
-  user.value.email = editEmail.value
-  if (previewPhoto.value) user.value.photoUrl = previewPhoto.value
+async function saveProfile() {
+  const updatedFields = {
+    username: editUsername.value,
+    email: editEmail.value
+  }
+  if (previewPhoto.value) updatedFields.photoUrl = previewPhoto.value
+  // Atualiza no backend
+  if (user.value?.id) {
+    const updated = await updateUser(user.value.id, updatedFields)
+    if (updated) {
+      user.value.username = updated.username
+      user.value.email = updated.email
+      if (updated.photoUrl) user.value.photoUrl = updated.photoUrl
+    }
+  } else {
+    // fallback local
+    user.value.username = editUsername.value
+    user.value.email = editEmail.value
+    if (previewPhoto.value) user.value.photoUrl = previewPhoto.value
+  }
   editMode.value = false
 }
 

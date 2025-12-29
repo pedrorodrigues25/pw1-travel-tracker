@@ -1,22 +1,41 @@
 # Voya - travel tracker ⛰️
 
-Voya é um travel tracker que ajuda os utilizadores a guardarem memórias das suas viagens, a preprararem-se para as próximas viagens e também permite compartilhar essas informações entre amigos.
+Voya is a website that allows users to register, track, and share their travel experiences. You can create a profile, add destinations, save notes, view your travel progress and interests, and edit your personal information. The goal is to make travel planning easier, preserve memories, and share experiences with friends.
 
-# Como utilizar:
+## Main Features
+- User registration and login
+- Profile editing (name, email, photo, about me, interests)
+- Add, edit, and remove trips/destinations
+- View travel progress
+- City and country suggestions
+- Modern and responsive interface
 
-npx json-server --watch db.json --port 3001
+## APIs Used
+- **json-server**: Local API for storing user data, trips, interests, etc. (db.json file)
+- **REST Countries API**: To get country lists, names, codes, and flags
+- **Wikidata SPARQL**: To suggest cities for each country
+- **Wikipedia API**: To fetch images for destinations
 
-Blablablabla
+## How to Start the Project
 
-# Tecnologias utilizadas:
+1. Install project dependencies (npm/pnpm install)
+2. Start the local API:
 
-- blabla;
-- blabla.
+	npx json-server --watch db.json --port 3001
 
-# Desenvolvido por:
+3. Start the frontend (npm run dev or pnpm run dev)
 
-Este projeto está a ser desenvolvido no âmbito da disciplina Programação Web 1, da Licenciatura em Tecnologias e Sistemas de Informação para a Web da Escola Superior em Media Artes e Design.
+---
 
-- Pedro Rodrigues;
-- Mariana Ferreira;
-- Miguel Caldas.
+## Technologies Used
+- Vue.js
+- Pinia (state management)
+- Vite
+- json-server
+- Modern CSS
+
+## Developed by:
+This project is being developed for the Web Programming 1 course, part of the Bachelor’s in Technologies and Information Systems for the Web at Escola Superior em Media Artes e Design.
+- Pedro Rodrigues
+- Mariana Ferreira
+- Miguel Caldas

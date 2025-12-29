@@ -43,6 +43,18 @@
       "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Quintanilha12.jpg",
       "userEmail": "arroz@gmail.com",
       "createdAt": "2025-12-29T14:23:10.599Z"
+    },
+    {
+      "id": "7e4a",
+      "destination": "Portugal",
+      "city": "Caetobriga",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2025-12-23",
+      "endDate": "2025-12-23",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Setubal_III_%28cropped%29.jpg",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2025-12-29T15:47:27.660Z"
     }
   ]
 }

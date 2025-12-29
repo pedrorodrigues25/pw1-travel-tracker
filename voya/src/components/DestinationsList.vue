@@ -24,32 +24,15 @@
 </template>
 
 <script setup>
-import { reactive, ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, watch } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
-import { searchCountries } from '../api/countries'
-import { fetchCountryWikipediaSummary } from '../api/countries'
 
-const router = useRouter()
 const auth = useAuthStore()
 const selections = useSelectionsStore()
 
+
 const user = auth.user
-const showLoginAlert = ref(false)
-
-const form = reactive({ destination: '', city: '', notes: '', status: 'upcoming', startDate: '', endDate: '' })
-
-const editing = ref(false)
-const editId = ref(null)
-const editForm = reactive({ destination: '', notes: '', status: 'upcoming' })
-
-const countryQuery = ref('')
-const countryResults = ref([])
-const showSuggestions = ref(false)
-
-const cityResults = ref([])
-const showCitySuggestions = ref(false)
 
 // Compute the progress percentage (0-100%)
 const progressPercentage = ref(0)
@@ -75,152 +58,30 @@ watch(
   },
 )
 
-async function onCountryInput() {
-  if (countryQuery.value.length < 2) {
-    countryResults.value = []
-    showSuggestions.value = false
-    return
-  }
-  countryResults.value = await searchCountries(countryQuery.value)
-  showSuggestions.value = true
-}
 
-// Função para buscar cidades de um país via Wikidata
-async function searchCities(countryName) {
-  const endpoint = 'https://query.wikidata.org/sparql'
-  const query = `SELECT ?cityLabel WHERE { ?country rdfs:label "${countryName}"@en. ?city wdt:P31/wdt:P279* wd:Q515; wdt:P17 ?country. SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } } LIMIT 50`
-  const url = endpoint + '?query=' + encodeURIComponent(query) + '&format=json'
-  try {
-    const res = await fetch(url)
-    const data = await res.json()
-    return data.results.bindings.map(b => b.cityLabel.value)
-  } catch (e) {
-    return []
-  }
-}
 
-async function selectCountry(country) {
-  form.destination = country.name
-  countryQuery.value = country.name
-  showSuggestions.value = false
-  // Buscar cidades únicas
-  const allCities = await searchCities(country.name)
-  cityResults.value = Array.from(new Set(allCities))
-  showCitySuggestions.value = true
-}
 
-function selectCity(city) {
-  form.city = city
-  showCitySuggestions.value = false
-}
 
-document.addEventListener('click', (e) => {
-  // Fecha sugestões se clicar fora do input ou lista
-  const input = document.querySelector('.country-search-input');
-  const list = document.querySelector('.country-suggestions');
-  if (input && !input.contains(e.target) && list && !list.contains(e.target)) {
-    showSuggestions.value = false;
-  }
-});
 
-async function addSelection() {
-  if (!form.destination) {
-    alert('Escolhe um país!')
-    return
-  }
-  if (!form.startDate || !form.endDate) {
-    alert('Preencha as datas de início e fim!')
-    return
-  }
-  // If guest, show alert
-  if (auth.isGuest) {
-    showLoginAlert.value = true
-    return
-  }
-  if (!user || !user.email) return alert('Please log in first')
-  // Buscar imagem da Wikipedia
-  let wikiQuery = form.city || form.destination
-  let imageUrl = ''
-  try {
-    const wikiResult = await fetchCountryWikipediaSummary(wikiQuery)
-    imageUrl = wikiResult?.originalimage?.source || ''
-  } catch {}
-  selections.add({ destination: form.destination, city: form.city, notes: form.notes, status: form.status, startDate: form.startDate, endDate: form.endDate, imageUrl }, user.email)
-  form.destination = ''
-  form.city = ''
-  form.notes = ''
-  form.status = 'upcoming'
-  form.startDate = ''
-  form.endDate = ''
-  countryQuery.value = ''
-}
 
-function startEdit(item) {
-  // If guest, show alert
-  if (auth.isGuest) {
-    showLoginAlert.value = true
-    return
-  }
-  editing.value = true
-  editId.value = item.id
-  editForm.destination = item.destination
-  editForm.notes = item.notes || ''
-  editForm.status = item.status || 'upcoming'
-}
 
-function confirmEdit() {
-  if (auth.isGuest) {
-    showLoginAlert.value = true
-    return
-  }
-  if (!editId.value) return
-  selections.update(
-    editId.value,
-    { destination: editForm.destination, notes: editForm.notes, status: editForm.status },
-    user.email,
-  )
-  cancelEdit()
-}
 
-function cancelEdit() {
-  editing.value = false
-  editId.value = null
-  editForm.destination = ''
-  editForm.notes = ''
-}
 
-function remove(id) {
-  // If guest, show alert
-  if (auth.isGuest) {
-    showLoginAlert.value = true
-    return
-  }
-  if (!confirm('Delete this selection?')) return
-  selections.remove(id, user.email)
-}
 
-function logout() {
-  auth.logout()
-  router.push('/login')
-}
 
-function goToProfile() {
-  router.push('/profile')
-}
 
-function goToJournal(tripId) {
-  router.push({ name: 'Journal', params: { tripId } })
-}
+
+
+
+
+
+
+
 
 // save on unload (just in case)
-window.addEventListener('beforeunload', () => {
-  if (user && user.email) selections.save(user.email)
-})
 
-async function getWikiImage(query) {
-  const result = await fetchCountryWikipediaSummary(query)
-  return result?.originalimage?.source || '/src/img/placeholder.jpg'
-}
+
+
 </script>
 
 <style src="../css/NavBar.css"></style>

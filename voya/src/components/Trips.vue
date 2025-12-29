@@ -51,7 +51,7 @@
       <label>Start Date:</label>
       <input type="date" v-model="form.startDate" required />
       <label>End Date:</label>
-      <input type="date" v-model="form.endDate" required />
+      <input type="date" v-model="form.endDate" :min="form.startDate" required />
       <button class="btn" @click="addSelection" :disabled="!form.destination">Save</button>
     </section>
     <section class="list">
@@ -123,6 +123,8 @@
 </template>
 
 <script setup>
+// @vue/component
+defineOptions({ name: 'TripsPage' })
 import { reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
@@ -152,7 +154,7 @@ const showCitySuggestions = ref(false)
 
 watch(
   () => selections.count,
-  (count) => {},
+  () => {},
   { immediate: true }
 )
 
@@ -187,7 +189,7 @@ async function searchCities(countryName) {
     const res = await fetch(url)
     const data = await res.json()
     return data.results.bindings.map(b => b.cityLabel.value)
-  } catch (e) {
+  } catch {
     return []
   }
 }
@@ -233,7 +235,9 @@ async function addSelection() {
   try {
     const wikiResult = await fetchCountryWikipediaSummary(wikiQuery)
     imageUrl = wikiResult?.originalimage?.source || ''
-  } catch {}
+  } catch (e) {
+    console.error(e)
+  }
   selections.add({ destination: form.destination, city: form.city, notes: form.notes, status: form.status, startDate: form.startDate, endDate: form.endDate, imageUrl }, user.email)
   form.destination = ''
   form.city = ''
@@ -286,14 +290,9 @@ function remove(id) {
   selections.remove(id, user.email)
 }
 
-function logout() {
-  auth.logout()
-  router.push('/login')
-}
 
-function goToProfile() {
-  router.push('/profile')
-}
+
+
 
 function goToJournal(tripId) {
   router.push({ name: 'Journal', params: { tripId } })
@@ -303,10 +302,7 @@ window.addEventListener('beforeunload', () => {
   if (user && user.email) selections.save(user.email)
 })
 
-async function getWikiImage(query) {
-  const result = await fetchCountryWikipediaSummary(query)
-  return result?.originalimage?.source || '/src/img/placeholder.jpg'
-}
+
 </script>
 
 <style src="../css/NavBar.css"></style>

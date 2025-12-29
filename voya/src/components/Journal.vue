@@ -1,3 +1,4 @@
+
 <template>
   <div class="figma-journal-bg">
     <div class="figma-journal-container">

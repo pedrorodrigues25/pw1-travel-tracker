@@ -11,10 +11,10 @@ Voya is a website that allows users to register, track, and share their travel e
 - Modern and responsive interface
 
 ## APIs Used
-- **json-server**: Local API for storing user data, trips, interests, etc. (db.json file)
-- **REST Countries API**: To get country lists, names, codes, and flags
-- **Wikidata SPARQL**: To suggest cities for each country
-- **Wikipedia API**: To fetch images for destinations
+- [json-server](https://github.com/typicode/json-server): Local API for storing user data, trips, interests, etc. (db.json file)
+- [REST Countries API](https://restcountries.com/): To get country lists, names, codes, and flags
+- [Wikidata SPARQL](https://query.wikidata.org/): To suggest cities for each country
+- [Wikipedia API](https://www.mediawiki.org/wiki/API:Main_page): To fetch images for destinations
 
 ## How to Start the Project
 

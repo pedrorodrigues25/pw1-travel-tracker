@@ -32,7 +32,14 @@
           </div>
         </div>
         <div class="figma-journal-polaroids">
-          <div v-for="n in 4" :key="n" class="figma-polaroid"></div>
+          <template v-if="wikiImages.length">
+            <div v-for="(img, idx) in wikiImages.slice(0, 8)" :key="idx" class="figma-polaroid">
+              <img :src="img" alt="Foto do destino" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" />
+            </div>
+          </template>
+          <template v-else>
+            <div v-for="n in 4" :key="n" class="figma-polaroid"></div>
+          </template>
         </div>
       </div>
       <div v-else class="journal-not-found">
@@ -45,7 +52,7 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue'
 import { useSelectionsStore } from '../stores/selections'
-import { fetchCountryWikipediaSummary } from '../api/countries'
+import { fetchCountryWikipediaSummary, fetchWikipediaImages } from '../api/countries'
 const props = defineProps({ tripId: [String, Number] })
 const selections = useSelectionsStore()
 const trip = computed(() => selections.items.find(t => t.id == props.tripId))
@@ -53,6 +60,7 @@ const trip = computed(() => selections.items.find(t => t.id == props.tripId))
 const wikiInfo = ref(null)
 const wikiLoading = ref(false)
 const wikiError = ref(null)
+const wikiImages = ref([])
 
 onMounted(async () => {
   let query = trip.value?.city || trip.value?.destination;
@@ -65,6 +73,8 @@ onMounted(async () => {
       wikiError.value = result.error;
     } else {
       wikiInfo.value = result;
+      // Buscar imagens extras
+      wikiImages.value = await fetchWikipediaImages(query);
     }
     wikiLoading.value = false;
   }

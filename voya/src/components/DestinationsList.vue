@@ -219,7 +219,9 @@ async function selectCountry(country) {
   form.destination = country.name
   countryQuery.value = country.name
   showSuggestions.value = false
-  cityResults.value = await searchCities(country.name)
+  // Buscar cidades únicas
+  const allCities = await searchCities(country.name)
+  cityResults.value = Array.from(new Set(allCities))
   showCitySuggestions.value = true
 }
 

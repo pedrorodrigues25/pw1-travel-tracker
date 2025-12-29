@@ -1,3 +1,17 @@
+// Busca imagens extras da Wikipedia para um destino
+export async function fetchWikipediaImages(query) {
+  const url = `https://en.wikipedia.org/api/rest_v1/page/media-list/${encodeURIComponent(query)}`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) return [];
+    const data = await response.json();
+    // Filtra apenas imagens únicas e válidas
+    const allImages = (data.items || []).filter(item => item.type === 'image' && item.original?.source).map(item => item.original.source);
+    return Array.from(new Set(allImages));
+  } catch {
+    return [];
+  }
+}
 // countries.js - Função para pesquisar países da API restcountries.com
 
 export async function searchCountries(query) {
@@ -39,7 +53,9 @@ export async function fetchCitiesByCountry(countryName) {
   try {
     const res = await fetch(url);
     const data = await res.json();
-    return data.results.bindings.map(b => b.cityLabel.value);
+    // Filtrar cidades únicas
+    const allCities = data.results.bindings.map(b => b.cityLabel.value);
+    return Array.from(new Set(allCities));
   } catch (e) {
     return [];
   }

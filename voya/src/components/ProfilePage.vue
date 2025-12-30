@@ -55,6 +55,7 @@
         <div class="profile-about-card">
           <h3>About Me</h3>
           <div class="profile-interests-lg" v-if="userInterests.length > 0">
+            <p><strong>My Interests</strong></p>
             <div class="interests-list-lg">
               <span v-for="interest in userInterests" :key="interest.id || interest" class="interest-chip-lg">
                 {{ typeof interest === 'object' ? interest.interest : interest }}
@@ -63,13 +64,14 @@
           </div>
           <textarea v-model="aboutMe" placeholder="Fala um pouco sobre ti..." rows="4" class="about-me-textarea"></textarea>
         </div>
+        <br>
+        <button type="button" class="action-btn save-btn" @click="saveAboutMe">Save</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-const aboutMe = ref('')
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
@@ -82,13 +84,14 @@ const auth = useAuthStore()
 const selections = useSelectionsStore()
 const interestsStore = useInterestsStore()
 
+const user = computed(() => auth.user)
+const aboutMe = ref(user.value?.aboutMe || '')
+
 onMounted(() => {
   if (auth.user?.email) {
     interestsStore.load(auth.user.email)
   }
 })
-
-const user = computed(() => auth.user)
 const editMode = ref(false)
 const editUsername = ref(user.value?.username || '')
 const editEmail = ref(user.value?.email || '')
@@ -126,6 +129,15 @@ async function saveProfile() {
     if (previewPhoto.value) user.value.photoUrl = previewPhoto.value
   }
   editMode.value = false
+}
+
+async function saveAboutMe() {
+  if (!user.value?.id) return
+  const updated = await updateUser(user.value.id, { aboutMe: aboutMe.value })
+  if (updated && typeof updated.aboutMe === 'string') {
+    user.value.aboutMe = updated.aboutMe
+    aboutMe.value = updated.aboutMe
+  }
 }
 
 const userInitial = computed(() => {

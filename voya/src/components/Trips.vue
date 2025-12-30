@@ -68,7 +68,7 @@
                 <template v-else>{{ it.destination }}</template>
               </span>
               <span class="card-status" :class="it.status === 'completed' ? 'completed' : 'upcoming'">
-                {{ it.status === 'completed' ? 'Concluída' : 'Upcoming' }}
+                {{ it.status === 'completed' ? 'Completed' : 'Upcoming' }}
               </span>
             </div>
             <div class="card-row card-notes-row" v-if="it.notes">
@@ -78,7 +78,7 @@
               <span class="card-date">{{ new Date(it.createdAt).toLocaleString() }}</span>
               <div class="card-actions-row">
                 <button class="btn small" @click="startEdit(it)">Edit</button>
-                <button class="btn small danger" @click="remove(it.id)">Delete</button>
+                <button class="btn small danger" @click="remove(it.id)" :disabled="it.status === 'completed'">Delete</button>
               </div>
             </div>
           </div>
@@ -282,6 +282,8 @@ function cancelEdit() {
 }
 
 function remove(id) {
+  const item = selections.items.find(sel => sel.id === id)
+  if (!item || item.status === 'completed') return
   if (auth.isGuest) {
     showLoginAlert.value = true
     return

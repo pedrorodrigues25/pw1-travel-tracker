@@ -188,10 +188,12 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  align-items: center;
 }
 
 .about-me-textarea {
   width: 100%;
+  max-width: 320px;
   border-radius: 8px;
   border: 1px solid #d0d6db;
   padding: 12px 14px;
@@ -201,6 +203,10 @@
   background: #f7f8fa;
   color: #222;
   margin-top: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+  display: block;
 }
 
 .profile-interests-lg {
@@ -219,6 +225,8 @@
   padding: 4px 12px;
   font-size: 0.98em;
 }
+
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 .profile-container {

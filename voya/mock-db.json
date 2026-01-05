@@ -1,0 +1,146 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "email": "arroz@gmail.com",
+      "password": "123",
+      "username": "arroz5",
+      "aboutMe": "top xuxa"
+    },
+    {
+      "id": "u2",
+      "email": "sofia.silva@example.com",
+      "password": "123",
+      "username": "sofia",
+      "aboutMe": "Adoro city breaks e gastronomia."
+    },
+    {
+      "id": "u3",
+      "email": "tiago.pereira@example.com",
+      "password": "123",
+      "username": "tiago",
+      "aboutMe": "Hiking, natureza e fotografia."
+    },
+    {
+      "id": "u4",
+      "email": "ines.costa@example.com",
+      "password": "123",
+      "username": "ines",
+      "aboutMe": "Praia, relax e viagens em família."
+    },
+    {
+      "id": "u5",
+      "email": "miguel.rodrigues@example.com",
+      "password": "123",
+      "username": "miguel",
+      "aboutMe": "Road trips e aventuras solo."
+    },
+    {
+      "id": "u6",
+      "email": "beatriz.almeida@example.com",
+      "password": "123",
+      "username": "bea",
+      "aboutMe": "Cultura, museus e experiências locais."
+    },
+    {
+      "id": "u7",
+      "email": "rui.martins@example.com",
+      "password": "123",
+      "username": "rui",
+      "aboutMe": "Viajo com amigos sempre que posso."
+    },
+    {
+      "id": "u8",
+      "email": "carolina.ferreira@example.com",
+      "password": "123",
+      "username": "carolina",
+      "aboutMe": "Foodie e fotógrafa de viagens."
+    }
+  ],
+  "interests": [
+    {
+      "id": "i_u1_1",
+      "userEmail": "arroz@gmail.com",
+      "interest": "City Exploration"
+    },
+    {
+      "id": "i_u1_2",
+      "userEmail": "arroz@gmail.com",
+      "interest": "Food & Gastronomy"
+    }
+  ],
+  "destinations": [
+    {
+      "id": "d1",
+      "name": "Lisbon",
+      "country": "Portugal",
+      "city": "Lisbon",
+      "tags": ["City Exploration", "Food & Gastronomy", "Cultural Experiences", "Photography"]
+    },
+    {
+      "id": "d2",
+      "name": "Porto",
+      "country": "Portugal",
+      "city": "Porto",
+      "tags": ["City Exploration", "Food & Gastronomy", "Cultural Experiences", "Photography"]
+    },
+    {
+      "id": "d3",
+      "name": "Barcelona",
+      "country": "Spain",
+      "city": "Barcelona",
+      "tags": ["Beach & Relaxation", "City Exploration", "Food & Gastronomy", "Photography"]
+    },
+    {
+      "id": "d4",
+      "name": "Paris",
+      "country": "France",
+      "city": "Paris",
+      "tags": ["City Exploration", "Cultural Experiences", "Food & Gastronomy", "Photography"]
+    },
+    {
+      "id": "d5",
+      "name": "Interlaken",
+      "country": "Switzerland",
+      "city": "Interlaken",
+      "tags": ["Nature & Hiking", "Solo Adventure", "Photography"]
+    },
+    {
+      "id": "d6",
+      "name": "Madeira",
+      "country": "Portugal",
+      "city": "Funchal",
+      "tags": ["Nature & Hiking", "Beach & Relaxation", "Photography", "Road Trips"]
+    },
+    {
+      "id": "d7",
+      "name": "Rome",
+      "country": "Italy",
+      "city": "Rome",
+      "tags": ["Cultural Experiences", "City Exploration", "Food & Gastronomy", "Photography"]
+    },
+    {
+      "id": "d8",
+      "name": "Reykjavík",
+      "country": "Iceland",
+      "city": "Reykjavík",
+      "tags": ["Solo Adventure", "Nature & Hiking", "Road Trips", "Photography"]
+    },
+    {
+      "id": "d9",
+      "name": "Algarve",
+      "country": "Portugal",
+      "city": "Faro",
+      "tags": ["Beach & Relaxation", "Family Trips", "Road Trips", "Photography"]
+    },
+    {
+      "id": "d10",
+      "name": "Prague",
+      "country": "Czechia",
+      "city": "Prague",
+      "tags": ["City Exploration", "Cultural Experiences", "Photography"]
+    }
+  ],
+  "selections": [],
+  "journals": []
+}

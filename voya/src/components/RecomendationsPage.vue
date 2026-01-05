@@ -6,9 +6,9 @@
       </router-link>
       <div class="navbar-links">
         <router-link to="/destinations" active-class="active">Home</router-link>
-        <a href="#" class="navbar-link">Recommendations</a>
+        <router-link to="/recommendations" active-class="active">Recommendations</router-link>
         <router-link to="/trips" active-class="active">Trips</router-link>
-        <a href="#" class="navbar-link">Friends</a>
+        <router-link to="/friends" active-class="active">Friends</router-link>
         <router-link to="/profile" active-class="active">Profile</router-link>
       </div>
     </nav>

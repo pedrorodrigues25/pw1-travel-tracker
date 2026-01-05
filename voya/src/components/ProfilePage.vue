@@ -1,72 +1,92 @@
-
 <template>
-  <div class="profile-full-bg">
+  <div class="trips">
     <nav class="navbar">
       <router-link to="/" class="navbar-logo">
         <img src="@/img/logo-pw1-voya.png" alt="Voya Logo" height="38" />
       </router-link>
       <div class="navbar-links">
         <router-link to="/destinations" active-class="active">Home</router-link>
-        <a href="#" class="navbar-link">Recommendations</a>
+        <router-link to="/recommendations" active-class="active">Recommendations</router-link>
         <router-link to="/trips" active-class="active">Trips</router-link>
-        <a href="#" class="navbar-link">Friends</a>
+        <router-link to="/friends" active-class="active">Friends</router-link>
         <router-link to="/profile" active-class="active">Profile</router-link>
       </div>
     </nav>
-    <div class="profile-layout-columns">
-      <div class="profile-col-main">
-        <div class="profile-header-row">
-          <div class="profile-photo-circle">
-            <label class="profile-photo-label" v-if="editMode">
-              <input type="file" accept="image/*" @change="onPhotoChange" />
-              <span class="profile-photo-upload-btn">Alterar foto</span>
-            </label>
-            <img v-if="user.value?.photoUrl && !previewPhoto" :src="user.value.photoUrl" class="profile-photo-lg" alt="Profile Photo" />
-            <img v-else-if="previewPhoto" :src="previewPhoto" class="profile-photo-lg" alt="Preview" />
-            <div v-else class="profile-avatar-lg">{{ userInitial }}</div>
-          </div>
-          <div class="profile-header-info">
-            <div v-if="!editMode">
-              <h2 class="profile-username-lg-horizontal">{{ user?.username || 'User' }}</h2>
-              <p class="profile-email-lg-horizontal">{{ user?.email || '' }}</p>
-            </div>
-            <div v-else class="edit-fields-lg">
-              <input v-model="editUsername" placeholder="Novo username" />
-              <input v-model="editEmail" placeholder="Novo email" />
-            </div>
-          </div>
+  </div>
+  <div class="profile-layout-columns">
+    <div class="profile-col-main">
+      <div class="profile-header-row">
+        <div class="profile-photo-circle">
+          <label class="profile-photo-label" v-if="editMode">
+            <input type="file" accept="image/*" @change="onPhotoChange" />
+            <span class="profile-photo-upload-btn">Alterar foto</span>
+          </label>
+          <img
+            v-if="user.value?.photoUrl && !previewPhoto"
+            :src="user.value.photoUrl"
+            class="profile-photo-lg"
+            alt="Profile Photo"
+          />
+          <img
+            v-else-if="previewPhoto"
+            :src="previewPhoto"
+            class="profile-photo-lg"
+            alt="Preview"
+          />
+          <div v-else class="profile-avatar-lg">{{ userInitial }}</div>
         </div>
-        <div class="profile-progress-card">
-          <div class="progress-header-lg">
-            <span>Progresso</span>
-            <span>{{ tripCount }}/10 viagens</span>
+        <div class="profile-header-info">
+          <div v-if="!editMode">
+            <h2 class="profile-username-lg-horizontal">{{ user?.username || 'User' }}</h2>
+            <p class="profile-email-lg-horizontal">{{ user?.email || '' }}</p>
           </div>
-          <div class="progress-bar-container-lg">
-            <div class="progress-bar-fill-lg" :style="{ width: progressPercentage + '%' }"></div>
+          <div v-else class="edit-fields-lg">
+            <input v-model="editUsername" placeholder="Novo username" />
+            <input v-model="editEmail" placeholder="Novo email" />
           </div>
-        </div>
-        <div class="profile-actions-lg">
-          <button v-if="!editMode" class="action-btn edit-btn" @click="editMode = true">Editar Perfil</button>
-          <button v-else class="action-btn save-btn" @click="saveProfile">Guardar</button>
-          <button class="action-btn logout-btn" @click="handleLogout">Logout</button>
         </div>
       </div>
-      <div class="profile-col-side">
-        <div class="profile-about-card">
-          <h3>About Me</h3>
-          <div class="profile-interests-lg" v-if="userInterests.length > 0">
-            <p><strong>My Interests</strong></p>
-            <div class="interests-list-lg">
-              <span v-for="interest in userInterests" :key="interest.id || interest" class="interest-chip-lg">
-                {{ typeof interest === 'object' ? interest.interest : interest }}
-              </span>
-            </div>
-          </div>
-          <textarea v-model="aboutMe" placeholder="Fala um pouco sobre ti..." rows="4" class="about-me-textarea"></textarea>
+      <div class="profile-progress-card">
+        <div class="progress-header-lg">
+          <span>Progresso</span>
+          <span>{{ tripCount }}/10 viagens</span>
         </div>
-        <br>
-        <button type="button" class="action-btn save-btn" @click="saveAboutMe">Save</button>
+        <div class="progress-bar-container-lg">
+          <div class="progress-bar-fill-lg" :style="{ width: progressPercentage + '%' }"></div>
+        </div>
       </div>
+      <div class="profile-actions-lg">
+        <button v-if="!editMode" class="action-btn edit-btn" @click="editMode = true">
+          Editar Perfil
+        </button>
+        <button v-else class="action-btn save-btn" @click="saveProfile">Guardar</button>
+        <button class="action-btn logout-btn" @click="handleLogout">Logout</button>
+      </div>
+    </div>
+    <div class="profile-col-side">
+      <div class="profile-about-card">
+        <h3>About Me</h3>
+        <div class="profile-interests-lg" v-if="userInterests.length > 0">
+          <p><strong>My Interests</strong></p>
+          <div class="interests-list-lg">
+            <span
+              v-for="interest in userInterests"
+              :key="interest.id || interest"
+              class="interest-chip-lg"
+            >
+              {{ typeof interest === 'object' ? interest.interest : interest }}
+            </span>
+          </div>
+        </div>
+        <textarea
+          v-model="aboutMe"
+          placeholder="Fala um pouco sobre ti..."
+          rows="4"
+          class="about-me-textarea"
+        ></textarea>
+      </div>
+      <br />
+      <button type="button" class="action-btn save-btn" @click="saveAboutMe">Save</button>
     </div>
   </div>
 </template>
@@ -101,7 +121,7 @@ function onPhotoChange(e) {
   const file = e.target.files[0]
   if (file) {
     const reader = new FileReader()
-    reader.onload = ev => {
+    reader.onload = (ev) => {
       previewPhoto.value = ev.target.result
     }
     reader.readAsDataURL(file)
@@ -111,7 +131,7 @@ function onPhotoChange(e) {
 async function saveProfile() {
   const updatedFields = {
     username: editUsername.value,
-    email: editEmail.value
+    email: editEmail.value,
   }
   if (previewPhoto.value) updatedFields.photoUrl = previewPhoto.value
   // Atualiza no backend

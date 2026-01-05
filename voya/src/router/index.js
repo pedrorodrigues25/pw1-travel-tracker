@@ -5,6 +5,8 @@ import RegisterView from '../views/RegisterView.vue'
 import InterestsView from '../views/InterestsView.vue'
 import DestinationsView from '../views/DestinationsView.vue'
 import ProfileView from '../views/ProfileView.vue'
+import RecomendationsView from '../views/RecomendationsView.vue'
+import FriendsView from '../views/FriendsView.vue'
 
 import JournalView from '../views/JournalView.vue'
 
@@ -14,44 +16,54 @@ const router = createRouter({
     {
       path: '/',
       component: LandingView,
-      name: 'Landing'
+      name: 'Landing',
     },
     {
       path: '/login',
       component: LoginView,
-      name: 'Login'
+      name: 'Login',
     },
     {
       path: '/register',
       component: RegisterView,
-      name: 'Register'
+      name: 'Register',
     },
     {
       path: '/interests',
       component: InterestsView,
-      name: 'Interests'
+      name: 'Interests',
     },
     {
       path: '/destinations',
       component: DestinationsView,
-      name: 'Destinations'
+      name: 'Destinations',
     },
     {
       path: '/profile',
       component: ProfileView,
-      name: 'Profile'
+      name: 'Profile',
+    },
+    {
+      path: '/recommendations',
+      component: RecomendationsView,
+      name: 'Recommendations',
+    },
+    {
+      path: '/friends',
+      component: FriendsView,
+      name: 'Friends',
     },
     {
       path: '/trips',
       component: () => import('../views/TripsView.vue'),
-      name: 'Trips'
+      name: 'Trips',
     },
     {
       path: '/journal/:tripId',
       component: JournalView,
       name: 'Journal',
-      props: true
-    }
+      props: true,
+    },
   ],
 })
 

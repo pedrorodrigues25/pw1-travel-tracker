@@ -1,25 +1,27 @@
 <template>
-  <div class="destinations">
+  <div class="trips">
     <nav class="navbar">
       <router-link to="/" class="navbar-logo">
         <img src="@/img/logo-pw1-voya.png" alt="Voya Logo" height="38" />
       </router-link>
       <div class="navbar-links">
         <router-link to="/destinations" active-class="active">Home</router-link>
-        <a href="#" class="navbar-link">Recommendations</a>
+        <router-link to="/recommendations" active-class="active">Recommendations</router-link>
         <router-link to="/trips" active-class="active">Trips</router-link>
-        <a href="#" class="navbar-link">Friends</a>
+        <router-link to="/friends" active-class="active">Friends</router-link>
         <router-link to="/profile" active-class="active">Profile</router-link>
       </div>
     </nav>
-    <div class="home-progress">
-      <h2 style="margin-top: 18px;">Welcome to Voya!</h2>
-      <div class="progress-container" style="width: 300px; margin: 32px auto 0 auto;">
-        <div class="progress-bar" :style="{ width: progressPercentage + '%' }"></div>
-      </div>
-      <div class="progress-text" style="text-align:center; margin-top:8px;">{{ selections.count }}/10 trips</div>
-      <!-- Aqui podes adicionar conquistas do user -->
+  </div>
+  <div class="home-progress">
+    <h2 style="margin-top: 18px">Welcome to Voya!</h2>
+    <div class="progress-container" style="width: 300px; margin: 32px auto 0 auto">
+      <div class="progress-bar" :style="{ width: progressPercentage + '%' }"></div>
     </div>
+    <div class="progress-text" style="text-align: center; margin-top: 8px">
+      {{ selections.count }}/10 trips
+    </div>
+    <!-- Aqui podes adicionar conquistas do user -->
   </div>
 </template>
 
@@ -31,7 +33,6 @@ import { useSelectionsStore } from '../stores/selections'
 const auth = useAuthStore()
 const selections = useSelectionsStore()
 
-
 const user = auth.user
 
 // Compute the progress percentage (0-100%)
@@ -42,7 +43,7 @@ watch(
   (count) => {
     progressPercentage.value = (count % 10) * 10
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 function ensureLoaded() {
@@ -58,30 +59,7 @@ watch(
   },
 )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // save on unload (just in case)
-
-
-
 </script>
 
 <style src="../css/NavBar.css"></style>

@@ -6,120 +6,127 @@
       </router-link>
       <div class="navbar-links">
         <router-link to="/destinations" active-class="active">Home</router-link>
-        <a href="#" class="navbar-link">Recommendations</a>
+        <router-link to="/recommendations" active-class="active">Recommendations</router-link>
         <router-link to="/trips" active-class="active">Trips</router-link>
-        <a href="#" class="navbar-link">Friends</a>
+        <router-link to="/friends" active-class="active">Friends</router-link>
         <router-link to="/profile" active-class="active">Profile</router-link>
       </div>
     </nav>
-    <h2 style="margin-top: 18px;">Choose Destinations</h2>
-    <!-- Conteúdo principal da antiga DestinationsList.vue -->
-    <section class="create">
-      <label>Destination (Country):</label>
+  </div>
+  <h2 style="margin-top: 18px">Choose Destinations</h2>
+  <!-- Conteúdo principal da antiga DestinationsList.vue -->
+  <section class="create">
+    <label>Destination (Country):</label>
+    <input
+      v-model="countryQuery"
+      @input="onCountryInput"
+      @focus="onCountryInput"
+      placeholder="Type a country..."
+      autocomplete="off"
+      class="country-search-input"
+    />
+    <ul v-if="showSuggestions && countryResults.length" class="country-suggestions">
+      <li v-for="country in countryResults" :key="country.code" @click="selectCountry(country)">
+        <img v-if="country.flag" :src="country.flag" alt="flag" class="country-flag" />
+        {{ country.name }}
+      </li>
+    </ul>
+    <label v-if="form.destination">City:</label>
+    <input
+      v-if="form.destination"
+      v-model="form.city"
+      @focus="showCitySuggestions = true"
+      placeholder="Type or select a city..."
+      autocomplete="off"
+      class="city-search-input"
+    />
+    <ul v-if="showCitySuggestions && cityResults.length" class="city-suggestions">
+      <li v-for="city in cityResults" :key="city" @click="selectCity(city)">{{ city }}</li>
+    </ul>
+    <label>Notes (optional):</label>
+    <input v-model="form.notes" placeholder="Notes about the trip" />
+    <label>Status:</label>
+    <select v-model="form.status">
+      <option value="upcoming">Upcoming</option>
+      <option value="completed">Completed</option>
+    </select>
+    <label>Start Date:</label>
+    <input type="date" v-model="form.startDate" required />
+    <label>End Date:</label>
+    <input type="date" v-model="form.endDate" :min="form.startDate" required />
+    <button class="btn" @click="addSelection" :disabled="!form.destination">Save</button>
+  </section>
+  <section class="list">
+    <h3>My selections ({{ selections.count }})</h3>
+    <div class="cards-container">
+      <div v-for="it in selections.items" :key="it.id" class="trip-card">
+        <div class="card-image clickable" @click="goToJournal(it.id)">
+          <img :src="it.imageUrl || '/src/img/placeholder.jpg'" alt="Destination image" />
+        </div>
+        <div class="card-content">
+          <div class="card-row card-title-row">
+            <span class="card-title">
+              <template v-if="it.city">{{ it.city }}, {{ it.destination }}</template>
+              <template v-else>{{ it.destination }}</template>
+            </span>
+            <span class="card-status" :class="it.status === 'completed' ? 'completed' : 'upcoming'">
+              {{ it.status === 'completed' ? 'Completed' : 'Upcoming' }}
+            </span>
+          </div>
+          <div class="card-row card-notes-row" v-if="it.notes">
+            <span class="card-notes">{{ it.notes }}</span>
+          </div>
+          <div class="card-bottom-row">
+            <span class="card-date">{{ new Date(it.createdAt).toLocaleString() }}</span>
+            <div class="card-actions-row">
+              <button class="btn small" @click="startEdit(it)">Edit</button>
+              <button
+                class="btn small danger"
+                @click="remove(it.id)"
+                :disabled="it.status === 'completed'"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="selections.count === 0">You haven't saved any destinations yet.</div>
+  </section>
+  <section v-if="editing" class="edit-panel">
+    <h3>Edit selection</h3>
+    <label>Destination:</label>
+    <div class="destination-search">
       <input
         v-model="countryQuery"
         @input="onCountryInput"
-        @focus="onCountryInput"
-        placeholder="Type a country..."
-        autocomplete="off"
-        class="country-search-input"
+        placeholder="Search for a country..."
+        class="country-input"
       />
-      <ul v-if="showSuggestions && countryResults.length" class="country-suggestions">
-        <li v-for="country in countryResults" :key="country.code" @click="selectCountry(country)">
-          <img v-if="country.flag" :src="country.flag" alt="flag" class="country-flag" />
+      <div v-if="showSuggestions" class="suggestions-list">
+        <div
+          v-for="country in countryResults"
+          :key="country.code"
+          class="suggestion-item"
+          @click="selectCountry(country)"
+        >
           {{ country.name }}
-        </li>
-      </ul>
-      <label v-if="form.destination">City:</label>
-      <input v-if="form.destination"
-        v-model="form.city"
-        @focus="showCitySuggestions = true"
-        placeholder="Type or select a city..."
-        autocomplete="off"
-        class="city-search-input"
-      />
-      <ul v-if="showCitySuggestions && cityResults.length" class="city-suggestions">
-        <li v-for="city in cityResults" :key="city" @click="selectCity(city)">{{ city }}</li>
-      </ul>
-      <label>Notes (optional):</label>
-      <input v-model="form.notes" placeholder="Notes about the trip" />
-      <label>Status:</label>
-      <select v-model="form.status">
-        <option value="upcoming">Upcoming</option>
-        <option value="completed">Completed</option>
-      </select>
-      <label>Start Date:</label>
-      <input type="date" v-model="form.startDate" required />
-      <label>End Date:</label>
-      <input type="date" v-model="form.endDate" :min="form.startDate" required />
-      <button class="btn" @click="addSelection" :disabled="!form.destination">Save</button>
-    </section>
-    <section class="list">
-      <h3>My selections ({{ selections.count }})</h3>
-      <div class="cards-container">
-        <div v-for="it in selections.items" :key="it.id" class="trip-card">
-          <div class="card-image clickable" @click="goToJournal(it.id)">
-            <img :src="it.imageUrl || '/src/img/placeholder.jpg'" alt="Destination image" />
-          </div>
-          <div class="card-content">
-            <div class="card-row card-title-row">
-              <span class="card-title">
-                <template v-if="it.city">{{ it.city }}, {{ it.destination }}</template>
-                <template v-else>{{ it.destination }}</template>
-              </span>
-              <span class="card-status" :class="it.status === 'completed' ? 'completed' : 'upcoming'">
-                {{ it.status === 'completed' ? 'Completed' : 'Upcoming' }}
-              </span>
-            </div>
-            <div class="card-row card-notes-row" v-if="it.notes">
-              <span class="card-notes">{{ it.notes }}</span>
-            </div>
-            <div class="card-bottom-row">
-              <span class="card-date">{{ new Date(it.createdAt).toLocaleString() }}</span>
-              <div class="card-actions-row">
-                <button class="btn small" @click="startEdit(it)">Edit</button>
-                <button class="btn small danger" @click="remove(it.id)" :disabled="it.status === 'completed'">Delete</button>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-      <div v-if="selections.count === 0">You haven't saved any destinations yet.</div>
-    </section>
-    <section v-if="editing" class="edit-panel">
-      <h3>Edit selection</h3>
-      <label>Destination:</label>
-      <div class="destination-search">
-        <input
-          v-model="countryQuery"
-          @input="onCountryInput"
-          placeholder="Search for a country..."
-          class="country-input"
-        />
-        <div v-if="showSuggestions" class="suggestions-list">
-          <div
-            v-for="country in countryResults"
-            :key="country.code"
-            class="suggestion-item"
-            @click="selectCountry(country)"
-          >
-            {{ country.name }}
-          </div>
-        </div>
-      </div>
-      <label>Notes:</label>
-      <input v-model="editForm.notes" />
-      <label>Status:</label>
-      <select v-model="editForm.status">
-        <option value="upcoming">Upcoming</option>
-        <option value="completed">Completed</option>
-      </select>
-      <div class="edit-actions">
-        <button class="btn" @click="confirmEdit">Save</button>
-        <button class="btn small" @click="cancelEdit">Cancel</button>
-      </div>
-    </section>
-  </div>
+    </div>
+    <label>Notes:</label>
+    <input v-model="editForm.notes" />
+    <label>Status:</label>
+    <select v-model="editForm.status">
+      <option value="upcoming">Upcoming</option>
+      <option value="completed">Completed</option>
+    </select>
+    <div class="edit-actions">
+      <button class="btn" @click="confirmEdit">Save</button>
+      <button class="btn small" @click="cancelEdit">Cancel</button>
+    </div>
+  </section>
 </template>
 
 <script setup>
@@ -139,7 +146,14 @@ const selections = useSelectionsStore()
 const user = auth.user
 const showLoginAlert = ref(false)
 
-const form = reactive({ destination: '', city: '', notes: '', status: 'upcoming', startDate: '', endDate: '' })
+const form = reactive({
+  destination: '',
+  city: '',
+  notes: '',
+  status: 'upcoming',
+  startDate: '',
+  endDate: '',
+})
 
 const editing = ref(false)
 const editId = ref(null)
@@ -155,7 +169,7 @@ const showCitySuggestions = ref(false)
 watch(
   () => selections.count,
   () => {},
-  { immediate: true }
+  { immediate: true },
 )
 
 function ensureLoaded() {
@@ -188,7 +202,7 @@ async function searchCities(countryName) {
   try {
     const res = await fetch(url)
     const data = await res.json()
-    return data.results.bindings.map(b => b.cityLabel.value)
+    return data.results.bindings.map((b) => b.cityLabel.value)
   } catch {
     return []
   }
@@ -209,12 +223,12 @@ function selectCity(city) {
 }
 
 document.addEventListener('click', (e) => {
-  const input = document.querySelector('.country-search-input');
-  const list = document.querySelector('.country-suggestions');
+  const input = document.querySelector('.country-search-input')
+  const list = document.querySelector('.country-suggestions')
   if (input && !input.contains(e.target) && list && !list.contains(e.target)) {
-    showSuggestions.value = false;
+    showSuggestions.value = false
   }
-});
+})
 
 async function addSelection() {
   if (!form.destination) {
@@ -238,7 +252,18 @@ async function addSelection() {
   } catch (e) {
     console.error(e)
   }
-  selections.add({ destination: form.destination, city: form.city, notes: form.notes, status: form.status, startDate: form.startDate, endDate: form.endDate, imageUrl }, user.email)
+  selections.add(
+    {
+      destination: form.destination,
+      city: form.city,
+      notes: form.notes,
+      status: form.status,
+      startDate: form.startDate,
+      endDate: form.endDate,
+      imageUrl,
+    },
+    user.email,
+  )
   form.destination = ''
   form.city = ''
   form.notes = ''
@@ -282,7 +307,7 @@ function cancelEdit() {
 }
 
 function remove(id) {
-  const item = selections.items.find(sel => sel.id === id)
+  const item = selections.items.find((sel) => sel.id === id)
   if (!item || item.status === 'completed') return
   if (auth.isGuest) {
     showLoginAlert.value = true
@@ -292,10 +317,6 @@ function remove(id) {
   selections.remove(id, user.email)
 }
 
-
-
-
-
 function goToJournal(tripId) {
   router.push({ name: 'Journal', params: { tripId } })
 }
@@ -303,8 +324,6 @@ function goToJournal(tripId) {
 window.addEventListener('beforeunload', () => {
   if (user && user.email) selections.save(user.email)
 })
-
-
 </script>
 
 <style src="../css/NavBar.css"></style>

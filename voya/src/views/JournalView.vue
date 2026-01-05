@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import Journal from '../components/Journal.vue'
+import Journal from '../components/JournalPage.vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 const tripId = route.params.tripId

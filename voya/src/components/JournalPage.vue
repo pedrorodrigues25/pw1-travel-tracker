@@ -1,4 +1,3 @@
-
 <template>
   <div class="figma-journal-bg">
     <div class="figma-journal-container">
@@ -17,12 +16,23 @@
             </template>
           </div>
           <div class="figma-journal-avatars">
-            <img v-for="n in 5" :key="n" :src="`/src/img/avatar${n}.png`" class="figma-avatar" alt="avatar" />
+            <img
+              v-for="n in 5"
+              :key="n"
+              :src="`/src/img/avatar${n}.png`"
+              class="figma-avatar"
+              alt="avatar"
+            />
           </div>
         </div>
         <div class="figma-journal-main">
           <div class="figma-journal-image-block">
-            <img v-if="wikiInfo?.originalimage?.source" :src="wikiInfo.originalimage.source" :alt="wikiInfo.title" style="width:100%;height:100%;object-fit:cover;border-radius:16px;" />
+            <img
+              v-if="wikiInfo?.originalimage?.source"
+              :src="wikiInfo.originalimage.source"
+              :alt="wikiInfo.title"
+              style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px"
+            />
           </div>
           <div class="figma-journal-day-block">
             <div class="figma-journal-day-title">Sobre o destino</div>
@@ -35,7 +45,11 @@
         <div class="figma-journal-polaroids">
           <template v-if="wikiImages.length">
             <div v-for="(img, idx) in wikiImages.slice(0, 8)" :key="idx" class="figma-polaroid">
-              <img :src="img" alt="Foto do destino" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" />
+              <img
+                :src="img"
+                alt="Foto do destino"
+                style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px"
+              />
             </div>
           </template>
           <template v-else>
@@ -56,7 +70,7 @@ import { useSelectionsStore } from '../stores/selections'
 import { fetchCountryWikipediaSummary, fetchWikipediaImages } from '../api/countries'
 const props = defineProps({ tripId: [String, Number] })
 const selections = useSelectionsStore()
-const trip = computed(() => selections.items.find(t => t.id == props.tripId))
+const trip = computed(() => selections.items.find((t) => t.id == props.tripId))
 
 const wikiInfo = ref(null)
 const wikiLoading = ref(false)
@@ -64,20 +78,20 @@ const wikiError = ref(null)
 const wikiImages = ref([])
 
 onMounted(async () => {
-  let query = trip.value?.city || trip.value?.destination;
+  let query = trip.value?.city || trip.value?.destination
   if (query) {
-    wikiLoading.value = true;
-    wikiError.value = null;
-    wikiInfo.value = null;
-    const result = await fetchCountryWikipediaSummary(query);
+    wikiLoading.value = true
+    wikiError.value = null
+    wikiInfo.value = null
+    const result = await fetchCountryWikipediaSummary(query)
     if (result.error) {
-      wikiError.value = result.error;
+      wikiError.value = result.error
     } else {
-      wikiInfo.value = result;
+      wikiInfo.value = result
       // Buscar imagens extras
-      wikiImages.value = await fetchWikipediaImages(query);
+      wikiImages.value = await fetchWikipediaImages(query)
     }
-    wikiLoading.value = false;
+    wikiLoading.value = false
   }
 })
 </script>

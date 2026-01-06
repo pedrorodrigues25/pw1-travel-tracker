@@ -92,10 +92,12 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSelectionsStore } from '../stores/selections'
 import { fetchCountryWikipediaSummary, fetchWikipediaImages } from '../api/countries'
+
+const API_BASE = 'http://localhost:3001'
 
 const props = defineProps({ tripId: [String, Number] })
 const router = useRouter()
@@ -105,6 +107,41 @@ const trip = computed(() => selections.items.find((t) => t.id == props.tripId))
 // Fotos da viagem
 const photos = ref([])
 const fileInput = ref(null)
+
+// Carregar fotos da viagem do servidor
+async function loadPhotos() {
+  if (trip.value?.photos) {
+    photos.value = [...trip.value.photos]
+  }
+}
+
+// Guardar fotos no servidor
+async function savePhotos() {
+  if (!trip.value) return
+  
+  try {
+    const response = await fetch(`${API_BASE}/selections/${props.tripId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        photos: photos.value
+      })
+    })
+    
+    if (response.ok) {
+      // Atualizar a store local
+      const updatedTrip = await response.json()
+      const index = selections.items.findIndex(t => t.id == props.tripId)
+      if (index !== -1) {
+        selections.items[index] = updatedTrip
+      }
+    }
+  } catch (error) {
+    console.error('Erro ao guardar fotos:', error)
+  }
+}
 
 function editTrip() {
   // Abrir seletor de ficheiros para adicionar fotos
@@ -123,6 +160,8 @@ function handleFileUpload(event) {
         const reader = new FileReader()
         reader.onload = (e) => {
           photos.value.push(e.target.result)
+          // Guardar automaticamente após adicionar foto
+          savePhotos()
         }
         reader.readAsDataURL(file)
       }
@@ -138,6 +177,9 @@ const wikiError = ref(null)
 const wikiImages = ref([])
 
 onMounted(async () => {
+  // Carregar fotos guardadas
+  loadPhotos()
+  
   let query = trip.value?.city || trip.value?.destination
   if (query) {
     wikiLoading.value = true

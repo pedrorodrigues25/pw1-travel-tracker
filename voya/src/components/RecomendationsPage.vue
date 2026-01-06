@@ -39,7 +39,7 @@
           :key="destination.id"
           class="trip-card"
         >
-          <div class="card-image">
+          <div class="card-image clickable" @click="goToDestination(destination.id)">
             <img :src="destination.photo || '/src/img/placeholder.jpg'" alt="Destination image" />
           </div>
           <div class="card-content">
@@ -65,8 +65,11 @@
 </template>
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useInterestsStore } from '../stores/interests'
+
+const router = useRouter()
 
 const API_BASE = 'http://localhost:3001'
 
@@ -132,6 +135,10 @@ function toggleFilter(interest) {
   } else {
     selectedFilters.value.splice(index, 1)
   }
+}
+
+function goToDestination(destinationId) {
+  router.push(`/destination/${destinationId}`)
 }
 
 onMounted(async () => {

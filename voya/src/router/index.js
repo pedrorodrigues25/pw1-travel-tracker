@@ -64,6 +64,12 @@ const router = createRouter({
       name: 'Journal',
       props: true,
     },
+    {
+      path: '/destination/:destinationId',
+      component: () => import('../views/DestinationDetailView.vue'),
+      name: 'DestinationDetail',
+      props: true,
+    },
   ],
 })
 

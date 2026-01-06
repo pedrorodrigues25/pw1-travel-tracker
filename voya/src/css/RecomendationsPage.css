@@ -90,6 +90,14 @@
 }
 
 /* Card Image */
+.card-image {
+  cursor: pointer;
+}
+
+.card-image.clickable:hover {
+  opacity: 0.9;
+}
+
 .card-image img {
   width: 100%;
   height: 180px;

@@ -21,11 +21,11 @@
             />
           </div>
           <div class="figma-journal-day-block">
-            <div class="figma-journal-day-title">Sobre o destino</div>
+            <div class="figma-journal-day-title">About the destination</div>
             <div class="figma-journal-day-text">
-              <template v-if="wikiLoading">A carregar informações...</template>
+              <template v-if="wikiLoading">Loading information...</template>
               <template v-else-if="wikiInfo">{{ wikiInfo.extract }}</template>
-              <template v-else>Informações não disponíveis.</template>
+              <template v-else>Information not available.</template>
             </div>
           </div>
         </div>
@@ -47,12 +47,12 @@
         <!-- Botão para adicionar às viagens -->
         <div class="add-trip-section">
           <button class="add-trip-btn" @click="goToTrips">
-            + Adicionar às minhas viagens
+            + Add to My Trips
           </button>
         </div>
       </div>
       <div v-else class="journal-not-found">
-        <p>Destino não encontrado.</p>
+        <p>Destination not found.</p>
       </div>
     </div>
   </div>

@@ -4,9 +4,15 @@
       <div v-if="trip && trip.destination">
         <div class="figma-journal-header">
           <button class="figma-back-btn" @click="$router.back()">←</button>
-          <div class="figma-journal-title">
-            <template v-if="trip.city">{{ trip.city }}, {{ trip.destination }}</template>
-            <template v-else>{{ trip.destination || 'Destino' }}</template>
+          <div class="figma-journal-title-row">
+            <div class="figma-journal-title">
+              <template v-if="trip.city">{{ trip.city }}, {{ trip.destination }}</template>
+              <template v-else>{{ trip.destination || 'Destino' }}</template>
+            </div>
+            <button class="figma-edit-btn" @click="editTrip">
+              <img src="../img/editar.png" alt="Edit" class="edit-icon" />
+              <span>Edit</span>
+            </button>
           </div>
           <div class="figma-journal-dates">
             <template v-if="trip.startDate || trip.endDate">
@@ -15,7 +21,7 @@
               <span v-if="trip.endDate">{{ trip.endDate }}</span>
             </template>
           </div>
-          <div class="figma-journal-avatars">
+          <!-- <div class="figma-journal-avatars">
             <img
               v-for="n in 5"
               :key="n"
@@ -23,7 +29,7 @@
               class="figma-avatar"
               alt="avatar"
             />
-          </div>
+          </div> -->
         </div>
         <div class="figma-journal-main">
           <div class="figma-journal-image-block">
@@ -35,27 +41,48 @@
             />
           </div>
           <div class="figma-journal-day-block">
-            <div class="figma-journal-day-title">Sobre o destino</div>
+            <div class="figma-journal-day-title">About the destination</div>
             <div class="figma-journal-day-text">
               <template v-if="wikiInfo">{{ wikiInfo.extract }}</template>
-              <template v-else>Informações não disponíveis.</template>
+              <template v-else>Information not available.</template>
             </div>
           </div>
         </div>
+        
+        <!-- Secção de fotos polaroid -->
         <div class="figma-journal-polaroids">
-          <template v-if="wikiImages.length">
-            <div v-for="(img, idx) in wikiImages.slice(0, 8)" :key="idx" class="figma-polaroid">
-              <img
-                :src="img"
-                alt="Foto do destino"
-                style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px"
-              />
-            </div>
-          </template>
-          <template v-else>
-            <div v-for="n in 4" :key="n" class="figma-polaroid"></div>
-          </template>
+          <div 
+            v-for="(photo, index) in photos" 
+            :key="index" 
+            class="figma-polaroid"
+          >
+            <img 
+              v-if="photo" 
+              :src="photo" 
+              alt="Foto da viagem" 
+              class="polaroid-photo"
+            />
+          </div>
+          <!-- Slots vazios para completar 4 -->
+          <div 
+            v-for="n in Math.max(0, 4 - photos.length)" 
+            :key="'empty-' + n" 
+            class="figma-polaroid empty"
+            @click="triggerFileInput"
+          >
+            <span class="add-photo-icon">+</span>
+          </div>
         </div>
+        
+        <!-- Input escondido para upload de fotos -->
+        <input 
+          type="file" 
+          ref="fileInput" 
+          @change="handleFileUpload" 
+          accept="image/*" 
+          multiple 
+          style="display: none;"
+        />
       </div>
       <div v-else class="journal-not-found">
         <p>Viagem não encontrada.</p>
@@ -66,11 +93,44 @@
 
 <script setup>
 import { computed, ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useSelectionsStore } from '../stores/selections'
 import { fetchCountryWikipediaSummary, fetchWikipediaImages } from '../api/countries'
+
 const props = defineProps({ tripId: [String, Number] })
+const router = useRouter()
 const selections = useSelectionsStore()
 const trip = computed(() => selections.items.find((t) => t.id == props.tripId))
+
+// Fotos da viagem
+const photos = ref([])
+const fileInput = ref(null)
+
+function editTrip() {
+  // Abrir seletor de ficheiros para adicionar fotos
+  triggerFileInput()
+}
+
+function triggerFileInput() {
+  fileInput.value?.click()
+}
+
+function handleFileUpload(event) {
+  const files = event.target.files
+  if (files) {
+    for (const file of files) {
+      if (photos.value.length < 4) {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          photos.value.push(e.target.result)
+        }
+        reader.readAsDataURL(file)
+      }
+    }
+  }
+  // Limpar input para permitir selecionar o mesmo ficheiro novamente
+  event.target.value = ''
+}
 
 const wikiInfo = ref(null)
 const wikiLoading = ref(false)
@@ -130,14 +190,45 @@ onMounted(async () => {
   color: #888;
   cursor: pointer;
 }
+.figma-journal-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 12px;
+}
 .figma-journal-title {
   font-size: 3rem;
   font-family: 'Amatic SC', cursive, sans-serif;
   font-weight: 700;
   letter-spacing: 2px;
-  margin-top: 12px;
-  margin-bottom: 0;
+  margin: 0;
   color: #222;
+}
+.figma-edit-btn {
+  position: absolute;
+  right: 32px;
+  top: 48px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f0eeea;
+  border: 1px solid #ddd;
+  border-radius: 24px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.figma-edit-btn:hover {
+  background: #e8e6e2;
+  box-shadow: 0 2px 8px #0001;
+}
+.figma-edit-btn .edit-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 .figma-journal-dates {
   font-size: 1.1rem;
@@ -195,11 +286,38 @@ onMounted(async () => {
   justify-content: flex-start;
 }
 .figma-polaroid {
-  width: 120px;
-  height: 140px;
-  background: #e0dedb;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px #0001;
+  width: 140px;
+  height: 160px;
+  background-image: url('../img/modelofoto.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 10px 10px 30px 10px;
+  box-sizing: border-box;
+}
+.figma-polaroid.empty {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.figma-polaroid.empty:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+.polaroid-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+}
+.add-photo-icon {
+  font-size: 2.5rem;
+  color: #aaa;
+  font-weight: 300;
 }
 .journal-not-found {
   display: flex;

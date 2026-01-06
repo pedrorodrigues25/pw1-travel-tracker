@@ -4,7 +4,6 @@
   padding-bottom: 40px;
 }
 
-/* Filters Section */
 .filters-section {
   background-color: #b8c9d9;
   padding: 20px 24px;
@@ -23,7 +22,7 @@
 .filter-tag {
   padding: 8px 16px;
   border: 1px solid #666;
-  background-color: #ffffff;
+  background-color: #ffffffbe;
   color: #333;
   border-radius: 20px;
   font-size: 13px;
@@ -37,17 +36,16 @@
 
 .filter-tag:hover {
   background-color: #f0f4fa;
-  border-color: #0077ff;
+  border-color: #d9d9d9;
 }
 
 .filter-tag.active {
-  background-color: #0077ff;
+  background-color: #014f76;
   color: #ffffff;
-  border-color: #0077ff;
+  border-color: #d9d9d9;
   font-weight: 600;
 }
 
-/* Recommendations Content */
 .recommendations-content {
   padding: 40px 24px;
   max-width: 1400px;
@@ -64,14 +62,12 @@
   text-align: left;
 }
 
-/* Grid of Recommendations */
 .recommendations-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
 }
 
-/* Individual Card */
 .recommendation-card {
   background-color: #ffffff;
   border-radius: 12px;

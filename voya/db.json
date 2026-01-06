@@ -81,5 +81,182 @@
       "userEmail": "lol@gmail.com",
       "createdAt": "2026-01-05T12:22:04.720Z"
     }
+  ],
+  "destinations": [
+    {
+      "id": "d1",
+      "name": "Lisbon",
+      "country": "Portugal",
+      "city": "Lisbon",
+      "tags": ["City Exploration", "Food & Gastronomy", "Cultural Experiences", "Photography"]
+    },
+    {
+      "id": "d2",
+      "name": "Porto",
+      "country": "Portugal",
+      "city": "Porto",
+      "tags": ["City Exploration", "Food & Gastronomy", "Cultural Experiences", "Photography"]
+    },
+    {
+      "id": "d3",
+      "name": "Barcelona",
+      "country": "Spain",
+      "city": "Barcelona",
+      "tags": ["Beach & Relaxation", "City Exploration", "Food & Gastronomy", "Photography"]
+    },
+    {
+      "id": "d4",
+      "name": "Paris",
+      "country": "France",
+      "city": "Paris",
+      "tags": ["City Exploration", "Cultural Experiences", "Food & Gastronomy", "Photography"]
+    },
+    {
+      "id": "d5",
+      "name": "Interlaken",
+      "country": "Switzerland",
+      "city": "Interlaken",
+      "tags": ["Nature & Hiking", "Solo Adventure", "Photography"]
+    },
+    {
+      "id": "d6",
+      "name": "Madeira",
+      "country": "Portugal",
+      "city": "Funchal",
+      "tags": ["Nature & Hiking", "Beach & Relaxation", "Photography", "Road Trips"]
+    },
+    {
+      "id": "d7",
+      "name": "Rome",
+      "country": "Italy",
+      "city": "Rome",
+      "tags": ["Cultural Experiences", "City Exploration", "Food & Gastronomy", "Photography"]
+    },
+    {
+      "id": "d8",
+      "name": "Reykjavík",
+      "country": "Iceland",
+      "city": "Reykjavík",
+      "tags": ["Solo Adventure", "Nature & Hiking", "Road Trips", "Photography"]
+    },
+    {
+      "id": "d9",
+      "name": "Algarve",
+      "country": "Portugal",
+      "city": "Faro",
+      "tags": ["Beach & Relaxation", "Family Trips", "Road Trips", "Photography"]
+    },
+    {
+      "id": "d10",
+      "name": "Prague",
+      "country": "Czechia",
+      "city": "Prague",
+      "tags": ["City Exploration", "Cultural Experiences", "Photography"]
+    },
+    {
+      "id": "d11",
+      "name": "Tokyo",
+      "country": "Japan",
+      "city": "Tokyo",
+      "tags": ["City Exploration", "Food & Gastronomy", "Cultural Experiences", "Photography"]
+    },
+    {
+      "id": "d12",
+      "name": "Bali",
+      "country": "Indonesia",
+      "city": "Ubud",
+      "tags": ["Beach & Relaxation", "Nature & Hiking", "Cultural Experiences", "Solo Adventure"]
+    },
+    {
+      "id": "d13",
+      "name": "New York",
+      "country": "United States",
+      "city": "New York",
+      "tags": ["City Exploration", "Cultural Experiences", "Food & Gastronomy", "Photography"]
+    },
+    {
+      "id": "d14",
+      "name": "Santorini",
+      "country": "Greece",
+      "city": "Fira",
+      "tags": ["Beach & Relaxation", "Photography", "Road Trips", "Food & Gastronomy"]
+    },
+    {
+      "id": "d15",
+      "name": "Dubai",
+      "country": "United Arab Emirates",
+      "city": "Dubai",
+      "tags": ["City Exploration", "Family Trips", "Photography", "Beach & Relaxation"]
+    },
+    {
+      "id": "d16",
+      "name": "Machu Picchu",
+      "country": "Peru",
+      "city": "Cusco",
+      "tags": ["Nature & Hiking", "Cultural Experiences", "Solo Adventure", "Photography"]
+    },
+    {
+      "id": "d17",
+      "name": "Sydney",
+      "country": "Australia",
+      "city": "Sydney",
+      "tags": ["City Exploration", "Beach & Relaxation", "Photography", "Food & Gastronomy"]
+    },
+    {
+      "id": "d18",
+      "name": "Marrakech",
+      "country": "Morocco",
+      "city": "Marrakech",
+      "tags": ["Cultural Experiences", "Food & Gastronomy", "Photography", "Solo Adventure"]
+    },
+    {
+      "id": "d19",
+      "name": "Cape Town",
+      "country": "South Africa",
+      "city": "Cape Town",
+      "tags": ["Nature & Hiking", "Beach & Relaxation", "Road Trips", "Photography"]
+    },
+    {
+      "id": "d20",
+      "name": "Amsterdam",
+      "country": "Netherlands",
+      "city": "Amsterdam",
+      "tags": ["City Exploration", "Cultural Experiences", "Traveling with Friends", "Photography"]
+    },
+    {
+      "id": "d21",
+      "name": "Maldives",
+      "country": "Maldives",
+      "city": "Malé",
+      "tags": ["Beach & Relaxation", "Photography", "Solo Adventure", "Nature & Hiking"]
+    },
+    {
+      "id": "d22",
+      "name": "Cancún",
+      "country": "Mexico",
+      "city": "Cancún",
+      "tags": ["Beach & Relaxation", "Traveling with Friends", "Family Trips", "Photography"]
+    },
+    {
+      "id": "d23",
+      "name": "Vienna",
+      "country": "Austria",
+      "city": "Vienna",
+      "tags": ["City Exploration", "Cultural Experiences", "Food & Gastronomy", "Photography"]
+    },
+    {
+      "id": "d24",
+      "name": "Queenstown",
+      "country": "New Zealand",
+      "city": "Queenstown",
+      "tags": ["Nature & Hiking", "Solo Adventure", "Road Trips", "Photography"]
+    },
+    {
+      "id": "d25",
+      "name": "Bangkok",
+      "country": "Thailand",
+      "city": "Bangkok",
+      "tags": ["City Exploration", "Food & Gastronomy", "Cultural Experiences", "Solo Adventure"]
+    }
   ]
 }

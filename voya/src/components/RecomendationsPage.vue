@@ -33,21 +33,26 @@
     <div class="recommendations-content">
       <h2 class="section-title">TRIPS JUST FOR YOU</h2>
       
-      <div class="recommendations-grid">
+      <div class="cards-container">
         <div 
           v-for="destination in filteredRecommendations" 
           :key="destination.id"
-          class="recommendation-card"
+          class="trip-card"
         >
-          <div class="card-image" :style="{ backgroundImage: `url(${destination.photo || 'https://via.placeholder.com/400x300'})` }">
-            <div class="card-overlay"></div>
+          <div class="card-image">
+            <img :src="destination.photo || '/src/img/placeholder.jpg'" alt="Destination image" />
           </div>
           <div class="card-content">
-            <h3 class="card-title">{{ destination.city }}, {{ destination.country }}</h3>
-            <p class="card-description">{{ destination.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }}</p>
-            <button class="card-button">
-              <span class="button-icon">→</span>
-            </button>
+            <div class="card-row card-title-row">
+              <span class="card-title">{{ destination.city }}, {{ destination.country }}</span>
+            </div>
+            <div class="card-row card-tags-row">
+              <span 
+                v-for="tag in getMatchingTags(destination.tags)" 
+                :key="tag" 
+                class="card-tag"
+              >{{ tag }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -63,9 +68,11 @@ import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useInterestsStore } from '../stores/interests'
 
+const API_BASE = 'http://localhost:3001'
+
 const auth = useAuthStore()
 const interestsStore = useInterestsStore()
-const recommendations = ref([])
+const allDestinations = ref([])
 const selectedFilters = ref([])
 
 const availableInterests = [
@@ -90,26 +97,33 @@ async function loadUserInterests() {
   }
 }
 
-async function loadRecommendations() {
+async function loadDestinations() {
   try {
-    const userEmail = auth.user?.email
-    const response = await fetch(userEmail ? `/api/recommendations?userEmail=${encodeURIComponent(userEmail)}` : '/api/recommendations')
-    if (response.ok) {
-      recommendations.value = await response.json()
+    // Buscar todos os destinos do json-server
+    const res = await fetch(`${API_BASE}/destinations`)
+    if (res.ok) {
+      allDestinations.value = await res.json()
     }
   } catch (e) {
-    console.error('Erro ao carregar recomendações:', e)
+    console.error('Erro ao carregar destinos:', e)
   }
 }
 
+// Filtrar destinos localmente com base nos filtros selecionados na UI
 const filteredRecommendations = computed(() => {
   if (selectedFilters.value.length === 0) {
-    return recommendations.value
+    return [] // Se não há filtros selecionados, não mostra nenhum destino
   }
-  return recommendations.value.filter(dest =>
+  return allDestinations.value.filter(dest =>
     dest.tags && dest.tags.some(tag => selectedFilters.value.includes(tag))
   )
 })
+
+// Retorna apenas as tags que estão selecionadas nos filtros
+function getMatchingTags(tags) {
+  if (!tags) return []
+  return tags.filter(tag => selectedFilters.value.includes(tag))
+}
 
 function toggleFilter(interest) {
   const index = selectedFilters.value.indexOf(interest)
@@ -122,7 +136,7 @@ function toggleFilter(interest) {
 
 onMounted(async () => {
   await loadUserInterests()
-  await loadRecommendations()
+  await loadDestinations()
 })
 </script>
 

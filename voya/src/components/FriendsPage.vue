@@ -70,15 +70,25 @@
       <section class="recommendations">
         <h2>People you may know</h2>
         <div class="recommendations-grid">
-          <div v-for="person in recommendations" :key="person.id" class="person-card">
-            <div class="person-avatar">
-              <img v-if="person.photo" :src="person.photo" :alt="person.username" />
-              <div v-else class="avatar-placeholder">{{ person.username.charAt(0).toUpperCase() }}</div>
+          <div v-for="person in recommendationsToShow" :key="person.id" class="person-card">
+            <div class="person-card-top"></div>
+            <div class="person-card-body">
+              <div class="person-avatar large">
+                <img v-if="person.photo" :src="person.photo" :alt="person.username" />
+                <div v-else class="avatar-placeholder">{{ person.username.charAt(0).toUpperCase() }}</div>
+              </div>
+              <div class="person-info">
+                <h4>{{ person.name || person.username }}</h4>
+                <p class="person-username">@{{ person.username }}</p>
+              </div>
             </div>
-            <h4>{{ person.username }}</h4>
-            <p class="person-about">{{ person.aboutMe }}</p>
-            <button class="see-profile-btn" @click="openPersonProfile(person)">See Profile</button>
+            <button class="see-profile-btn pill" @click="openPersonProfile(person)">See Profile</button>
           </div>
+        </div>
+        <div v-if="recommendations.length > 4" class="recommendations-toggle">
+          <button class="toggle-rec-btn" @click="showMoreRecommendations = !showMoreRecommendations">
+            {{ showMoreRecommendations ? 'Show Less' : 'Show More' }}
+          </button>
         </div>
       </section>
 
@@ -150,6 +160,12 @@ const sharedTrips = ref([])
 const searchQuery = ref('')
 const showProfileModal = ref(false)
 const selectedPerson = ref(null)
+const showMoreRecommendations = ref(false)
+
+const recommendationsToShow = computed(() => {
+  if (showMoreRecommendations.value) return recommendations.value
+  return recommendations.value.slice(0, 4)
+})
 
 const isPersonFriend = computed(() => {
   if (!selectedPerson.value) return false

@@ -609,7 +609,7 @@ onMounted(async () => {
   display: flex;
   gap: 18px;
   margin-top: 18px;
-  justify-content: flex-start;
+  justify-content: center;
 }
 .figma-polaroid {
   width: 140px;
@@ -759,6 +759,7 @@ onMounted(async () => {
 }
 .figma-trip-friends {
   margin-bottom: 24px;
+  text-align: center;
 }
 .figma-trip-friends h3 {
   margin: 0 0 16px 0;
@@ -771,6 +772,7 @@ onMounted(async () => {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .friend-avatar-item {
   display: flex;

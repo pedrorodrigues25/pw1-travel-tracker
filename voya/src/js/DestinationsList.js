@@ -78,9 +78,10 @@ function cancelEdit() {
   editForm.notes = ''
 }
 
-function remove(id) {
+async function remove(id) {
   if (!confirm('Apagar esta escolha?')) return
-  selections.remove(id, user.email)
+  const deleted = await selections.remove(id)
+  if (!deleted) alert('Não foi possível apagar a viagem. Tenta novamente.')
 }
 
 function logout() {

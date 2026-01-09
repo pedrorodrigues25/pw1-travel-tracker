@@ -70,6 +70,17 @@ async function saveSelection(selection) {
   }
 }
 
+async function deleteSelection(id) {
+  try {
+    const res = await fetch(`${API_BASE}/selections/${id}`, { method: 'DELETE' })
+    if (!res.ok) throw new Error('Erro ao apagar viagem')
+    return true
+  } catch (e) {
+    console.error('Erro ao apagar viagem:', e)
+    return false
+  }
+}
+
 // INTERESTS
 async function getInterests(userEmail) {
   try {
@@ -129,6 +140,7 @@ export {
   updateUser,
   getSelections,
   saveSelection,
+  deleteSelection,
   getInterests,
   saveInterest,
   getRecommendations,

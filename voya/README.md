@@ -21,7 +21,7 @@ Voya is a website that allows users to register, track, and share their travel e
 1. Install project dependencies (npm/pnpm install)
 2. Start the local API:
 
-	npx json-server --watch db.json --port 3001
+npx json-server --watch db.json --port 3001
 
 3. Start the frontend (npm run dev or pnpm run dev)
 

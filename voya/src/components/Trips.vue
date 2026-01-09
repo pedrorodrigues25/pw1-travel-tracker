@@ -306,7 +306,7 @@ function cancelEdit() {
   editForm.notes = ''
 }
 
-function remove(id) {
+async function remove(id) {
   const item = selections.items.find((sel) => sel.id === id)
   if (!item || item.status === 'completed') return
   if (auth.isGuest) {
@@ -314,7 +314,8 @@ function remove(id) {
     return
   }
   if (!confirm('Delete this selection?')) return
-  selections.remove(id, user.email)
+  const deleted = await selections.remove(id)
+  if (!deleted) alert('Could not delete this trip. Please try again.')
 }
 
 function goToJournal(tripId) {

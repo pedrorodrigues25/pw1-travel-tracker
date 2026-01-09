@@ -1,7 +1,7 @@
 
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { getSelections, saveSelection } from '../api/api'
+import { getSelections, saveSelection, deleteSelection } from '../api/api'
 
 export const useSelectionsStore = defineStore('selections', () => {
   const items = ref([])
@@ -41,10 +41,13 @@ export const useSelectionsStore = defineStore('selections', () => {
     }
   }
 
-  // remove pode ser implementado via API se necessário
-  function remove(id) {
-    items.value = items.value.filter((i) => i.id !== id)
-    // TODO: implementar DELETE via API
+  async function remove(id) {
+    if (!id) return false
+    const deleted = await deleteSelection(id)
+    if (deleted) {
+      items.value = items.value.filter((i) => i.id !== id)
+    }
+    return deleted
   }
 
   function clear() {

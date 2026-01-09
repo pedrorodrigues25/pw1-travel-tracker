@@ -174,9 +174,9 @@ Developed as part of the **Web Programming 1 Course** at:
 Bachelor's in Technologies and Information Systems for the Web
 
 ### Team Members
-- **Pedro Rodrigues** - Backend & Database Architecture
-- **Mariana Ferreira** - UI/UX Design & Styling
-- **Miguel Caldas** - Frontend Development & Full Stack
+- **Pedro Rodrigues** 
+- **Mariana Ferreira** 
+- **Miguel Caldas** 
 
 ## 📄 License
 
@@ -368,9 +368,9 @@ Desenvolvido como parte do **Curso de Programação Web 1** em:
 Licenciatura em Tecnologias e Sistemas de Informação para a Web
 
 ### Membros da Equipa
-- **Pedro Rodrigues** - Arquitetura de Backend & Base de Dados
-- **Mariana Ferreira** - Design UI/UX & Estilos
-- **Miguel Caldas** - Desenvolvimento Frontend & Full Stack
+- **Pedro Rodrigues** 
+- **Mariana Ferreira** 
+- **Miguel Caldas** 
 
 ## 📄 Licença
 
@@ -381,5 +381,3 @@ Este projeto é criado para fins educacionais como parte do currículo ESMAD.
 Para dúvidas, melhorias ou relatos de bugs, contacte a equipa de desenvolvimento ou abra uma issue no GitHub.
 
 ---
-
-**Feito com ❤️ para entusiastas de viagens | Feito com Vue.js & ☕**

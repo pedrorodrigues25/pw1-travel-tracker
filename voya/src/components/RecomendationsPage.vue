@@ -39,20 +39,24 @@
           :key="destination.id"
           class="trip-card"
         >
-          <div class="card-image clickable" @click="goToDestination(destination.id)">
-            <img :src="destination.photo || '/src/img/placeholder.jpg'" alt="Destination image" />
+          <div class="trip-cover clickable" @click="goToDestination(destination.id)">
+            <img :src="destination.imageUrl || '/src/img/mountains.png'" :alt="destination.city || destination.country" />
           </div>
-          <div class="card-content">
-            <div class="card-row card-title-row">
-              <span class="card-title">{{ destination.city }}, {{ destination.country }}</span>
+          <div class="trip-info">
+            <div class="trip-title-row">
+              <h4 class="trip-title">
+                <template v-if="destination.city">{{ destination.city }}, {{ destination.country }}</template>
+                <template v-else>{{ destination.country }}</template>
+              </h4>
+              <span class="trip-status pill upcoming">Recommended</span>
             </div>
-            <div class="card-row card-tags-row">
-              <span 
-                v-for="tag in getMatchingTags(destination.tags)" 
-                :key="tag" 
-                class="card-tag"
-              >{{ tag }}</span>
+            <div class="trip-updates">Matches your interests</div>
+            <div class="trip-avatars">
+              <span class="avatar tiny" v-for="n in 3" :key="n"></span>
             </div>
+          </div>
+          <div class="trip-actions">
+            <button class="open-journal-btn pill" @click="addToTrips(destination)">Add to Trips</button>
           </div>
         </div>
       </div>
@@ -68,6 +72,8 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useInterestsStore } from '../stores/interests'
+import { useSelectionsStore } from '../stores/selections'
+import { fetchCountryWikipediaSummary } from '../api/countries'
 
 const router = useRouter()
 
@@ -75,6 +81,7 @@ const API_BASE = 'http://localhost:3001'
 
 const auth = useAuthStore()
 const interestsStore = useInterestsStore()
+const selections = useSelectionsStore()
 const allDestinations = ref([])
 const selectedFilters = ref([])
 
@@ -105,7 +112,15 @@ async function loadDestinations() {
     // Buscar todos os destinos do json-server
     const res = await fetch(`${API_BASE}/destinations`)
     if (res.ok) {
-      allDestinations.value = await res.json()
+      const dests = await res.json()
+      // Fetch Wikipedia image for each destination
+      for (const dest of dests) {
+        try {
+          const wiki = await fetchCountryWikipediaSummary(dest.city || dest.country)
+          dest.imageUrl = wiki?.originalimage?.source || ''
+        } catch {}
+      }
+      allDestinations.value = dests
     }
   } catch (e) {
     console.error('Erro ao carregar destinos:', e)
@@ -141,6 +156,27 @@ function goToDestination(destinationId) {
   router.push(`/destination/${destinationId}`)
 }
 
+async function addToTrips(dest) {
+  if (auth.isGuest) {
+    alert('Please log in to save trips.')
+    return
+  }
+  const userEmail = auth.user?.email
+  if (!userEmail) {
+    alert('Please log in first')
+    return
+  }
+  await selections.add({
+    destination: dest.country,
+    city: dest.city || '',
+    notes: '',
+    status: 'upcoming',
+    startDate: '',
+    endDate: '',
+    imageUrl: dest.imageUrl || '',
+  }, userEmail)
+}
+
 onMounted(async () => {
   await loadUserInterests()
   await loadDestinations()
@@ -149,3 +185,4 @@ onMounted(async () => {
 
 <style src="../css/NavBar.css"></style>
 <style src="../css/RecomendationsPage.css"></style>
+<style src="../css/Trips.css"></style>

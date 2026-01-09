@@ -81,6 +81,18 @@
       "userEmail": "arroz@gmail.com",
       "createdAt": "2026-01-09T12:25:42.113Z",
       "id": "r5H2T5N"
+    },
+    {
+      "destination": "Portugal",
+      "city": "Lisbon",
+      "notes": "",
+      "status": "upcoming",
+      "startDate": "",
+      "endDate": "",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Lisboa_-_Portugal_%2852597836992%29.jpg",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-09T12:42:53.836Z",
+      "id": "KJCO0AP"
     }
   ],
   "destinations": [

@@ -124,6 +124,32 @@ input:focus {
   transform: translateY(2px);
 }
 
+/* Botão de Admin Login */
+.admin-login-btn {
+  width: 150px;
+  margin: 8px auto 4px;
+  padding: 11px 0 10px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #0d5678 0%, #1a7fa0 100%);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition:
+    filter 0.25s,
+    transform 0.25s;
+}
+
+.admin-login-btn:hover {
+  filter: brightness(0.92);
+}
+
+.admin-login-btn:active {
+  transform: translateY(2px);
+}
+
 /* Registar */
 .register {
   text-align: center;

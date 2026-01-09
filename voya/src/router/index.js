@@ -7,6 +7,7 @@ import DestinationsView from '../views/DestinationsView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import RecomendationsView from '../views/RecomendationsView.vue'
 import FriendsView from '../views/FriendsView.vue'
+import AdminView from '../views/AdminView.vue'
 
 import JournalView from '../views/JournalView.vue'
 
@@ -52,6 +53,11 @@ const router = createRouter({
       path: '/friends',
       component: FriendsView,
       name: 'Friends',
+    },
+    {
+      path: '/admin',
+      component: AdminView,
+      name: 'Admin',
     },
     {
       path: '/trips',

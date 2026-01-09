@@ -56,7 +56,7 @@
             </div>
           </div>
           <div class="trip-actions">
-            <button class="open-journal-btn pill" @click="addToTrips(destination)">Add to Trips</button>
+            <button class="open-journal-btn pill" @click="goToDestination(destination.id)">See Trip</button>
           </div>
         </div>
       </div>

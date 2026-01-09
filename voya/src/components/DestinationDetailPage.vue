@@ -61,6 +61,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
+import { useSelectionsStore } from '../stores/selections'
 import { fetchCountryWikipediaSummary, fetchWikipediaImages } from '../api/countries'
 
 const API_BASE = 'http://localhost:3001'
@@ -73,6 +75,8 @@ const props = defineProps({
 })
 
 const router = useRouter()
+const auth = useAuthStore()
+const selections = useSelectionsStore()
 const destination = ref(null)
 const wikiInfo = ref(null)
 const wikiLoading = ref(false)
@@ -105,7 +109,29 @@ async function loadWikiInfo() {
   }
 }
 
-function goToTrips() {
+async function goToTrips() {
+  if (auth.isGuest) {
+    alert('Please log in to save trips.')
+    return
+  }
+  const userEmail = auth.user?.email
+  if (!userEmail) {
+    alert('Please log in first')
+    return
+  }
+  
+  // Adicionar viagem
+  await selections.add({
+    destination: destination.value.country,
+    city: destination.value.city || '',
+    notes: '',
+    status: 'upcoming',
+    startDate: '',
+    endDate: '',
+    imageUrl: wikiInfo.value?.originalimage?.source || '',
+  }, userEmail)
+  
+  // Navegar para trips
   router.push('/trips')
 }
 

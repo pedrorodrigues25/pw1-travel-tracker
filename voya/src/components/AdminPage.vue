@@ -264,10 +264,17 @@ async function confirmBan() {
 
   const now = new Date()
   const banExpiryTime = new Date(now.getTime() + selectedBanDuration.value * 60 * 60 * 1000)
+  
+  console.log('Banning user:', selectedUser.value.username)
+  console.log('Ban expiry time:', banExpiryTime.toISOString())
+  console.log('Current time:', now.toISOString())
+  console.log('Duration in hours:', selectedBanDuration.value)
 
   const result = await updateUser(selectedUser.value.id, {
     bannedUntil: banExpiryTime.toISOString(),
   })
+
+  console.log('Ban result:', result)
 
   if (result) {
     const idx = users.value.findIndex((u) => u.id === selectedUser.value.id)

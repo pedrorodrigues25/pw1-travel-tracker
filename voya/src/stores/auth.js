@@ -53,7 +53,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function login(email, password) {
-    await loadUsers();
+    await loadUsers(); // Recarrega todos os users para ter dados atualizados
     const normalizedEmail = email.trim().toLowerCase();
     const foundUser = users.value.find(u => u.email === normalizedEmail);
 
@@ -63,6 +63,37 @@ export const useAuthStore = defineStore('auth', () => {
 
     if (foundUser.password !== password) {
       throw new Error('Password incorreta');
+    }
+
+    // Check if user is banned
+    console.log('Login check - User:', foundUser.username)
+    console.log('Login check - bannedUntil:', foundUser.bannedUntil)
+    
+    if (foundUser.bannedUntil) {
+      const banExpiryDate = new Date(foundUser.bannedUntil);
+      const now = new Date();
+
+      console.log('Ban expiry date:', banExpiryDate)
+      console.log('Current date:', now)
+      console.log('Is banned:', banExpiryDate > now)
+
+      if (banExpiryDate > now) {
+        // Calculate remaining ban time
+        const diffMs = banExpiryDate - now;
+        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+        const diffDays = Math.floor(diffHours / 24);
+        
+        let banTimeMsg = '';
+        if (diffHours < 1) {
+          banTimeMsg = 'less than 1 hour';
+        } else if (diffHours < 24) {
+          banTimeMsg = `${diffHours} hour${diffHours > 1 ? 's' : ''}`;
+        } else {
+          banTimeMsg = `${diffDays} day${diffDays > 1 ? 's' : ''} and ${diffHours % 24} hour${(diffHours % 24) > 1 ? 's' : ''}`;
+        }
+        
+        throw new Error(`Your account has been banned for ${banTimeMsg}. Please try again later.`);
+      }
     }
 
     user.value = foundUser; // Guarda o utilizador completo, incluindo id

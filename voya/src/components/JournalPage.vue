@@ -14,9 +14,11 @@
               <span>Edit</span>
             </button>
             <button class="figma-delete-btn" @click="deleteTrip">
+              <img src="../img/delete.png" alt="Delete" class="delete-icon" />
               <span>Delete</span>
             </button>
             <button v-if="!trip.archived" class="figma-archive-btn" @click="archiveTrip">
+              <img src="../img/archive.png" alt="Archive" class="archive-icon" />
               <span>Archive</span>
             </button>
             <button v-if="trip.archived" class="figma-unarchive-btn" @click="unarchiveTrip">
@@ -348,6 +350,16 @@ onMounted(async () => {
   height: 16px;
   object-fit: contain;
 }
+.figma-delete-btn .delete-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+.figma-archive-btn .archive-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
 .figma-delete-btn {
   position: absolute;
   right: 32px;
@@ -432,8 +444,8 @@ onMounted(async () => {
   margin-bottom: 24px;
 }
 .figma-journal-image-block {
-  width: 220px;
-  height: 180px;
+  width: 160px;
+  height: 140px;
   background: #d6d3ce;
   border-radius: 16px;
   margin-top: 8px;

@@ -246,11 +246,6 @@ async function loadFriendsData() {
   sharedTrips.value = userTrips.slice(0, 3) // Show first 3 shared trips
 }
 
-function getLastTrip(friendEmail) {
-
-  return 'Paris, France'
-}
-
 function formatLastTripDate(friend) {
   // Format the last trip date for display
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']

@@ -138,6 +138,24 @@
         "f2",
         "f3"
       ]
+    },
+    {
+      "destination": "Denmark",
+      "city": "Copenhagen",
+      "notes": "",
+      "status": "upcoming",
+      "startDate": "2026-01-22",
+      "endDate": "2026-01-27",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Christiansborg_fra_Nikolaj_Kirken.jpg",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-09T16:59:21.003Z",
+      "id": "qVILMT1",
+      "customText": "Copenhagen is the capital and most populous city in the Kingdom of Denmark, with a population of 667,000 people in the municipality and 1.4 million in the urban area. The city is situated mainly on the island of Zealand (Sjælland), with a smaller part on the island of Amager. Copenhagen is separated from Malmö, Sweden, by the Øresund strait. The Øresund Bridge connects the two cities by rail and road.",
+      "friends": [
+        "f1",
+        "f2",
+        "f3"
+      ]
     }
   ],
   "destinations": [

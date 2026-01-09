@@ -51,14 +51,22 @@
         <!-- Your Last Trip -->
         <div class="trip-card last-trip">
           <div class="trip-label">YOUR LAST TRIP</div>
-          <div v-if="lastTrip" class="trip-content">
-            <p class="trip-title">{{ lastTrip.city }}, {{ lastTrip.destination }}</p>
-            <p class="trip-date" v-if="lastTrip.startDate">{{ lastTrip.startDate }}</p>
-            <div class="trip-friends-preview" v-if="lastTrip.friends && lastTrip.friends.length > 0">
-              <span v-for="(friendId, idx) in lastTrip.friends.slice(0, 3)" :key="idx" class="friend-avatar-small">
-                {{ friendId }}
-              </span>
-              <span v-if="lastTrip.friends.length > 3" class="friend-count">+{{ lastTrip.friends.length - 3 }}</span>
+          <div v-if="lastTrip" class="trip-card-wrapper">
+            <div class="trip-image-container">
+              <img v-if="lastTrip.imageUrl" :src="lastTrip.imageUrl" :alt="lastTrip.destination" class="trip-image" />
+              <div v-else class="image-placeholder"></div>
+            </div>
+            <div class="trip-content">
+              <p class="trip-title">{{ lastTrip.city }}, {{ lastTrip.destination }}</p>
+              <p class="trip-date" v-if="lastTrip.startDate">{{ lastTrip.startDate }}</p>
+              <div class="trip-friends-list" v-if="lastTripFriendsDetails && lastTripFriendsDetails.length > 0">
+                <p class="friends-label">Friends:</p>
+                <div class="friends-names">
+                  <span v-for="friend in lastTripFriendsDetails" :key="friend.id" class="friend-name-tag">
+                    {{ friend.username }}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
           <div v-else class="trip-empty">
@@ -102,7 +110,10 @@ import { ref, watch, computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
 import { useInterestsStore } from '../stores/interests'
+import { getFriends } from '../api/api'
 import '../css/DestinationsList.css'
+
+const API_BASE = 'http://localhost:3001'
 
 const auth = useAuthStore()
 const selections = useSelectionsStore()
@@ -110,9 +121,16 @@ const interestsStore = useInterestsStore()
 
 const user = auth.user
 const userInterests = ref([])
+const allFriends = ref([])
+
 const lastTrip = computed(() => {
   if (selections.items.length === 0) return null
   return selections.items[selections.items.length - 1]
+})
+
+const lastTripFriendsDetails = computed(() => {
+  if (!lastTrip.value || !lastTrip.value.friends || lastTrip.value.friends.length === 0) return []
+  return allFriends.value.filter(f => lastTrip.value.friends.includes(f.id))
 })
 
 async function loadUserData() {
@@ -120,6 +138,13 @@ async function loadUserData() {
     await selections.load(user.email)
     await interestsStore.load(user.email)
     userInterests.value = interestsStore.items.map(item => item.interest)
+    
+    // Load all friends
+    try {
+      allFriends.value = await getFriends()
+    } catch (e) {
+      console.error('Error loading friends:', e)
+    }
   }
 }
 

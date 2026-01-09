@@ -177,6 +177,33 @@
   min-height: 120px;
 }
 
+.trip-card-wrapper {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.trip-image-container {
+  width: 120px;
+  height: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f0f2f5;
+}
+
+.trip-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #5b8ba8, #7ba4c2);
+}
+
 .trip-title {
   font-size: 1.1rem;
   font-weight: 700;
@@ -188,6 +215,33 @@
   font-size: 0.9rem;
   color: #666;
   margin: 0 0 12px 0;
+}
+
+.trip-friends-list {
+  margin-top: 12px;
+}
+
+.friends-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0d5678;
+  margin: 0 0 8px 0;
+}
+
+.friends-names {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.friend-name-tag {
+  background: linear-gradient(135deg, #f5a85c 0%, #f9b77a 100%);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
 .trip-friends-preview {

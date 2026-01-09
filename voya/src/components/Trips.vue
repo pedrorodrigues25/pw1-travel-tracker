@@ -57,42 +57,36 @@
     <button class="btn" @click="addSelection" :disabled="!form.destination">Save</button>
   </section>
   <section class="list">
-    <h3>My selections ({{ selections.count }})</h3>
+    <h3>My selections ({{ activeTripCount }})</h3>
     <div class="cards-container">
-      <div v-for="it in selections.items" :key="it.id" class="trip-card">
-        <div class="card-image clickable" @click="goToJournal(it.id)">
-          <img :src="it.imageUrl || '/src/img/placeholder.jpg'" alt="Destination image" />
+      <div v-for="it in activeTrips" :key="it.id" class="trip-card">
+        <div class="card-icons">
+          
         </div>
-        <div class="card-content">
-          <div class="card-row card-title-row">
-            <span class="card-title">
+        <div class="trip-cover">
+          <img v-if="it.imageUrl" :src="it.imageUrl" :alt="it.city || it.destination" />
+          <div v-else class="trip-cover-placeholder"></div>
+        </div>
+        <div class="trip-info">
+          <div class="trip-title-row">
+            <h4 class="trip-title">
               <template v-if="it.city">{{ it.city }}, {{ it.destination }}</template>
               <template v-else>{{ it.destination }}</template>
-            </span>
-            <span class="card-status" :class="it.status === 'completed' ? 'completed' : 'upcoming'">
-              {{ it.status === 'completed' ? 'Completed' : 'Upcoming' }}
-            </span>
+            </h4>
+            <span class="trip-status pill" :class="it.status">{{ it.status === 'completed' ? 'Completed' : 'Upcoming' }}</span>
           </div>
-          <div class="card-row card-notes-row" v-if="it.notes">
-            <span class="card-notes">{{ it.notes }}</span>
+          <div class="trip-date">{{ formatMonthYear(it.startDate || it.createdAt) }}</div>
+          <div class="trip-updates">0 New Updates</div>
+          <div class="trip-avatars">
+            <span class="avatar tiny" v-for="n in 3" :key="n"></span>
           </div>
-          <div class="card-bottom-row">
-            <span class="card-date">{{ new Date(it.createdAt).toLocaleString() }}</span>
-            <div class="card-actions-row">
-              <button class="btn small" @click="startEdit(it)">Edit</button>
-              <button
-                class="btn small danger"
-                @click="remove(it.id)"
-                :disabled="it.status === 'completed'"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
+        </div>
+        <div class="trip-actions">
+          <button class="open-journal-btn pill" @click="goToJournal(it.id)">Open the Journal</button>
         </div>
       </div>
     </div>
-    <div v-if="selections.count === 0">You haven't saved any destinations yet.</div>
+    <div v-if="activeTripCount === 0">You haven't saved any destinations yet.</div>
   </section>
   <section v-if="editing" class="edit-panel">
     <h3>Edit selection</h3>
@@ -132,7 +126,7 @@
 <script setup>
 // @vue/component
 defineOptions({ name: 'TripsPage' })
-import { reactive, ref, watch } from 'vue'
+import { reactive, ref, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
@@ -146,6 +140,10 @@ const selections = useSelectionsStore()
 const user = auth.user
 const showLoginAlert = ref(false)
 
+// Filter out archived trips from display
+const activeTrips = computed(() => selections.items.filter((t) => !t.archived))
+const activeTripCount = computed(() => activeTrips.value.length)
+
 const form = reactive({
   destination: '',
   city: '',
@@ -155,9 +153,10 @@ const form = reactive({
   endDate: '',
 })
 
-const editing = ref(false)
-const editId = ref(null)
-const editForm = reactive({ destination: '', notes: '', status: 'upcoming' })
+// Unused edit state - kept for potential future use
+// const editing = ref(false)
+// const editId = ref(null)
+// const editForm = reactive({ destination: '', notes: '', status: 'upcoming' })
 
 const countryQuery = ref('')
 const countryResults = ref([])
@@ -273,6 +272,7 @@ async function addSelection() {
   countryQuery.value = ''
 }
 
+/* Unused edit functions - kept for potential future use
 function startEdit(item) {
   if (auth.isGuest) {
     showLoginAlert.value = true
@@ -305,22 +305,19 @@ function cancelEdit() {
   editForm.destination = ''
   editForm.notes = ''
 }
-
-async function remove(id) {
-  const item = selections.items.find((sel) => sel.id === id)
-  if (!item || item.status === 'completed') return
-  if (auth.isGuest) {
-    showLoginAlert.value = true
-    return
-  }
-  if (!confirm('Delete this selection?')) return
-  const deleted = await selections.remove(id)
-  if (!deleted) alert('Could not delete this trip. Please try again.')
-}
+*/
 
 function goToJournal(tripId) {
   router.push({ name: 'Journal', params: { tripId } })
 }
+
+function formatMonthYear(dateStr) {
+  const d = new Date(dateStr)
+  if (Number.isNaN(d.getTime())) return ''
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December']
+  return `${months[d.getMonth()]} ${d.getFullYear()}`
+}
+
 
 window.addEventListener('beforeunload', () => {
   if (user && user.email) selections.save(user.email)

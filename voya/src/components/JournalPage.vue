@@ -13,6 +13,15 @@
               <img src="../img/editar.png" alt="Edit" class="edit-icon" />
               <span>Edit</span>
             </button>
+            <button class="figma-delete-btn" @click="deleteTrip">
+              <span>Delete</span>
+            </button>
+            <button v-if="!trip.archived" class="figma-archive-btn" @click="archiveTrip">
+              <span>Archive</span>
+            </button>
+            <button v-if="trip.archived" class="figma-unarchive-btn" @click="unarchiveTrip">
+              <span>Unarchive</span>
+            </button>
           </div>
           <div class="figma-journal-dates">
             <template v-if="trip.startDate || trip.endDate">
@@ -92,16 +101,18 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted, watch } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSelectionsStore } from '../stores/selections'
 import { fetchCountryWikipediaSummary, fetchWikipediaImages } from '../api/countries'
+import { useAuthStore } from '../stores/auth'
 
 const API_BASE = 'http://localhost:3001'
 
 const props = defineProps({ tripId: [String, Number] })
 const router = useRouter()
 const selections = useSelectionsStore()
+const auth = useAuthStore()
 const trip = computed(() => selections.items.find((t) => t.id == props.tripId))
 
 // Fotos da viagem
@@ -169,6 +180,71 @@ function handleFileUpload(event) {
   }
   // Limpar input para permitir selecionar o mesmo ficheiro novamente
   event.target.value = ''
+}
+
+async function deleteTrip() {
+  if (!trip.value) return
+  if (auth.isGuest) {
+    alert('Please log in to delete trips.')
+    return
+  }
+  if (!confirm('Delete this trip and its journal?')) return
+  const deleted = await selections.remove(props.tripId)
+  if (!deleted) {
+    alert('Could not delete this trip. Please try again.')
+    return
+  }
+  router.push('/trips')
+}
+
+async function archiveTrip() {
+  if (!trip.value) return
+  if (auth.isGuest) {
+    alert('Please log in to archive trips.')
+    return
+  }
+  try {
+    const response = await fetch(`${API_BASE}/selections/${props.tripId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ archived: true })
+    })
+    if (response.ok) {
+      const updatedTrip = await response.json()
+      const index = selections.items.findIndex(t => t.id == props.tripId)
+      if (index !== -1) selections.items[index] = updatedTrip
+    } else {
+      alert('Could not archive this trip. Please try again.')
+    }
+  } catch (e) {
+    console.error('Erro ao arquivar viagem:', e)
+    alert('Could not archive this trip. Please try again.')
+  }
+}
+
+async function unarchiveTrip() {
+  if (!trip.value) return
+  if (auth.isGuest) {
+    alert('Please log in to unarchive trips.')
+    return
+  }
+  try {
+    const response = await fetch(`${API_BASE}/selections/${props.tripId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ archived: false })
+    })
+    if (response.ok) {
+      const updatedTrip = await response.json()
+      const index = selections.items.findIndex(t => t.id == props.tripId)
+      if (index !== -1) selections.items[index] = updatedTrip
+    } else {
+      alert('Could not unarchive this trip. Please try again.')
+    }
+  } catch (e) {
+    console.error('Erro ao desarquivar viagem:', e)
+    alert('Could not unarchive this trip. Please try again.')
+  }
 }
 
 const wikiInfo = ref(null)
@@ -271,6 +347,66 @@ onMounted(async () => {
   width: 16px;
   height: 16px;
   object-fit: contain;
+}
+.figma-delete-btn {
+  position: absolute;
+  right: 32px;
+  top: 96px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fdecea;
+  border: 1px solid #f5c2c7;
+  border-radius: 24px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  color: #c0392b;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.figma-delete-btn:hover {
+  background: #fbd5d7;
+  box-shadow: 0 2px 8px #0001;
+}
+.figma-archive-btn {
+  position: absolute;
+  right: 32px;
+  top: 144px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #eef6ff;
+  border: 1px solid #bcd0ff;
+  border-radius: 24px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  color: #1f4bd8;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.figma-archive-btn:hover {
+  background: #e2efff;
+  box-shadow: 0 2px 8px #0001;
+}
+.figma-unarchive-btn {
+  position: absolute;
+  right: 32px;
+  top: 144px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #eef9f3;
+  border: 1px solid #b8e6c9;
+  border-radius: 24px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  color: #1d8f4a;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.figma-unarchive-btn:hover {
+  background: #dff4e8;
+  box-shadow: 0 2px 8px #0001;
 }
 .figma-journal-dates {
   font-size: 1.1rem;

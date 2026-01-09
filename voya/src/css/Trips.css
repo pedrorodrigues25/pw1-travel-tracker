@@ -82,47 +82,47 @@
   align-items: flex-start;
 }
 .trip-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px #0001;
-  width: 320px;
-  overflow: hidden;
+  width: 300px;
+  border-radius: 14px;
+  background: #e6eaee;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  border: 3px solid #2a7aa0;
+  padding: 10px;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
-.card-image img {
+
+.card-icons { position: absolute; top: 10px; right: 10px; display: flex; gap: 8px; }
+.icon-btn { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.92); border: 1px solid #c3ccd4; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.12); transition: background 0.2s, transform 0.2s; }
+.icon-btn:hover { background: #f0f4fa; transform: translateY(-1px); }
+.icon-btn img { width: 18px; height: 18px; object-fit: contain; }
+
+.trip-cover {
   width: 100%;
-  height: 180px;
-  object-fit: cover;
+  height: 140px;
+  background: #d7d8da;
+  border-radius: 12px;
+  overflow: hidden;
 }
-.card-content {
-  padding: 16px;
-}
-.card-title {
-  font-size: 1.1em;
-  font-weight: 700;
-}
-.card-status.completed {
-  color: #2ecc40;
-}
-.card-status.upcoming {
-  color: #0074d9;
-}
-.card-actions-row {
-  display: flex;
-  gap: 8px;
-}
-.btn {
-  padding: 6px 10px;
-  cursor: pointer;
-}
-.btn.small {
-  padding: 4px 8px;
-  font-size: 0.9em;
-}
-.btn.danger {
-  background: #ffdddd;
-}
+.trip-cover img { width: 100%; height: 100%; object-fit: cover; }
+.trip-cover-placeholder { width: 100%; height: 100%; background: #cfd3d7; }
+
+.trip-info { padding: 10px 8px 8px 8px; }
+.trip-title-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.trip-title { margin: 0; font-family: 'Syncopate', Arial, sans-serif; font-weight: 700; color: #0d5678; font-size: 1rem; }
+.trip-status.pill { background: #efa36d; color: #1a1a1a; border: 2px solid #c56b34; border-radius: 999px; padding: 4px 10px; font-size: 0.75rem; font-weight: 700; }
+.trip-status.completed { background: #a8e6a1; border-color: #4caf50; }
+.trip-status.upcoming { background: #efa36d; border-color: #c56b34; }
+.trip-date { color: #3e5c6d; font-size: 0.85rem; margin-top: 4px; }
+.trip-updates { color: #2f4550; font-size: 0.85rem; margin-top: 4px; }
+
+.trip-avatars { display: flex; gap: 6px; margin-top: 6px; }
+.avatar.tiny { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#5b8ba8,#7ba4c2); border: 2px solid #e6eaee; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+
+.trip-actions { display: flex; justify-content: center; padding: 8px 8px 0 8px; }
+.open-journal-btn.pill { background: #e6ebef; color: #0d5678; border: 1px solid #0d5678; padding: 8px 18px; border-radius: 999px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: background 0.2s, color 0.2s, transform 0.2s; }
+.open-journal-btn.pill:hover { background: #0d5678; color: #fff; transform: translateY(-1px); }
 .edit-panel {
   margin-top: 16px;
   border-top: 1px dashed #ccc;

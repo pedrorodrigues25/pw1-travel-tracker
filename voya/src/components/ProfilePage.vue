@@ -87,6 +87,19 @@
       </div>
       <br />
       <button type="button" class="action-btn save-btn" @click="saveAboutMe">Save</button>
+
+      <div class="profile-archived-card" v-if="archivedTrips.length">
+        <h3>Viagens arquivadas</h3>
+        <ul class="archived-list">
+          <li v-for="trip in archivedTrips" :key="trip.id" class="archived-item" @click="goToJournal(trip.id)">
+            <span class="archived-title">
+              <template v-if="trip.city">{{ trip.city }}, {{ trip.destination }}</template>
+              <template v-else>{{ trip.destination }}</template>
+            </span>
+            <span class="archived-date">{{ formatMonthYear(trip.startDate || trip.createdAt) }}</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -110,6 +123,7 @@ const aboutMe = ref(user.value?.aboutMe || '')
 onMounted(() => {
   if (auth.user?.email) {
     interestsStore.load(auth.user.email)
+    selections.load(auth.user.email)
   }
 })
 const editMode = ref(false)
@@ -174,6 +188,19 @@ const tripCount = computed(() => selections.count || 0)
 const interestsCount = computed(() => interestsStore.items.length)
 const userInterests = computed(() => interestsStore.items)
 const progressPercentage = computed(() => (tripCount.value % 10) * 10)
+
+const archivedTrips = computed(() => selections.items.filter((t) => t.archived))
+
+function formatMonthYear(dateStr) {
+  const d = new Date(dateStr)
+  if (Number.isNaN(d.getTime())) return ''
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December']
+  return `${months[d.getMonth()]} ${d.getFullYear()}`
+}
+
+function goToJournal(tripId) {
+  router.push({ name: 'Journal', params: { tripId } })
+}
 
 function handleLogout() {
   auth.logout()

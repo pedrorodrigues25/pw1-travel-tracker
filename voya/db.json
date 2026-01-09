@@ -420,5 +420,168 @@
         "Solo Adventure"
       ]
     }
+  ],
+  "friends": [
+    {
+      "id": "f1",
+      "email": "maria.silva@example.com",
+      "username": "maria_wanderlust",
+      "aboutMe": "Travel photographer capturing moments around the world. Always seeking the next adventure!",
+      "interests": ["Photography", "City Exploration", "Cultural Experiences", "Food & Gastronomy"]
+    },
+    {
+      "id": "f2",
+      "email": "joao.costa@example.com",
+      "username": "joao_explorer",
+      "aboutMe": "Surfer and beach lover. Life is better with sand between your toes.",
+      "interests": ["Beach & Relaxation", "Water Sports", "Solo Adventure", "Road Trips"]
+    },
+    {
+      "id": "f3",
+      "email": "ana.santos@example.com",
+      "username": "ana_foodie",
+      "aboutMe": "Food blogger and culinary enthusiast. Traveling one bite at a time!",
+      "interests": ["Food & Gastronomy", "Cultural Experiences", "City Exploration", "Wine Tasting"]
+    },
+    {
+      "id": "f4",
+      "email": "pedro.alves@example.com",
+      "username": "pedro_hiker",
+      "aboutMe": "Mountain climber and hiking enthusiast. The higher the altitude, the better!",
+      "interests": ["Mountain Hiking", "Nature & Wildlife", "Adventure Sports", "Photography"]
+    },
+    {
+      "id": "f5",
+      "email": "carla.ferreira@example.com",
+      "username": "carla_nomad",
+      "aboutMe": "Digital nomad working remotely from beautiful places. Living the dream!",
+      "interests": ["City Exploration", "Cultural Experiences", "Solo Adventure", "Beach & Relaxation"]
+    },
+    {
+      "id": "f6",
+      "email": "miguel.oliveira@example.com",
+      "username": "miguel_roadtripper",
+      "aboutMe": "Road trip enthusiast. Give me a car and a map, and I'm happy!",
+      "interests": ["Road Trips", "City Exploration", "Food & Gastronomy", "Photography"]
+    },
+    {
+      "id": "f7",
+      "email": "sofia.martins@example.com",
+      "username": "sofia_culture",
+      "aboutMe": "Art historian and museum lover. Fascinated by different cultures and traditions.",
+      "interests": ["Cultural Experiences", "History & Architecture", "City Exploration", "Photography"]
+    },
+    {
+      "id": "f8",
+      "email": "ricardo.pereira@example.com",
+      "username": "ricardo_diver",
+      "aboutMe": "Scuba diving instructor. Exploring the underwater world one dive at a time.",
+      "interests": ["Water Sports", "Beach & Relaxation", "Nature & Wildlife", "Adventure Sports"]
+    },
+    {
+      "id": "f9",
+      "email": "ines.sousa@example.com",
+      "username": "ines_wellness",
+      "aboutMe": "Yoga instructor and wellness advocate. Finding peace in every destination.",
+      "interests": ["Beach & Relaxation", "Wellness & Yoga", "Nature & Wildlife", "Cultural Experiences"]
+    },
+    {
+      "id": "f10",
+      "email": "tiago.rodrigues@example.com",
+      "username": "tiago_adrenaline",
+      "aboutMe": "Adrenaline junkie! Skydiving, bungee jumping, white water rafting - I do it all!",
+      "interests": ["Adventure Sports", "Mountain Hiking", "Water Sports", "Solo Adventure"]
+    },
+    {
+      "id": "f11",
+      "email": "beatriz.gomes@example.com",
+      "username": "beatriz_luxury",
+      "aboutMe": "Luxury travel blogger. Experiencing the finest hotels and resorts worldwide.",
+      "interests": ["Beach & Relaxation", "Wine Tasting", "Food & Gastronomy", "Spa & Wellness"]
+    },
+    {
+      "id": "f12",
+      "email": "luis.fernandes@example.com",
+      "username": "luis_backpacker",
+      "aboutMe": "Budget backpacker exploring the world with just a backpack and a smile.",
+      "interests": ["Solo Adventure", "Cultural Experiences", "City Exploration", "Food & Gastronomy"]
+    },
+    {
+      "id": "f13",
+      "email": "catarina.lopes@example.com",
+      "username": "catarina_wildlife",
+      "aboutMe": "Wildlife photographer and nature conservationist. Protecting our planet one photo at a time.",
+      "interests": ["Nature & Wildlife", "Photography", "Mountain Hiking", "Eco-Tourism"]
+    },
+    {
+      "id": "f14",
+      "email": "bruno.carvalho@example.com",
+      "username": "bruno_festival",
+      "aboutMe": "Music festival traveler. Dancing my way around the world!",
+      "interests": ["Music Festivals", "City Exploration", "Cultural Experiences", "Nightlife"]
+    },
+    {
+      "id": "f15",
+      "email": "diana.nunes@example.com",
+      "username": "diana_history",
+      "aboutMe": "History teacher and ancient ruins explorer. Every stone has a story to tell.",
+      "interests": ["History & Architecture", "Cultural Experiences", "City Exploration", "Photography"]
+    },
+    {
+      "id": "f16",
+      "email": "francisco.machado@example.com",
+      "username": "francisco_cyclist",
+      "aboutMe": "Long-distance cyclist. Pedaling through continents and cultures.",
+      "interests": ["Road Trips", "Solo Adventure", "Nature & Wildlife", "Photography"]
+    },
+    {
+      "id": "f17",
+      "email": "mariana.ramos@example.com",
+      "username": "mariana_vineyard",
+      "aboutMe": "Wine sommelier exploring vineyards and wineries around the globe.",
+      "interests": ["Wine Tasting", "Food & Gastronomy", "Cultural Experiences", "Road Trips"]
+    },
+    {
+      "id": "f18",
+      "email": "andre.silva@example.com",
+      "username": "andre_winter",
+      "aboutMe": "Skiing and snowboarding enthusiast. Winter sports are my passion!",
+      "interests": ["Winter Sports", "Mountain Hiking", "Adventure Sports", "Photography"]
+    },
+    {
+      "id": "f19",
+      "email": "rita.pinto@example.com",
+      "username": "rita_volunteer",
+      "aboutMe": "Volunteer traveler. Making a difference in communities around the world.",
+      "interests": ["Cultural Experiences", "Eco-Tourism", "Solo Adventure", "Community Service"]
+    },
+    {
+      "id": "f20",
+      "email": "hugo.barbosa@example.com",
+      "username": "hugo_sailing",
+      "aboutMe": "Sailor and boat captain. Navigating the world's oceans and discovering hidden islands.",
+      "interests": ["Water Sports", "Beach & Relaxation", "Nature & Wildlife", "Adventure Sports"]
+    },
+    {
+      "id": "f21",
+      "email": "paula.matos@example.com",
+      "username": "paula_spa",
+      "aboutMe": "Spa and wellness retreat specialist. Relaxation is the key to happiness.",
+      "interests": ["Spa & Wellness", "Beach & Relaxation", "Wellness & Yoga", "Food & Gastronomy"]
+    },
+    {
+      "id": "f22",
+      "email": "nuno.teixeira@example.com",
+      "username": "nuno_urban",
+      "aboutMe": "Urban explorer and street art enthusiast. Every city has hidden gems to discover.",
+      "interests": ["City Exploration", "Cultural Experiences", "Photography", "Nightlife"]
+    },
+    {
+      "id": "f23",
+      "email": "teresa.correia@example.com",
+      "username": "teresa_camping",
+      "aboutMe": "Camping and outdoor adventure lover. Sleeping under the stars is my therapy.",
+      "interests": ["Nature & Wildlife", "Mountain Hiking", "Solo Adventure", "Photography"]
+    }
   ]
 }

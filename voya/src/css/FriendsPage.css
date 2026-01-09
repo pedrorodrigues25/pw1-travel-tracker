@@ -1,0 +1,628 @@
+.friends-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #b9c6d1;
+  padding: 0;
+}
+
+.friends-main {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 30px;
+  padding: 40px 30px;
+  flex: 1;
+}
+
+/* See where your friends are section */
+.friends-locations {
+  grid-column: 1;
+}
+
+.friends-locations h2 {
+  color: #ffffff;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggle-all-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid white;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.toggle-all-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.toggle-all-btn:active {
+  transform: translateY(0);
+}
+
+.friend-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.friend-card {
+  background: linear-gradient(to bottom, #d5dee5 0%, #d5dee5 35%, #9eadb8 35%, #9eadb8 100%);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.friend-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.friend-card-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  gap: 12px;
+  position: relative;
+}
+
+.friend-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #0d5678;
+  flex-shrink: 0;
+}
+
+.friend-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  background: #0d5678;
+}
+
+.friend-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.friend-name {
+  font-size: 16px;
+  margin: 0;
+  color: #0d5678;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.friend-username {
+  color: #0d5678;
+  font-size: 13px;
+  margin: 2px 0 0 0;
+  font-weight: 400;
+}
+
+.friend-date {
+  color: #0d5678;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.friend-card-body {
+  flex: 1;
+  min-height: 140px;
+  background: #9eadb8;
+  position: relative;
+  overflow: hidden;
+}
+
+.friend-trip-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  min-height: 140px;
+}
+
+.no-trip-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5a6d7a;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.friend-trip-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  padding: 20px 12px 10px 12px;
+}
+
+.trip-location {
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.friend-lasttrip {
+  color: #0d5678;
+  font-size: 12px;
+  margin: 4px 0 0 0;
+  font-weight: 500;
+}
+
+/* Your trips with friends section */
+.shared-trips {
+  grid-column: 1;
+  margin-bottom: 40px;
+}
+
+.shared-trips h2 {
+  color: #ffffff;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.see-full {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  border-bottom: 2px solid #ffffff;
+  padding-bottom: 2px;
+}
+
+.see-full:hover {
+  opacity: 0.8;
+}
+
+.trips-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.trip-card-small {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.trip-card-small:hover {
+  transform: translateY(-5px);
+}
+
+.trip-image {
+  width: 100%;
+  height: 150px;
+  background: #e0e0e0;
+  overflow: hidden;
+}
+
+.trip-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #5b8ba8 0%, #7ba4c2 100%);
+}
+
+.trip-details {
+  padding: 12px;
+}
+
+.trip-details h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.trip-status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.trip-status.completed {
+  background: #4caf50;
+  color: white;
+}
+
+.trip-status.upcoming {
+  background: #ff9800;
+  color: white;
+}
+
+.trip-notes {
+  font-size: 12px;
+  color: #666;
+  margin: 6px 0 0 0;
+}
+
+/* People you may know section */
+.recommendations {
+  grid-column: 1;
+  margin-bottom: 40px;
+}
+
+.recommendations h2 {
+  color: #ffffff;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+.person-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.person-card:hover {
+  transform: translateY(-5px);
+}
+
+.person-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #e0e0e0;
+}
+
+.person-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.person-card h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.person-about {
+  color: #666;
+  font-size: 12px;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.see-profile-btn {
+  background: #0d5678;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.3s;
+}
+
+.see-profile-btn:hover {
+  background: #094567;
+}
+
+/* Profile modal */
+.profile-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 20px;
+}
+
+.profile-modal {
+  background: #f4f7fa;
+  border-radius: 14px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+  width: min(420px, 90vw);
+  padding: 22px 24px 20px;
+  position: relative;
+  border: 1px solid rgba(13, 86, 120, 0.15);
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: #0d5678;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+}
+
+.profile-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.modal-avatar {
+  width: 60px;
+  height: 60px;
+}
+
+.profile-meta h3 {
+  margin: 0;
+  color: #0d5678;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.profile-email {
+  margin: 4px 0 0 0;
+  color: #3b5a6b;
+  font-size: 13px;
+}
+
+.profile-about {
+  margin: 6px 0 14px 0;
+  color: #2a3f4e;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.profile-interests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  background: rgba(13, 86, 120, 0.12);
+  color: #0d5678;
+  border: 1px solid rgba(13, 86, 120, 0.2);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.add-friend-btn {
+  margin-top: 14px;
+  width: 100%;
+  background: #0d5678;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+  box-shadow: 0 6px 14px rgba(13, 86, 120, 0.25);
+}
+
+.add-friend-btn:hover {
+  background: #0b4a68;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(13, 86, 120, 0.3);
+}
+
+.add-friend-btn:active {
+  transform: translateY(0);
+}
+
+/* Friendlist sidebar */
+.friendlist-sidebar {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.friendlist-sidebar h3 {
+  font-size: 18px;
+  margin: 0 0 15px 0;
+  color: #0d5678;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.search-friends {
+  margin-bottom: 15px;
+}
+
+.search-friends input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 12px;
+  transition: border-color 0.3s;
+}
+
+.search-friends input:focus {
+  outline: none;
+  border-color: #0d5678;
+}
+
+.friends-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.friend-item:hover {
+  background: #f0f0f0;
+}
+
+.friend-avatar-small {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #e0e0e0;
+}
+
+.friend-avatar-small img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder-small {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0d5678 0%, #1a7ba8 100%);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.friend-item span {
+  font-size: 13px;
+  color: #333;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .friends-main {
+    grid-template-columns: 1fr;
+  }
+
+  .friendlist-sidebar {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .shared-trips,
+  .recommendations {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .friends-main {
+    gap: 20px;
+    padding: 20px 15px;
+  }
+
+  .friend-cards,
+  .trips-cards,
+  .recommendations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .friends-locations h2,
+  .shared-trips h2,
+  .recommendations h2 {
+    font-size: 18px;
+  }
+
+  .friendlist-sidebar {
+    padding: 15px;
+  }
+}

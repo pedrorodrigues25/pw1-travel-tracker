@@ -240,14 +240,13 @@ async function loadFriendsData() {
 }
 
 function getLastTrip(friendEmail) {
-    
+
   return 'Paris, France'
 }
 
 function formatLastTripDate(friend) {
   // Format the last trip date for display
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 
-                  'July', 'August', 'September', 'October', 'November', 'December']
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   
   if (friend.lastTrip && friend.lastTrip.startDate) {
     const tripDate = new Date(friend.lastTrip.startDate)

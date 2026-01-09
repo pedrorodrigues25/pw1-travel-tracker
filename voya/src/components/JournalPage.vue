@@ -54,8 +54,25 @@
           <div class="figma-journal-day-block">
             <div class="figma-journal-day-title">About the destination</div>
             <div class="figma-journal-day-text">
-              <template v-if="wikiInfo">{{ wikiInfo.extract }}</template>
+              <template v-if="trip?.customText">{{ trip.customText }}</template>
+              <template v-else-if="wikiInfo">{{ wikiInfo.extract }}</template>
               <template v-else>Information not available.</template>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Secção de amigos na viagem -->
+        <div v-if="tripFriendsDetails.length > 0" class="figma-trip-friends">
+          <h3>Friends on this trip</h3>
+          <div class="friends-avatars">
+            <div v-for="friend in tripFriendsDetails" :key="friend.id" class="friend-avatar-item">
+              <div class="friend-avatar">
+                <div v-if="!friend.photo" class="avatar-placeholder">
+                  {{ friend.username.charAt(0).toUpperCase() }}
+                </div>
+                <img v-else :src="friend.photo" :alt="friend.username" />
+              </div>
+              <span class="friend-name">{{ friend.username }}</span>
             </div>
           </div>
         </div>
@@ -94,6 +111,48 @@
           multiple 
           style="display: none;"
         />
+
+        <!-- Edit Panel -->
+        <div v-if="editingPanel" class="edit-panel-overlay">
+          <div class="edit-panel-modal">
+            <h3>Edit Trip Information</h3>
+            
+            <div class="edit-section">
+              <label>About the destination:</label>
+              <textarea 
+                v-model="editedText" 
+                rows="6"
+                class="edit-textarea"
+                placeholder="Edit the destination description..."
+              ></textarea>
+            </div>
+
+            <div class="edit-section">
+              <label>Add Friends to this trip:</label>
+              <div class="friends-list">
+                <div 
+                  v-for="friend in availableFriends" 
+                  :key="friend.id"
+                  class="friend-item"
+                >
+                  <input 
+                    type="checkbox" 
+                    :id="'friend-' + friend.id"
+                    :checked="tripFriends.includes(friend.id)"
+                    @change="toggleFriend(friend.id)"
+                  />
+                  <label :for="'friend-' + friend.id">{{ friend.username }}</label>
+                </div>
+              </div>
+              <p v-if="availableFriends.length === 0" class="no-friends">No friends available.</p>
+            </div>
+
+            <div class="edit-actions">
+              <button class="btn-save" @click="saveEdits">Save</button>
+              <button class="btn-cancel" @click="cancelEdit">Cancel</button>
+            </div>
+          </div>
+        </div>
       </div>
       <div v-else class="journal-not-found">
         <p>Viagem não encontrada.</p>
@@ -108,6 +167,7 @@ import { useRouter } from 'vue-router'
 import { useSelectionsStore } from '../stores/selections'
 import { fetchCountryWikipediaSummary, fetchWikipediaImages } from '../api/countries'
 import { useAuthStore } from '../stores/auth'
+import { getUserFriends, getFriends } from '../api/api'
 
 const API_BASE = 'http://localhost:3001'
 
@@ -117,9 +177,21 @@ const selections = useSelectionsStore()
 const auth = useAuthStore()
 const trip = computed(() => selections.items.find((t) => t.id == props.tripId))
 
+const tripFriendsDetails = computed(() => {
+  if (!trip.value || !trip.value.friends || trip.value.friends.length === 0) return []
+  return allFriendsData.value.filter(f => trip.value.friends.includes(f.id))
+})
+
 // Fotos da viagem
 const photos = ref([])
 const fileInput = ref(null)
+
+// Edit panel state
+const editingPanel = ref(false)
+const editedText = ref('')
+const availableFriends = ref([])
+const tripFriends = ref([])
+const allFriendsData = ref([])
 
 // Carregar fotos da viagem do servidor
 async function loadPhotos() {
@@ -157,8 +229,53 @@ async function savePhotos() {
 }
 
 function editTrip() {
-  // Abrir seletor de ficheiros para adicionar fotos
-  triggerFileInput()
+  if (auth.isGuest) {
+    alert('Please log in to edit trips.')
+    return
+  }
+  editingPanel.value = true
+  editedText.value = trip.value?.customText || wikiInfo.value?.extract || ''
+  tripFriends.value = trip.value?.friends || []
+}
+
+function cancelEdit() {
+  editingPanel.value = false
+  editedText.value = ''
+  tripFriends.value = []
+}
+
+function toggleFriend(friendId) {
+  const idx = tripFriends.value.indexOf(friendId)
+  if (idx === -1) {
+    tripFriends.value.push(friendId)
+  } else {
+    tripFriends.value.splice(idx, 1)
+  }
+}
+
+async function saveEdits() {
+  if (!trip.value) return
+  try {
+    const response = await fetch(`${API_BASE}/selections/${props.tripId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        customText: editedText.value,
+        friends: tripFriends.value
+      })
+    })
+    if (response.ok) {
+      const updatedTrip = await response.json()
+      const index = selections.items.findIndex(t => t.id == props.tripId)
+      if (index !== -1) selections.items[index] = updatedTrip
+      editingPanel.value = false
+    } else {
+      alert('Could not save changes.')
+    }
+  } catch (e) {
+    console.error('Erro ao guardar edições:', e)
+    alert('Could not save changes.')
+  }
 }
 
 function triggerFileInput() {
@@ -257,6 +374,25 @@ const wikiImages = ref([])
 onMounted(async () => {
   // Carregar fotos guardadas
   loadPhotos()
+  
+  // Carregar dados de todos os amigos para resolução de avatares
+  try {
+    const allFriends = await getFriends()
+    allFriendsData.value = allFriends
+  } catch (e) {
+    console.error('Erro ao carregar dados de amigos:', e)
+  }
+  
+  // Carregar amigos do utilizador (apenas os amigos adicionados)
+  const userEmail = auth.user?.email
+  if (userEmail) {
+    try {
+      const userFriends = await getUserFriends(userEmail)
+      availableFriends.value = userFriends
+    } catch (e) {
+      console.error('Erro ao carregar amigos:', e)
+    }
+  }
   
   let query = trip.value?.city || trip.value?.destination
   if (query) {
@@ -517,5 +653,163 @@ onMounted(async () => {
   color: #888;
   font-size: 1.5rem;
   font-family: 'Quicksand', 'Inter', Arial, sans-serif;
+}
+.edit-panel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.edit-panel-modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+.edit-panel-modal h3 {
+  margin: 0 0 24px 0;
+  color: #222;
+  font-size: 1.3rem;
+}
+.edit-section {
+  margin-bottom: 24px;
+}
+.edit-section label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.edit-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: 'Quicksand', Arial, sans-serif;
+  font-size: 0.95rem;
+  resize: vertical;
+}
+.edit-textarea:focus {
+  outline: none;
+  border-color: #0d5678;
+  box-shadow: 0 0 0 2px rgba(13, 86, 120, 0.1);
+}
+.friends-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.friend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.friend-item input[type="checkbox"] {
+  cursor: pointer;
+}
+.friend-item label {
+  margin: 0;
+  cursor: pointer;
+  font-weight: 400;
+}
+.no-friends {
+  color: #999;
+  font-size: 0.9rem;
+  margin: 0;
+}
+.edit-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+.btn-save, .btn-cancel {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-save {
+  background: #0d5678;
+  color: #fff;
+}
+.btn-save:hover {
+  background: #0a3f53;
+}
+.btn-cancel {
+  background: #e8e8e8;
+  color: #333;
+}
+.btn-cancel:hover {
+  background: #d8d8d8;
+}
+.figma-trip-friends {
+  margin-bottom: 24px;
+}
+.figma-trip-friends h3 {
+  margin: 0 0 16px 0;
+  font-size: 1.3rem;
+  font-family: 'Amatic SC', cursive, sans-serif;
+  font-weight: 700;
+  color: #222;
+}
+.friends-avatars {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.friend-avatar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.friend-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #d6d3ce;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 2px solid #0d5678;
+}
+.friend-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #5b8ba8, #7ba4c2);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+.friend-name {
+  font-size: 0.85rem;
+  color: #555;
+  text-align: center;
+  max-width: 70px;
+  word-break: break-word;
 }
 </style>

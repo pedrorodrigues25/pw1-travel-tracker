@@ -67,7 +67,11 @@
       "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Lisboa_-_Portugal_%2852597836992%29.jpg",
       "userEmail": "arroz@gmail.com",
       "createdAt": "2025-12-28T11:49:44.207Z",
-      "archived": false
+      "archived": false,
+      "customText": "Lisbon, officially the Very Noble and Ever Loyal City of Lisbon, is the capital and most populous municipality of Portugal, with an estimated population of 575,739, as of 2024, within its administrative limits and 3,028,000 within the metropolis, as of 2025. Lisbon is mainland Europe's westernmost capital city, and the only one along the Atlantic coast, the others being on islands. The city lies in the western portion of the Iberian Peninsula, on the northern shore of the River Tagus. The western portion of its metro area, the Portuguese Riviera, hosts the westernmost point of Continental Europe, culminating at Cabo da Roca.",
+      "friends": [
+        "f1"
+      ]
     },
     {
       "id": "8564",
@@ -91,7 +95,12 @@
       "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/73/Marginal_Pinheiros_e_Jockey_Club.jpg",
       "userEmail": "arroz@gmail.com",
       "createdAt": "2026-01-09T12:25:42.113Z",
-      "id": "r5H2T5N"
+      "id": "r5H2T5N",
+      "customText": "São Paulo is the capital city of the state of São Paulo, as well as the most populous city in Brazil, in the Americas and in the southern hemisphere. Listed by the Globalization and World Cities Research Network (GaWC) as an alpha global city, it exerts international influence in commerce, finance, culture, gastronomy, arts, fashion, technology, entertainment and media, which has earned it inclusion in UNESCO's Creative Cities Network as a \"City of Film\" and the title of \"World Capital of Gastronomy\". It is the largest urban area by population outside Asia and the most populous Portuguese-speaking city in the world. The city's name honors Paul the Apostle and people from the city are known as paulistanos. The city's Latin motto is Non ducor, duco, which translates as \"I am not led, I lead\".",
+      "friends": [
+        "f3",
+        "f2"
+      ]
     }
   ],
   "destinations": [
@@ -670,6 +679,28 @@
         "Solo Adventure",
         "Photography"
       ]
+    }
+  ],
+  "userFriends": [
+    {
+      "id": "uf1",
+      "userEmail": "arroz@gmail.com",
+      "friendId": "f1"
+    },
+    {
+      "id": "uf2",
+      "userEmail": "arroz@gmail.com",
+      "friendId": "f2"
+    },
+    {
+      "id": "uf3",
+      "userEmail": "arroz@gmail.com",
+      "friendId": "f3"
+    },
+    {
+      "userEmail": "arroz@gmail.com",
+      "friendId": "f4",
+      "id": "I3teaGk"
     }
   ]
 }

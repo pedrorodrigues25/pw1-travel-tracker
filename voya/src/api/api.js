@@ -119,6 +119,55 @@ async function getFriends(userEmail) {
   }
 }
 
+// USER FRIENDS (relações de amizade persistentes)
+async function getUserFriends(userEmail) {
+  try {
+    // Buscar relações de amizade do utilizador
+    const res = await fetch(`${API_BASE}/userFriends?userEmail=${encodeURIComponent(userEmail)}`)
+    if (!res.ok) throw new Error('Erro ao obter amizades')
+    const userFriends = await res.json()
+    
+    // Buscar detalhes de cada amigo
+    const allFriends = await getFriends()
+    const friendIds = userFriends.map(uf => uf.friendId)
+    return allFriends.filter(f => friendIds.includes(f.id))
+  } catch (e) {
+    console.error('Erro ao ler amizades:', e)
+    return []
+  }
+}
+
+async function addUserFriend(userEmail, friendId) {
+  try {
+    const res = await fetch(`${API_BASE}/userFriends`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userEmail, friendId })
+    })
+    if (!res.ok) throw new Error('Erro ao adicionar amigo')
+    return await res.json()
+  } catch (e) {
+    console.error('Erro ao adicionar amigo:', e)
+    return null
+  }
+}
+
+async function removeUserFriend(userEmail, friendId) {
+  try {
+    // Primeiro encontrar a relação
+    const res = await fetch(`${API_BASE}/userFriends?userEmail=${encodeURIComponent(userEmail)}&friendId=${encodeURIComponent(friendId)}`)
+    const relations = await res.json()
+    if (relations.length === 0) return false
+    
+    // Apagar a relação
+    const deleteRes = await fetch(`${API_BASE}/userFriends/${relations[0].id}`, { method: 'DELETE' })
+    return deleteRes.ok
+  } catch (e) {
+    console.error('Erro ao remover amigo:', e)
+    return false
+  }
+}
+
 async function saveInterest(interest) {
   try {
     const res = await fetch(`${API_BASE}/interests`, {
@@ -145,4 +194,7 @@ export {
   saveInterest,
   getRecommendations,
   getFriends,
+  getUserFriends,
+  addUserFriend,
+  removeUserFriend,
 }

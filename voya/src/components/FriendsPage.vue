@@ -148,7 +148,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
-import { getFriends, getSelections } from '../api/api'
+import { getFriends, getSelections, getUserFriends, addUserFriend, removeUserFriend } from '../api/api'
 import { fetchCountryWikipediaSummary } from '../api/countries'
 
 const auth = useAuthStore()
@@ -176,13 +176,16 @@ const isPersonFriend = computed(() => {
 async function loadFriendsData() {
   if (!user || !user.email) return
 
-  // Get all friends except current user
-  const allFriends = await getFriends(user.email)
-  console.log('All friends:', allFriends)
+  // Get user's actual friends (from userFriends table)
+  const userFriendsList = await getUserFriends(user.email)
+  const userFriendIds = userFriendsList.map(f => f.id)
+  
+  // Get all available people
+  const allPeople = await getFriends()
   
   // Fetch last trip for each friend
   const friendsWithTrips = await Promise.all(
-    allFriends.map(async (friend) => {
+    userFriendsList.map(async (friend) => {
       console.log('Loading trips for friend:', friend.username, friend.email)
       const friendTrips = await getSelections(friend.email)
       console.log('Friend trips:', friendTrips)
@@ -226,8 +229,10 @@ async function loadFriendsData() {
   )
   
   console.log('Friends with trips:', friendsWithTrips)
-  friends.value = friendsWithTrips.slice(0, 3) // Only first 3 as friends
-  recommendations.value = friendsWithTrips.slice(3) // People you may know
+  friends.value = friendsWithTrips
+  
+  // Recommendations are people not yet added as friends
+  recommendations.value = allPeople.filter(p => !userFriendIds.includes(p.id))
 
   // Get user's trips to find shared destinations
   const userTrips = await getSelections(user.email)
@@ -276,12 +281,17 @@ function closeProfileModal() {
   selectedPerson.value = null
 }
 
-function addFriend(person) {
+async function addFriend(person) {
   if (!person) return
+  if (!user || !user.email) return
   if (friends.value.some((f) => f.id === person.id)) return
 
-  recommendations.value = recommendations.value.filter((p) => p.id !== person.id)
-  friends.value = [...friends.value, person]
+  // Guardar no servidor
+  const result = await addUserFriend(user.email, person.id)
+  if (result) {
+    recommendations.value = recommendations.value.filter((p) => p.id !== person.id)
+    friends.value = [...friends.value, person]
+  }
 
   closeProfileModal()
 }

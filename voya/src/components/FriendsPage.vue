@@ -140,6 +140,13 @@
         >
           Add Friend
         </button>
+        <button
+          v-if="selectedPerson && isPersonFriend"
+          class="remove-friend-btn"
+          @click="removeFriend(selectedPerson)"
+        >
+          Remove Friend
+        </button>
       </div>
     </div>
   </div>
@@ -289,6 +296,21 @@ async function addFriend(person) {
   if (result) {
     recommendations.value = recommendations.value.filter((p) => p.id !== person.id)
     friends.value = [...friends.value, person]
+  }
+
+  closeProfileModal()
+}
+
+async function removeFriend(person) {
+  if (!person) return
+  if (!user || !user.email) return
+  if (!friends.value.some((f) => f.id === person.id)) return
+
+  // Remover do servidor
+  const result = await removeUserFriend(user.email, person.id)
+  if (result) {
+    friends.value = friends.value.filter((f) => f.id !== person.id)
+    recommendations.value = [...recommendations.value, person]
   }
 
   closeProfileModal()

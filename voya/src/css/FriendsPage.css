@@ -548,6 +548,33 @@
   transform: translateY(0);
 }
 
+.remove-friend-btn {
+  margin-top: 14px;
+  width: 100%;
+  background: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+  box-shadow: 0 6px 14px rgba(217, 83, 79, 0.25);
+}
+
+.remove-friend-btn:hover {
+  background: #c9302c;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(217, 83, 79, 0.3);
+}
+
+.remove-friend-btn:active {
+  transform: translateY(0);
+}
+
 /* Friendlist sidebar */
 .friendlist-sidebar {
   grid-column: 2;

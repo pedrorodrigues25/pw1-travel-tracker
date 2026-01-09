@@ -140,7 +140,6 @@ import { useInterestsStore } from '../stores/interests'
 import { getFriends } from '../api/api'
 import '../css/DestinationsList.css'
 
-const API_BASE = 'http://localhost:3001'
 
 const auth = useAuthStore()
 const selections = useSelectionsStore()

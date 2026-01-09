@@ -79,23 +79,6 @@
   ],
   "selections": [
     {
-      "id": "0f28",
-      "destination": "Portugal",
-      "city": "Lisbon",
-      "notes": "",
-      "status": "upcoming",
-      "startDate": "2025-12-09",
-      "endDate": "2025-12-17",
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Lisboa_-_Portugal_%2852597836992%29.jpg",
-      "userEmail": "arroz@gmail.com",
-      "createdAt": "2025-12-28T11:49:44.207Z",
-      "archived": false,
-      "customText": "Lisbon, officially the Very Noble and Ever Loyal City of Lisbon, is the capital and most populous municipality of Portugal, with an estimated population of 575,739, as of 2024, within its administrative limits and 3,028,000 within the metropolis, as of 2025. Lisbon is mainland Europe's westernmost capital city, and the only one along the Atlantic coast, the others being on islands. The city lies in the western portion of the Iberian Peninsula, on the northern shore of the River Tagus. The western portion of its metro area, the Portuguese Riviera, hosts the westernmost point of Continental Europe, culminating at Cabo da Roca.",
-      "friends": [
-        "f1"
-      ]
-    },
-    {
       "id": "8564",
       "destination": "Portugal",
       "city": "Porto",
@@ -132,18 +115,6 @@
       ]
     },
     {
-      "destination": "Portugal",
-      "city": "Porto",
-      "notes": "",
-      "status": "upcoming",
-      "startDate": "",
-      "endDate": "",
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Puente_Don_Luis_I%2C_Oporto%2C_Portugal%2C_2012-05-09%2C_DD_13.JPG",
-      "userEmail": "arroz@gmail.com",
-      "createdAt": "2026-01-09T16:34:52.172Z",
-      "id": "B6OV_eh"
-    },
-    {
       "destination": "Japan",
       "city": "Tokyo",
       "notes": "",
@@ -155,24 +126,6 @@
       "createdAt": "2026-01-09T16:44:03.871Z",
       "id": "ebOM6Wm",
       "customText": "Tokyo, officially the Tokyo Metropolis, is the capital and most populous city of Japan. With a population of over 14 million in the city proper in 2023, it is one of the most populous urban areas in the world. The Greater Tokyo Area, which includes Tokyo and parts of six neighboring prefectures, is the most populous metropolitan area in the world, with 41 million residents as of 2024.",
-      "friends": [
-        "f1",
-        "f2",
-        "f3"
-      ]
-    },
-    {
-      "destination": "Denmark",
-      "city": "Copenhagen",
-      "notes": "",
-      "status": "upcoming",
-      "startDate": "2026-01-22",
-      "endDate": "2026-01-27",
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Christiansborg_fra_Nikolaj_Kirken.jpg",
-      "userEmail": "arroz@gmail.com",
-      "createdAt": "2026-01-09T16:59:21.003Z",
-      "id": "qVILMT1",
-      "customText": "Copenhagen is the capital and most populous city in the Kingdom of Denmark, with a population of 667,000 people in the municipality and 1.4 million in the urban area. The city is situated mainly on the island of Zealand (Sjælland), with a smaller part on the island of Amager. Copenhagen is separated from Malmö, Sweden, by the Øresund strait. The Øresund Bridge connects the two cities by rail and road.",
       "friends": [
         "f1",
         "f2",
@@ -805,11 +758,6 @@
   ],
   "userFriends": [
     {
-      "id": "uf1",
-      "userEmail": "arroz@gmail.com",
-      "friendId": "f1"
-    },
-    {
       "id": "uf2",
       "userEmail": "arroz@gmail.com",
       "friendId": "f2"
@@ -833,6 +781,11 @@
       "userEmail": "mariamelo2006@gmail.com",
       "friendId": "f15",
       "id": "rFvCNHl"
+    },
+    {
+      "userEmail": "arroz@gmail.com",
+      "friendId": "f1",
+      "id": "GQnMD4Y"
     }
   ]
 }

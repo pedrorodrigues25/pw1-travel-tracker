@@ -272,41 +272,6 @@ async function addSelection() {
   countryQuery.value = ''
 }
 
-/* Unused edit functions - kept for potential future use
-function startEdit(item) {
-  if (auth.isGuest) {
-    showLoginAlert.value = true
-    return
-  }
-  editing.value = true
-  editId.value = item.id
-  editForm.destination = item.destination
-  editForm.notes = item.notes || ''
-  editForm.status = item.status || 'upcoming'
-}
-
-function confirmEdit() {
-  if (auth.isGuest) {
-    showLoginAlert.value = true
-    return
-  }
-  if (!editId.value) return
-  selections.update(
-    editId.value,
-    { destination: editForm.destination, notes: editForm.notes, status: editForm.status },
-    user.email,
-  )
-  cancelEdit()
-}
-
-function cancelEdit() {
-  editing.value = false
-  editId.value = null
-  editForm.destination = ''
-  editForm.notes = ''
-}
-*/
-
 function goToJournal(tripId) {
   router.push({ name: 'Journal', params: { tripId } })
 }

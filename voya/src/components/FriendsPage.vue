@@ -240,8 +240,7 @@ async function loadFriendsData() {
 }
 
 function getLastTrip(friendEmail) {
-  // This would fetch the last trip for a friend if available
-  // For now, returning a placeholder
+    
   return 'Paris, France'
 }
 

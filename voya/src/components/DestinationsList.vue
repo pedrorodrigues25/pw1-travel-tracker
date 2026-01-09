@@ -78,7 +78,34 @@
         <div class="trip-card total-trips">
           <div class="trip-label">TOTAL TRIPS</div>
           <div class="trip-chart">
-            <p class="chart-placeholder">grafico</p>
+            <div class="chart-container">
+              <div class="chart-bars">
+                <div class="bar-group">
+                  <div class="bar-wrapper">
+                    <div class="bar completed" :style="{ height: completedPercentage + '%' }"></div>
+                    <span class="bar-label">Completed</span>
+                  </div>
+                  <div class="bar-count">{{ completedTrips }}</div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-wrapper">
+                    <div class="bar upcoming" :style="{ height: upcomingPercentage + '%' }"></div>
+                    <span class="bar-label">Upcoming</span>
+                  </div>
+                  <div class="bar-count">{{ upcomingTrips }}</div>
+                </div>
+              </div>
+              <div class="chart-legend">
+                <div class="legend-item">
+                  <span class="legend-color completed"></span>
+                  <span>Completed</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-color upcoming"></span>
+                  <span>Upcoming</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -131,6 +158,26 @@ const lastTrip = computed(() => {
 const lastTripFriendsDetails = computed(() => {
   if (!lastTrip.value || !lastTrip.value.friends || lastTrip.value.friends.length === 0) return []
   return allFriends.value.filter(f => lastTrip.value.friends.includes(f.id))
+})
+
+const completedTrips = computed(() => {
+  return selections.items.filter(trip => trip.status === 'completed').length
+})
+
+const upcomingTrips = computed(() => {
+  return selections.items.filter(trip => trip.status === 'upcoming').length
+})
+
+const totalTripsCount = computed(() => completedTrips.value + upcomingTrips.value)
+
+const completedPercentage = computed(() => {
+  if (totalTripsCount.value === 0) return 0
+  return (completedTrips.value / totalTripsCount.value) * 100
+})
+
+const upcomingPercentage = computed(() => {
+  if (totalTripsCount.value === 0) return 0
+  return (upcomingTrips.value / totalTripsCount.value) * 100
 })
 
 async function loadUserData() {

@@ -381,3 +381,4 @@ Este projeto é criado para fins educacionais como parte do currículo ESMAD.
 Para dúvidas, melhorias ou relatos de bugs, contacte a equipa de desenvolvimento ou abra uma issue no GitHub.
 
 ---
+

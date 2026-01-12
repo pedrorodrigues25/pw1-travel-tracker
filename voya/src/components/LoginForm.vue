@@ -109,7 +109,7 @@ async function submit() {
     email.value = ''
     password.value = ''
 
-    router.push('/destinations')
+    router.push('/homepage')
   } catch (error) {
     errorMessage.value = error.message
   }

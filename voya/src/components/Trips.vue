@@ -1,5 +1,5 @@
 <template>
-  <div class="trips">
+  <div class="trips-container">
     <nav class="navbar">
       <router-link to="/" class="navbar-logo">
         <img src="@/img/logo-pw1-voya.png" alt="Voya Logo" height="38" />
@@ -12,115 +12,119 @@
         <router-link to="/profile" active-class="active">Profile</router-link>
       </div>
     </nav>
+    <div class="trips-main">
+      <h2 class="voya-section-title">Choose Destinations</h2>
+      <!-- Conteúdo principal da antiga DestinationsList.vue -->
+      <section class="create">
+        <label>Destination (Country):</label>
+        <input
+          v-model="countryQuery"
+          @input="onCountryInput"
+          @focus="onCountryInput"
+          placeholder="Type a country..."
+          autocomplete="off"
+          class="country-search-input"
+        />
+        <ul v-if="showSuggestions && countryResults.length" class="country-suggestions">
+          <li v-for="country in countryResults" :key="country.code" @click="selectCountry(country)">
+            <img v-if="country.flag" :src="country.flag" alt="flag" class="country-flag" />
+            {{ country.name }}
+          </li>
+        </ul>
+        <label v-if="form.destination">City:</label>
+        <input
+          v-if="form.destination"
+          v-model="form.city"
+          @focus="showCitySuggestions = true"
+          placeholder="Type or select a city..."
+          autocomplete="off"
+          class="city-search-input"
+        />
+        <ul v-if="showCitySuggestions && cityResults.length" class="city-suggestions">
+          <li v-for="city in cityResults" :key="city" @click="selectCity(city)">{{ city }}</li>
+        </ul>
+        <label>Notes (optional):</label>
+        <input v-model="form.notes" placeholder="Notes about the trip" />
+        <label>Status:</label>
+        <select v-model="form.status">
+          <option value="upcoming">Upcoming</option>
+          <option value="completed">Completed</option>
+        </select>
+        <label>Start Date:</label>
+        <input type="date" v-model="form.startDate" required />
+        <label>End Date:</label>
+        <input type="date" v-model="form.endDate" :min="form.startDate" required />
+        <button class="btn" @click="addSelection" :disabled="!form.destination">Save</button>
+      </section>
+      <section class="list">
+        <h3>My selections ({{ activeTripCount }})</h3>
+        <div class="cards-container">
+          <div v-for="it in activeTrips" :key="it.id" class="trip-card">
+            <div class="card-icons"></div>
+            <div class="trip-cover">
+              <img v-if="it.imageUrl" :src="it.imageUrl" :alt="it.city || it.destination" />
+              <div v-else class="trip-cover-placeholder"></div>
+            </div>
+            <div class="trip-info">
+              <div class="trip-title-row">
+                <h4 class="trip-title">
+                  <template v-if="it.city">{{ it.city }}, {{ it.destination }}</template>
+                  <template v-else>{{ it.destination }}</template>
+                </h4>
+                <span class="trip-status pill" :class="it.status">{{
+                  it.status === 'completed' ? 'Completed' : 'Upcoming'
+                }}</span>
+              </div>
+              <div class="trip-date">{{ formatMonthYear(it.startDate || it.createdAt) }}</div>
+              <div class="trip-updates">0 New Updates</div>
+              <div class="trip-avatars">
+                <span class="avatar tiny" v-for="n in 3" :key="n"></span>
+              </div>
+            </div>
+            <div class="trip-actions">
+              <button class="open-journal-btn pill" @click="goToJournal(it.id)">
+                Open the Journal
+              </button>
+            </div>
+          </div>
+        </div>
+        <div v-if="activeTripCount === 0">You haven't saved any destinations yet.</div>
+      </section>
+      <section v-if="editing" class="edit-panel">
+        <h3>Edit selection</h3>
+        <label>Destination:</label>
+        <div class="destination-search">
+          <input
+            v-model="countryQuery"
+            @input="onCountryInput"
+            placeholder="Search for a country..."
+            class="country-input"
+          />
+          <div v-if="showSuggestions" class="suggestions-list">
+            <div
+              v-for="country in countryResults"
+              :key="country.code"
+              class="suggestion-item"
+              @click="selectCountry(country)"
+            >
+              {{ country.name }}
+            </div>
+          </div>
+        </div>
+        <label>Notes:</label>
+        <input v-model="editForm.notes" />
+        <label>Status:</label>
+        <select v-model="editForm.status">
+          <option value="upcoming">Upcoming</option>
+          <option value="completed">Completed</option>
+        </select>
+        <div class="edit-actions">
+          <button class="btn" @click="confirmEdit">Save</button>
+          <button class="btn small" @click="cancelEdit">Cancel</button>
+        </div>
+      </section>
+    </div>
   </div>
-  <h2 style="margin-top: 18px">Choose Destinations</h2>
-  <!-- Conteúdo principal da antiga DestinationsList.vue -->
-  <section class="create">
-    <label>Destination (Country):</label>
-    <input
-      v-model="countryQuery"
-      @input="onCountryInput"
-      @focus="onCountryInput"
-      placeholder="Type a country..."
-      autocomplete="off"
-      class="country-search-input"
-    />
-    <ul v-if="showSuggestions && countryResults.length" class="country-suggestions">
-      <li v-for="country in countryResults" :key="country.code" @click="selectCountry(country)">
-        <img v-if="country.flag" :src="country.flag" alt="flag" class="country-flag" />
-        {{ country.name }}
-      </li>
-    </ul>
-    <label v-if="form.destination">City:</label>
-    <input
-      v-if="form.destination"
-      v-model="form.city"
-      @focus="showCitySuggestions = true"
-      placeholder="Type or select a city..."
-      autocomplete="off"
-      class="city-search-input"
-    />
-    <ul v-if="showCitySuggestions && cityResults.length" class="city-suggestions">
-      <li v-for="city in cityResults" :key="city" @click="selectCity(city)">{{ city }}</li>
-    </ul>
-    <label>Notes (optional):</label>
-    <input v-model="form.notes" placeholder="Notes about the trip" />
-    <label>Status:</label>
-    <select v-model="form.status">
-      <option value="upcoming">Upcoming</option>
-      <option value="completed">Completed</option>
-    </select>
-    <label>Start Date:</label>
-    <input type="date" v-model="form.startDate" required />
-    <label>End Date:</label>
-    <input type="date" v-model="form.endDate" :min="form.startDate" required />
-    <button class="btn" @click="addSelection" :disabled="!form.destination">Save</button>
-  </section>
-  <section class="list">
-    <h3>My selections ({{ activeTripCount }})</h3>
-    <div class="cards-container">
-      <div v-for="it in activeTrips" :key="it.id" class="trip-card">
-        <div class="card-icons">
-          
-        </div>
-        <div class="trip-cover">
-          <img v-if="it.imageUrl" :src="it.imageUrl" :alt="it.city || it.destination" />
-          <div v-else class="trip-cover-placeholder"></div>
-        </div>
-        <div class="trip-info">
-          <div class="trip-title-row">
-            <h4 class="trip-title">
-              <template v-if="it.city">{{ it.city }}, {{ it.destination }}</template>
-              <template v-else>{{ it.destination }}</template>
-            </h4>
-            <span class="trip-status pill" :class="it.status">{{ it.status === 'completed' ? 'Completed' : 'Upcoming' }}</span>
-          </div>
-          <div class="trip-date">{{ formatMonthYear(it.startDate || it.createdAt) }}</div>
-          <div class="trip-updates">0 New Updates</div>
-          <div class="trip-avatars">
-            <span class="avatar tiny" v-for="n in 3" :key="n"></span>
-          </div>
-        </div>
-        <div class="trip-actions">
-          <button class="open-journal-btn pill" @click="goToJournal(it.id)">Open the Journal</button>
-        </div>
-      </div>
-    </div>
-    <div v-if="activeTripCount === 0">You haven't saved any destinations yet.</div>
-  </section>
-  <section v-if="editing" class="edit-panel">
-    <h3>Edit selection</h3>
-    <label>Destination:</label>
-    <div class="destination-search">
-      <input
-        v-model="countryQuery"
-        @input="onCountryInput"
-        placeholder="Search for a country..."
-        class="country-input"
-      />
-      <div v-if="showSuggestions" class="suggestions-list">
-        <div
-          v-for="country in countryResults"
-          :key="country.code"
-          class="suggestion-item"
-          @click="selectCountry(country)"
-        >
-          {{ country.name }}
-        </div>
-      </div>
-    </div>
-    <label>Notes:</label>
-    <input v-model="editForm.notes" />
-    <label>Status:</label>
-    <select v-model="editForm.status">
-      <option value="upcoming">Upcoming</option>
-      <option value="completed">Completed</option>
-    </select>
-    <div class="edit-actions">
-      <button class="btn" @click="confirmEdit">Save</button>
-      <button class="btn small" @click="cancelEdit">Cancel</button>
-    </div>
-  </section>
 </template>
 
 <script setup>
@@ -279,10 +283,22 @@ function goToJournal(tripId) {
 function formatMonthYear(dateStr) {
   const d = new Date(dateStr)
   if (Number.isNaN(d.getTime())) return ''
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December']
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
   return `${months[d.getMonth()]} ${d.getFullYear()}`
 }
-
 
 window.addEventListener('beforeunload', () => {
   if (user && user.email) selections.save(user.email)

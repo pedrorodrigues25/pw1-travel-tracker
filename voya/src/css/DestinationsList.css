@@ -1,18 +1,18 @@
-
 /* Home Landing Page Styles */
 .home-container {
   background: #b9c6d1;
   min-height: 100vh;
-  padding: 40px 20px;
+  padding: 40px 24px;
   font-family: 'Quicksand', 'Inter', Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 .welcome-section {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto 40px;
 }
 
-.welcome-section h1 {
+.welcome-section h1:not(.voya-section-title) {
   font-size: 2.5rem;
   color: #0d5678;
   margin: 0;
@@ -26,7 +26,7 @@
 
 /* User Profile Card */
 .user-profile-card {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto 40px;
   background: #ffffff;
   border-radius: 20px;
@@ -133,7 +133,7 @@
 
 /* See Your Trips Section */
 .see-your-trips {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto 40px;
 }
 
@@ -389,7 +389,7 @@
 
 /* Badges Section */
 .badges-section {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto 40px;
 }
 
@@ -458,7 +458,7 @@
     grid-template-columns: 1fr;
   }
 
-  .welcome-section h1 {
+  .welcome-section h1:not(.voya-section-title) {
     font-size: 1.8rem;
   }
 }

@@ -44,12 +44,20 @@
         </div>
         <div class="figma-journal-main">
           <div class="figma-journal-image-block">
-            <img
-              v-if="wikiInfo?.originalimage?.source"
-              :src="wikiInfo.originalimage.source"
-              :alt="wikiInfo.title"
-              style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px"
-            />
+            <div class="journal-hero">
+              <div v-if="showHeroLoading" class="journal-hero-loading" aria-live="polite">
+                <div class="loading-spinner" aria-hidden="true"></div>
+              </div>
+              <img
+                v-if="wikiInfo?.originalimage?.source"
+                class="journal-hero-main"
+                :class="{ loaded: heroImageLoaded }"
+                :src="wikiInfo.originalimage.source"
+                :alt="wikiInfo.title || 'Destination image'"
+                @load="onHeroLoad"
+                @error="onHeroError"
+              />
+            </div>
           </div>
           <div class="figma-journal-day-block">
             <div class="figma-journal-day-title">About the destination</div>
@@ -60,7 +68,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Secção de amigos na viagem -->
         <div v-if="tripFriendsDetails.length > 0" class="figma-trip-friends">
           <h3>Friends on this trip</h3>
@@ -76,51 +84,42 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Secção de fotos polaroid -->
         <div class="figma-journal-polaroids">
-          <div 
-            v-for="(photo, index) in photos" 
-            :key="index" 
-            class="figma-polaroid"
-          >
-            <img 
-              v-if="photo" 
-              :src="photo" 
-              alt="Foto da viagem" 
-              class="polaroid-photo"
-            />
+          <div v-for="(photo, index) in photos" :key="index" class="figma-polaroid">
+            <img v-if="photo" :src="photo" alt="Foto da viagem" class="polaroid-photo" />
           </div>
           <!-- Slots vazios para completar 4 -->
-          <div 
-            v-for="n in Math.max(0, 4 - photos.length)" 
-            :key="'empty-' + n" 
+          <div
+            v-for="n in Math.max(0, 4 - photos.length)"
+            :key="'empty-' + n"
             class="figma-polaroid empty"
             @click="triggerFileInput"
           >
             <span class="add-photo-icon">+</span>
           </div>
         </div>
-        
+
         <!-- Input escondido para upload de fotos -->
-        <input 
-          type="file" 
-          ref="fileInput" 
-          @change="handleFileUpload" 
-          accept="image/*" 
-          multiple 
-          style="display: none;"
+        <input
+          type="file"
+          ref="fileInput"
+          @change="handleFileUpload"
+          accept="image/*"
+          multiple
+          style="display: none"
         />
 
         <!-- Edit Panel -->
         <div v-if="editingPanel" class="edit-panel-overlay">
           <div class="edit-panel-modal">
             <h3>Edit Trip Information</h3>
-            
+
             <div class="edit-section">
               <label>About the destination:</label>
-              <textarea 
-                v-model="editedText" 
+              <textarea
+                v-model="editedText"
                 rows="6"
                 class="edit-textarea"
                 placeholder="Edit the destination description..."
@@ -130,13 +129,9 @@
             <div class="edit-section">
               <label>Add Friends to this trip:</label>
               <div class="friends-list">
-                <div 
-                  v-for="friend in availableFriends" 
-                  :key="friend.id"
-                  class="friend-item"
-                >
-                  <input 
-                    type="checkbox" 
+                <div v-for="friend in availableFriends" :key="friend.id" class="friend-item">
+                  <input
+                    type="checkbox"
                     :id="'friend-' + friend.id"
                     :checked="tripFriends.includes(friend.id)"
                     @change="toggleFriend(friend.id)"
@@ -162,7 +157,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSelectionsStore } from '../stores/selections'
 import { fetchCountryWikipediaSummary, fetchWikipediaImages } from '../api/countries'
@@ -180,7 +175,7 @@ const trip = computed(() => selections.items.find((t) => t.id == props.tripId))
 
 const tripFriendsDetails = computed(() => {
   if (!trip.value || !trip.value.friends || trip.value.friends.length === 0) return []
-  return allFriendsData.value.filter(f => trip.value.friends.includes(f.id))
+  return allFriendsData.value.filter((f) => trip.value.friends.includes(f.id))
 })
 
 // Fotos da viagem
@@ -204,22 +199,22 @@ async function loadPhotos() {
 // Guardar fotos no servidor
 async function savePhotos() {
   if (!trip.value) return
-  
+
   try {
     const response = await fetch(`${API_BASE}/selections/${props.tripId}`, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        photos: photos.value
-      })
+        photos: photos.value,
+      }),
     })
-    
+
     if (response.ok) {
       // Atualizar a store local
       const updatedTrip = await response.json()
-      const index = selections.items.findIndex(t => t.id == props.tripId)
+      const index = selections.items.findIndex((t) => t.id == props.tripId)
       if (index !== -1) {
         selections.items[index] = updatedTrip
       }
@@ -262,12 +257,12 @@ async function saveEdits() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         customText: editedText.value,
-        friends: tripFriends.value
-      })
+        friends: tripFriends.value,
+      }),
     })
     if (response.ok) {
       const updatedTrip = await response.json()
-      const index = selections.items.findIndex(t => t.id == props.tripId)
+      const index = selections.items.findIndex((t) => t.id == props.tripId)
       if (index !== -1) selections.items[index] = updatedTrip
       editingPanel.value = false
     } else {
@@ -327,11 +322,11 @@ async function archiveTrip() {
     const response = await fetch(`${API_BASE}/selections/${props.tripId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ archived: true })
+      body: JSON.stringify({ archived: true }),
     })
     if (response.ok) {
       const updatedTrip = await response.json()
-      const index = selections.items.findIndex(t => t.id == props.tripId)
+      const index = selections.items.findIndex((t) => t.id == props.tripId)
       if (index !== -1) selections.items[index] = updatedTrip
     } else {
       alert('Could not archive this trip. Please try again.')
@@ -352,11 +347,11 @@ async function unarchiveTrip() {
     const response = await fetch(`${API_BASE}/selections/${props.tripId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ archived: false })
+      body: JSON.stringify({ archived: false }),
     })
     if (response.ok) {
       const updatedTrip = await response.json()
-      const index = selections.items.findIndex(t => t.id == props.tripId)
+      const index = selections.items.findIndex((t) => t.id == props.tripId)
       if (index !== -1) selections.items[index] = updatedTrip
     } else {
       alert('Could not unarchive this trip. Please try again.')
@@ -372,10 +367,37 @@ const wikiLoading = ref(false)
 const wikiError = ref(null)
 const wikiImages = ref([])
 
+const heroImageLoaded = ref(false)
+const heroImageError = ref(false)
+
+const showHeroLoading = computed(() => {
+  if (wikiLoading.value) return true
+  if (!wikiInfo.value?.originalimage?.source) return false
+  return !heroImageLoaded.value && !heroImageError.value
+})
+
+function onHeroLoad() {
+  heroImageError.value = false
+  heroImageLoaded.value = true
+}
+
+function onHeroError() {
+  heroImageLoaded.value = false
+  heroImageError.value = true
+}
+
+watch(
+  () => wikiInfo.value?.originalimage?.source,
+  () => {
+    heroImageLoaded.value = false
+    heroImageError.value = false
+  },
+)
+
 onMounted(async () => {
   // Carregar fotos guardadas
   loadPhotos()
-  
+
   // Carregar dados de todos os amigos para resolução de avatares
   try {
     const allFriends = await getFriends()
@@ -383,7 +405,7 @@ onMounted(async () => {
   } catch (e) {
     console.error('Erro ao carregar dados de amigos:', e)
   }
-  
+
   // Carregar amigos do utilizador (apenas os amigos adicionados)
   const userEmail = auth.user?.email
   if (userEmail) {
@@ -394,12 +416,14 @@ onMounted(async () => {
       console.error('Erro ao carregar amigos:', e)
     }
   }
-  
+
   let query = trip.value?.city || trip.value?.destination
   if (query) {
     wikiLoading.value = true
     wikiError.value = null
     wikiInfo.value = null
+    heroImageLoaded.value = false
+    heroImageError.value = false
     const result = await fetchCountryWikipediaSummary(query)
     if (result.error) {
       wikiError.value = result.error

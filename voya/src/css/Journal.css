@@ -223,7 +223,9 @@
   font-size: 1rem;
   color: #555;
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
 }
 .figma-edit-btn:hover {
   background: #e8e6e2;
@@ -258,7 +260,9 @@
   font-size: 1rem;
   color: #c0392b;
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
 }
 .figma-delete-btn:hover {
   background: #fbd5d7;
@@ -278,7 +282,9 @@
   font-size: 1rem;
   color: #1f4bd8;
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
 }
 .figma-archive-btn:hover {
   background: #e2efff;
@@ -298,7 +304,9 @@
   font-size: 1rem;
   color: #1d8f4a;
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
 }
 .figma-unarchive-btn:hover {
   background: #dff4e8;
@@ -333,6 +341,50 @@
   background: #d6d3ce;
   border-radius: 16px;
   margin-top: 8px;
+  overflow: hidden;
+}
+
+.journal-hero {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.journal-hero-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 5px solid rgba(1, 79, 118, 0.18);
+  border-top-color: #014f76;
+  animation: voya-spin 0.95s linear infinite;
+}
+
+@keyframes voya-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.journal-hero-main {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.journal-hero-main.loaded {
+  opacity: 1;
 }
 .figma-journal-day-block {
   flex: 1;
@@ -381,7 +433,9 @@
 }
 .figma-polaroid.empty {
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 .figma-polaroid.empty:hover {
   transform: scale(1.05);
@@ -468,7 +522,7 @@
   align-items: center;
   gap: 10px;
 }
-.friend-item input[type="checkbox"] {
+.friend-item input[type='checkbox'] {
   cursor: pointer;
 }
 .friend-item label {
@@ -486,7 +540,8 @@
   gap: 12px;
   margin-top: 24px;
 }
-.btn-save, .btn-cancel {
+.btn-save,
+.btn-cancel {
   flex: 1;
   padding: 12px 20px;
   border: none;

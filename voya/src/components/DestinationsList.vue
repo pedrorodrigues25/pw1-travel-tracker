@@ -17,7 +17,9 @@
   <div class="home-container">
     <!-- Welcome Section -->
     <div class="welcome-section">
-      <h1>Welcome back, <span class="username">{{ user?.username || 'User' }}</span></h1>
+      <h1 class="voya-section-title">
+        Welcome back, <span class="username voya-no-transform">{{ user?.username || 'User' }}</span>
+      </h1>
     </div>
 
     <!-- User Profile Card -->
@@ -31,7 +33,11 @@
         <h3 class="profile-name">{{ user?.username || 'Nome utilizador' }}</h3>
         <p class="profile-interests-label">See all your achievements</p>
         <div class="profile-interests">
-          <span v-for="(interest, idx) in userInterests.slice(0, 5)" :key="idx" class="interest-badge">
+          <span
+            v-for="(interest, idx) in userInterests.slice(0, 5)"
+            :key="idx"
+            class="interest-badge"
+          >
             {{ interest }}
           </span>
         </div>
@@ -53,16 +59,28 @@
           <div class="trip-label">YOUR LAST TRIP</div>
           <div v-if="lastTrip" class="trip-card-wrapper">
             <div class="trip-image-container">
-              <img v-if="lastTrip.imageUrl" :src="lastTrip.imageUrl" :alt="lastTrip.destination" class="trip-image" />
+              <img
+                v-if="lastTrip.imageUrl"
+                :src="lastTrip.imageUrl"
+                :alt="lastTrip.destination"
+                class="trip-image"
+              />
               <div v-else class="image-placeholder"></div>
             </div>
             <div class="trip-content">
               <p class="trip-title">{{ lastTrip.city }}, {{ lastTrip.destination }}</p>
               <p class="trip-date" v-if="lastTrip.startDate">{{ lastTrip.startDate }}</p>
-              <div class="trip-friends-list" v-if="lastTripFriendsDetails && lastTripFriendsDetails.length > 0">
+              <div
+                class="trip-friends-list"
+                v-if="lastTripFriendsDetails && lastTripFriendsDetails.length > 0"
+              >
                 <p class="friends-label">Friends:</p>
                 <div class="friends-names">
-                  <span v-for="friend in lastTripFriendsDetails" :key="friend.id" class="friend-name-tag">
+                  <span
+                    v-for="friend in lastTripFriendsDetails"
+                    :key="friend.id"
+                    class="friend-name-tag"
+                  >
                     {{ friend.username }}
                   </span>
                 </div>
@@ -140,7 +158,6 @@ import { useInterestsStore } from '../stores/interests'
 import { getFriends } from '../api/api'
 import '../css/DestinationsList.css'
 
-
 const auth = useAuthStore()
 const selections = useSelectionsStore()
 const interestsStore = useInterestsStore()
@@ -156,15 +173,15 @@ const lastTrip = computed(() => {
 
 const lastTripFriendsDetails = computed(() => {
   if (!lastTrip.value || !lastTrip.value.friends || lastTrip.value.friends.length === 0) return []
-  return allFriends.value.filter(f => lastTrip.value.friends.includes(f.id))
+  return allFriends.value.filter((f) => lastTrip.value.friends.includes(f.id))
 })
 
 const completedTrips = computed(() => {
-  return selections.items.filter(trip => trip.status === 'completed').length
+  return selections.items.filter((trip) => trip.status === 'completed').length
 })
 
 const upcomingTrips = computed(() => {
-  return selections.items.filter(trip => trip.status === 'upcoming').length
+  return selections.items.filter((trip) => trip.status === 'upcoming').length
 })
 
 const totalTripsCount = computed(() => completedTrips.value + upcomingTrips.value)
@@ -183,8 +200,8 @@ async function loadUserData() {
   if (user && user.email) {
     await selections.load(user.email)
     await interestsStore.load(user.email)
-    userInterests.value = interestsStore.items.map(item => item.interest)
-    
+    userInterests.value = interestsStore.items.map((item) => item.interest)
+
     // Load all friends
     try {
       allFriends.value = await getFriends()

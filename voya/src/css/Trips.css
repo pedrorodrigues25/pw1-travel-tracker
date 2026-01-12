@@ -1,5 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap');
 
+.trips-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #b9c6d1;
+  padding: 0;
+}
+
+.trips-main {
+  padding: 40px 30px;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .trips-main {
+    padding: 20px 15px;
+  }
+}
+
 .navbar {
   display: flex;
   align-items: center;
@@ -32,7 +51,9 @@
   text-decoration: underline;
 }
 
-.country-search-input, .city-search-input, select {
+.country-search-input,
+.city-search-input,
+select {
   width: 100%;
   padding: 8px 12px;
   border-radius: 6px;
@@ -42,7 +63,8 @@
   background: #fff;
   color: #222;
 }
-.country-suggestions, .city-suggestions {
+.country-suggestions,
+.city-suggestions {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -56,14 +78,16 @@
   width: 350px;
   min-width: 220px;
 }
-.country-suggestions li, .city-suggestions li {
+.country-suggestions li,
+.city-suggestions li {
   padding: 7px 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.country-suggestions li:hover, .city-suggestions li:hover {
+.country-suggestions li:hover,
+.city-suggestions li:hover {
   background: #f0f4fa;
 }
 .country-flag {
@@ -85,7 +109,7 @@
   width: 300px;
   border-radius: 14px;
   background: #e6eaee;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   border: 3px solid #2a7aa0;
   padding: 10px;
   display: flex;
@@ -93,10 +117,37 @@
   position: relative;
 }
 
-.card-icons { position: absolute; top: 10px; right: 10px; display: flex; gap: 8px; }
-.icon-btn { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.92); border: 1px solid #c3ccd4; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.12); transition: background 0.2s, transform 0.2s; }
-.icon-btn:hover { background: #f0f4fa; transform: translateY(-1px); }
-.icon-btn img { width: 18px; height: 18px; object-fit: contain; }
+.card-icons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
+}
+.icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #c3ccd4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+.icon-btn:hover {
+  background: #f0f4fa;
+  transform: translateY(-1px);
+}
+.icon-btn img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
 
 .trip-cover {
   width: 100%;
@@ -105,24 +156,100 @@
   border-radius: 12px;
   overflow: hidden;
 }
-.trip-cover img { width: 100%; height: 100%; object-fit: cover; }
-.trip-cover-placeholder { width: 100%; height: 100%; background: #cfd3d7; }
+.trip-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.trip-cover-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #cfd3d7;
+}
 
-.trip-info { padding: 10px 8px 8px 8px; }
-.trip-title-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.trip-title { margin: 0; font-family: 'Syncopate', Arial, sans-serif; font-weight: 700; color: #0d5678; font-size: 1rem; }
-.trip-status.pill { background: #efa36d; color: #1a1a1a; border: 2px solid #c56b34; border-radius: 999px; padding: 4px 10px; font-size: 0.75rem; font-weight: 700; }
-.trip-status.completed { background: #a8e6a1; border-color: #4caf50; }
-.trip-status.upcoming { background: #efa36d; border-color: #c56b34; }
-.trip-date { color: #3e5c6d; font-size: 0.85rem; margin-top: 4px; }
-.trip-updates { color: #2f4550; font-size: 0.85rem; margin-top: 4px; }
+.trip-info {
+  padding: 10px 8px 8px 8px;
+}
+.trip-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.trip-title {
+  margin: 0;
+  font-family: 'Syncopate', Arial, sans-serif;
+  font-weight: 700;
+  color: #0d5678;
+  font-size: 1rem;
+}
+.trip-status.pill {
+  background: #efa36d;
+  color: #1a1a1a;
+  border: 2px solid #c56b34;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.trip-status.completed {
+  background: #a8e6a1;
+  border-color: #4caf50;
+}
+.trip-status.upcoming {
+  background: #efa36d;
+  border-color: #c56b34;
+}
+.trip-date {
+  color: #3e5c6d;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+.trip-updates {
+  color: #2f4550;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
 
-.trip-avatars { display: flex; gap: 6px; margin-top: 6px; }
-.avatar.tiny { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#5b8ba8,#7ba4c2); border: 2px solid #e6eaee; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+.trip-avatars {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+.avatar.tiny {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #5b8ba8, #7ba4c2);
+  border: 2px solid #e6eaee;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
 
-.trip-actions { display: flex; justify-content: center; padding: 8px 8px 0 8px; }
-.open-journal-btn.pill { background: #e6ebef; color: #0d5678; border: 1px solid #0d5678; padding: 8px 18px; border-radius: 999px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: background 0.2s, color 0.2s, transform 0.2s; }
-.open-journal-btn.pill:hover { background: #0d5678; color: #fff; transform: translateY(-1px); }
+.trip-actions {
+  display: flex;
+  justify-content: center;
+  padding: 8px 8px 0 8px;
+}
+.open-journal-btn.pill {
+  background: #e6ebef;
+  color: #0d5678;
+  border: 1px solid #0d5678;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+.open-journal-btn.pill:hover {
+  background: #0d5678;
+  color: #fff;
+  transform: translateY(-1px);
+}
 .edit-panel {
   margin-top: 16px;
   border-top: 1px dashed #ccc;

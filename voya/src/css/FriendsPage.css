@@ -19,7 +19,7 @@
   grid-column: 1;
 }
 
-.friends-locations h2 {
+.friends-locations h2:not(.voya-section-title) {
   color: #0d5678;
   font-size: 24px;
   margin-bottom: 20px;
@@ -67,7 +67,9 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(13, 86, 120, 0.08);
@@ -200,7 +202,7 @@
   margin-bottom: 40px;
 }
 
-.shared-trips h2 {
+.shared-trips h2:not(.voya-section-title) {
   color: #0d5678;
   font-size: 24px;
   margin-bottom: 20px;
@@ -238,7 +240,9 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
   border: 1px solid rgba(13, 86, 120, 0.08);
 }
 
@@ -307,7 +311,7 @@
   margin-bottom: 40px;
 }
 
-.recommendations h2 {
+.recommendations h2:not(.voya-section-title) {
   color: #0d5678;
   font-size: 24px;
   margin-bottom: 20px;
@@ -398,7 +402,10 @@
   font-weight: 700;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    transform 0.2s;
 }
 
 .see-profile-btn.pill:hover {
@@ -534,7 +541,10 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.3s ease;
   box-shadow: 0 6px 14px rgba(13, 86, 120, 0.25);
 }
 
@@ -561,7 +571,10 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.3s ease;
   box-shadow: 0 6px 14px rgba(217, 83, 79, 0.25);
 }
 
@@ -702,9 +715,9 @@
     grid-template-columns: 1fr;
   }
 
-  .friends-locations h2,
-  .shared-trips h2,
-  .recommendations h2 {
+  .friends-locations h2:not(.voya-section-title),
+  .shared-trips h2:not(.voya-section-title),
+  .recommendations h2:not(.voya-section-title) {
     font-size: 18px;
   }
 

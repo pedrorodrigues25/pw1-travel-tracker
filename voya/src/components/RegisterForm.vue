@@ -1,9 +1,10 @@
 <template>
   <div class="container">
-    <!-- Quote overlay above background image -->
     <div class="register-quote" aria-hidden="true">
       <h3 class="quote-title">travel</h3>
-      <p class="quote-sub">is the only purchase that enriches<br/>you in ways beyond material<br/>wealth</p>
+      <p class="quote-sub">
+        is the only purchase that enriches<br />you in ways beyond material wealth
+      </p>
     </div>
     <div class="left-panel"></div>
 
@@ -28,9 +29,9 @@
 
       <button class="login-btn" @click="submit">Continue</button>
 
-      <p class="register">Already have an account? <router-link to="/login"><span>Login</span></router-link></p>
-
-      
+      <p class="register">
+        Already have an account? <router-link to="/login"><span>Login</span></router-link>
+      </p>
     </div>
   </div>
 </template>
@@ -51,22 +52,22 @@ const errorMessage = ref('')
 
 async function submit() {
   errorMessage.value = ''
-  
+
   if (!email.value) {
     errorMessage.value = 'Escreve um email'
     return
   }
-  
+
   if (!password.value) {
     errorMessage.value = 'Escreve uma password'
     return
   }
-  
+
   if (password.value !== confirmPassword.value) {
     errorMessage.value = 'As passwords não coincidem'
     return
   }
-  
+
   if (!username.value) {
     errorMessage.value = 'Escreve um username'
     return

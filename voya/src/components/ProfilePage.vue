@@ -5,7 +5,7 @@
         <img src="@/img/logo-pw1-voya.png" alt="Voya Logo" height="38" />
       </router-link>
       <div class="navbar-links">
-        <router-link to="/destinations" active-class="active">Home</router-link>
+        <router-link to="/homepage" active-class="active">Home</router-link>
         <router-link to="/recommendations" active-class="active">Recommendations</router-link>
         <router-link to="/trips" active-class="active">Trips</router-link>
         <router-link to="/friends" active-class="active">Friends</router-link>
@@ -91,12 +91,19 @@
       <div class="profile-archived-card" v-if="archivedTrips.length">
         <h3>Viagens arquivadas</h3>
         <ul class="archived-list">
-          <li v-for="trip in archivedTrips" :key="trip.id" class="archived-item" @click="goToJournal(trip.id)">
+          <li
+            v-for="trip in archivedTrips"
+            :key="trip.id"
+            class="archived-item"
+            @click="goToJournal(trip.id)"
+          >
             <span class="archived-title">
               <template v-if="trip.city">{{ trip.city }}, {{ trip.destination }}</template>
               <template v-else>{{ trip.destination }}</template>
             </span>
-            <span class="archived-date">{{ formatMonthYear(trip.startDate || trip.createdAt) }}</span>
+            <span class="archived-date">{{
+              formatMonthYear(trip.startDate || trip.createdAt)
+            }}</span>
           </li>
         </ul>
       </div>
@@ -194,7 +201,20 @@ const archivedTrips = computed(() => selections.items.filter((t) => t.archived))
 function formatMonthYear(dateStr) {
   const d = new Date(dateStr)
   if (Number.isNaN(d.getTime())) return ''
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December']
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
   return `${months[d.getMonth()]} ${d.getFullYear()}`
 }
 

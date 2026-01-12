@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <div class="register-quote" aria-hidden="true">
+      <h3 class="quote-title">travel</h3>
+      <p class="quote-sub">
+        is the only purchase that enriches<br />you in ways beyond material wealth
+      </p>
+    </div>
     <div class="left-panel"></div>
 
     <div class="login-card">
@@ -19,7 +25,9 @@
 
       <button class="admin-login-btn" @click="showAdminModal = true">Admin Login</button>
 
-      <p class="register">Don't have an account? <router-link to="/register"><span>Register Now</span></router-link></p>
+      <p class="register">
+        Don't have an account? <router-link to="/register"><span>Register Now</span></router-link>
+      </p>
     </div>
 
     <!-- Admin Login Modal -->
@@ -30,17 +38,17 @@
         <p class="modal-description">Enter admin credentials</p>
 
         <label>Email</label>
-        <input 
-          v-model="adminEmail" 
-          type="email" 
+        <input
+          v-model="adminEmail"
+          type="email"
           placeholder="admin@gmail.com"
           class="admin-input"
         />
 
         <label>Password</label>
-        <input 
-          v-model="adminPassword" 
-          type="password" 
+        <input
+          v-model="adminPassword"
+          type="password"
           placeholder="Enter password"
           class="admin-input"
         />
@@ -101,7 +109,7 @@ async function submit() {
     email.value = ''
     password.value = ''
 
-    router.push('/destinations')
+    router.push('/homepage')
   } catch (error) {
     errorMessage.value = error.message
   }
@@ -134,11 +142,11 @@ async function confirmAdminLogin() {
   try {
     // Login com credenciais de admin
     await auth.login('admin@gmail.com', 'admin123')
-    
+
     adminEmail.value = ''
     adminPassword.value = ''
     showAdminModal.value = false
-    
+
     // Redirecionar para admin dashboard
     router.push('/admin')
   } catch (error) {
@@ -149,3 +157,4 @@ async function confirmAdminLogin() {
 
 <style src="../style.css"></style>
 <style src="../css/AdminPage.css"></style>
+<style src="../css/LoginForm.css"></style>

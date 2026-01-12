@@ -17,8 +17,8 @@
   <div class="home-container">
     <!-- Welcome Section -->
     <div class="welcome-section">
-      <h1 class="voya-section-title">
-        Welcome back, <span class="username voya-no-transform">{{ user?.username || 'User' }}</span>
+      <h1 class="welcome-title">
+        Welcome back, <span class="username">{{ user?.username || 'User' }}</span>
       </h1>
     </div>
 
@@ -53,16 +53,57 @@
     <div class="badges-section">
       <h2>SEE YOUR TRIPS</h2>
       <div class="badges-grid">
-        <div class="badges-card your-badges">
+        <!-- YOUR LAST TRIP (última concluída) -->
+        <div
+          class="badges-card your-badges has-bg clickable"
+          :style="
+            lastCompletedTrip?.imageUrl
+              ? { backgroundImage: `url(${lastCompletedTrip.imageUrl})` }
+              : {}
+          "
+          @click="lastCompletedTrip && goToJournal(lastCompletedTrip.id)"
+        >
           <div class="badge-label">YOUR LAST TRIP</div>
           <div class="badge-list">
-            <p class="trip-title">Badges will appear here</p>
+            <div v-if="lastCompletedTrip" class="badge-trip">
+              <h4 class="trip-title">
+                <template v-if="lastCompletedTrip.city"
+                  >{{ lastCompletedTrip.city }}, {{ lastCompletedTrip.destination }}</template
+                >
+                <template v-else>{{ lastCompletedTrip.destination }}</template>
+              </h4>
+              <p class="badge-trip-dates">{{ formatTripDates(lastCompletedTrip) }}</p>
+            </div>
+            <p v-else class="empty-message">No completed trips yet</p>
           </div>
         </div>
-        <div class="badges-card badges-to-unlock">
+        <!-- NEXT TRIPS (próximas upcoming) -->
+        <div
+          class="badges-card badges-to-unlock has-bg clickable"
+          :style="
+            upcomingTrips[0]?.imageUrl
+              ? { backgroundImage: `url(${upcomingTrips[0].imageUrl})` }
+              : {}
+          "
+          @click="upcomingTrips[0] && goToJournal(upcomingTrips[0].id)"
+        >
           <div class="badge-label">NEXT TRIPS</div>
           <div class="badge-list">
-            <p class="empty-message">Locked badges will appear here</p>
+            <div v-if="upcomingTrips.length" class="badge-trip">
+              <div
+                v-for="trip in upcomingTrips.slice(0, 3)"
+                :key="trip.id"
+                class="upcoming-trip-item clickable"
+                @click="goToJournal(trip.id)"
+              >
+                <h4 class="trip-title">
+                  <template v-if="trip.city">{{ trip.city }}, {{ trip.destination }}</template>
+                  <template v-else>{{ trip.destination }}</template>
+                </h4>
+                <p class="badge-trip-dates">{{ formatTripDates(trip) }}</p>
+              </div>
+            </div>
+            <p v-else class="empty-message">No upcoming trips yet</p>
           </div>
         </div>
       </div>
@@ -72,13 +113,13 @@
     <div class="badges-section">
       <h2>BADGES</h2>
       <div class="badges-grid">
-        <div class="badges-card your-badges">
+        <div class="badges-card your-badges clickable">
           <div class="badge-label">YOUR BADGES</div>
           <div class="badge-list">
             <p class="empty-message">Badges will appear here</p>
           </div>
         </div>
-        <div class="badges-card badges-to-unlock">
+        <div class="badges-card badges-to-unlock clickable">
           <div class="badge-label">BADGES TO UNLOCK</div>
           <div class="badge-list">
             <p class="empty-message">Locked badges will appear here</p>
@@ -90,20 +131,67 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
 import { useInterestsStore } from '../stores/interests'
 import { getFriends } from '../api/api'
 import '../css/HomePage.css'
 
+const router = useRouter()
 const auth = useAuthStore()
 const selections = useSelectionsStore()
 const interestsStore = useInterestsStore()
 
+function goToJournal(tripId) {
+  if (tripId) router.push({ name: 'Journal', params: { tripId } })
+}
+
 const user = auth.user
 const userInterests = ref([])
 const allFriends = ref([])
+
+// Última viagem concluída (ordenada por endDate/startDate/createdAt desc)
+const lastCompletedTrip = computed(() => {
+  const trips = (selections.items || []).filter((t) => t && t.status === 'completed' && !t.archived)
+  if (!trips.length) return null
+  const toTime = (t) => {
+    const raw = t.endDate || t.startDate || t.createdAt
+    const d = raw ? new Date(raw) : new Date(0)
+    return Number.isNaN(d.getTime()) ? 0 : d.getTime()
+  }
+  return trips.slice().sort((a, b) => toTime(b) - toTime(a))[0]
+})
+
+// Próximas viagens (upcoming) ordenadas por startDate asc
+const upcomingTrips = computed(() => {
+  const trips = (selections.items || []).filter((t) => t && t.status === 'upcoming' && !t.archived)
+  const toTime = (t) => {
+    const raw = t.startDate || t.createdAt
+    const d = raw ? new Date(raw) : new Date(0)
+    return Number.isNaN(d.getTime()) ? 0 : d.getTime()
+  }
+  return trips.slice().sort((a, b) => toTime(a) - toTime(b))
+})
+
+// Formata datas de uma viagem
+function formatTripDates(trip) {
+  if (!trip) return ''
+  const fmt = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+  const start = trip.startDate ? new Date(trip.startDate) : null
+  const end = trip.endDate ? new Date(trip.endDate) : null
+  const startOk = start && !Number.isNaN(start.getTime())
+  const endOk = end && !Number.isNaN(end.getTime())
+  if (startOk && endOk) return `${fmt.format(start)} – ${fmt.format(end)}`
+  if (endOk) return fmt.format(end)
+  if (startOk) return fmt.format(start)
+  if (trip.createdAt) {
+    const created = new Date(trip.createdAt)
+    if (!Number.isNaN(created.getTime())) return fmt.format(created)
+  }
+  return ''
+}
 
 async function loadUserData() {
   if (user && user.email) {

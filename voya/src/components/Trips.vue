@@ -45,11 +45,6 @@
         </ul>
         <label>Notes (optional):</label>
         <input v-model="form.notes" placeholder="Notes about the trip" />
-        <label>Status:</label>
-        <select v-model="form.status">
-          <option value="upcoming">Upcoming</option>
-          <option value="completed">Completed</option>
-        </select>
         <label>Start Date:</label>
         <input type="date" v-model="form.startDate" required />
         <label>End Date:</label>
@@ -152,7 +147,6 @@ const form = reactive({
   destination: '',
   city: '',
   notes: '',
-  status: 'upcoming',
   startDate: '',
   endDate: '',
 })
@@ -255,12 +249,18 @@ async function addSelection() {
   } catch (e) {
     console.error(e)
   }
-  selections.add(
+  // Calcular status automaticamente com base na data de fim
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const endDateObj = new Date(form.endDate)
+  const status = endDateObj < today ? 'completed' : 'upcoming'
+
+  await selections.add(
     {
       destination: form.destination,
       city: form.city,
       notes: form.notes,
-      status: form.status,
+      status,
       startDate: form.startDate,
       endDate: form.endDate,
       imageUrl,
@@ -270,7 +270,6 @@ async function addSelection() {
   form.destination = ''
   form.city = ''
   form.notes = ''
-  form.status = 'upcoming'
   form.startDate = ''
   form.endDate = ''
   countryQuery.value = ''

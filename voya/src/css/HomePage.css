@@ -9,7 +9,20 @@
 
 .welcome-section {
   max-width: 1400px;
-  margin: 0 auto 40px;
+  margin: 0 auto 24px;
+}
+
+.welcome-title {
+  font-size: 1.5rem;
+  color: #0d5678;
+  margin: 0;
+  font-weight: 600;
+  display: inline;
+}
+
+.welcome-title .username {
+  font-weight: 700;
+  color: #0d5678;
 }
 
 .welcome-section h1:not(.voya-section-title) {
@@ -152,6 +165,20 @@
   font-weight: 700;
   color: #0d5678;
   font-size: 1rem;
+  text-align: center;
+}
+
+.badge-trip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.badge-trip-dates {
+  margin: 0;
+  text-align: center;
 }
 
 .image-placeholder {
@@ -187,6 +214,65 @@
   padding: 24px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   border: 1px solid rgba(13, 86, 120, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Card with background image */
+.badges-card.has-bg {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 2px solid #ffffff;
+}
+
+.badges-card.has-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(13, 86, 120, 0.75) 0%, rgba(0, 0, 0, 0.55) 100%);
+  z-index: 0;
+}
+
+.badges-card.has-bg .badge-label,
+.badges-card.has-bg .badge-list,
+.badges-card.has-bg .badge-trip {
+  position: relative;
+  z-index: 1;
+}
+
+.badges-card.has-bg .trip-title,
+.badges-card.has-bg .badge-trip-dates,
+.badges-card.has-bg .empty-message {
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.badges-card.has-bg .badge-label {
+  border: 2px solid #ffffff;
+}
+
+.badges-card.clickable {
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.badges-card.clickable:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.upcoming-trip-item.clickable {
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.upcoming-trip-item.clickable:hover {
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .badge-label {

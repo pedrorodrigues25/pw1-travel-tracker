@@ -408,13 +408,12 @@
 .figma-journal-polaroids {
   display: flex;
   gap: 18px;
-  margin-top: 18px;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  margin-top: 39px;
+  justify-content: flex-start;
+  align-items: flex-start;
   flex-wrap: wrap;
+  flex: 1;
+  max-width: 614px;
 }
 .figma-polaroid {
   width: 140px;
@@ -565,9 +564,20 @@
 .btn-cancel:hover {
   background: #d8d8d8;
 }
+
+/* Container para amigos e polaroids lado a lado */
+.figma-friends-photos-row {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 70px;
+  flex-wrap: wrap;
+}
+
 .figma-trip-friends {
-  margin-bottom: 24px;
-  text-align: center;
+  margin-bottom: 0;
+  text-align: left;
+  flex-shrink: 0;
+  max-width: 260px;
 }
 .figma-trip-friends h3 {
   margin: 0 0 16px 0;
@@ -580,13 +590,23 @@
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 .friend-avatar-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
+}
+.friend-avatar-item.clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.friend-avatar-item.clickable:hover {
+  transform: translateY(-3px);
+}
+.friend-avatar-item.clickable:hover .friend-avatar {
+  box-shadow: 0 4px 12px rgba(13, 86, 120, 0.3);
 }
 .friend-avatar {
   width: 60px;

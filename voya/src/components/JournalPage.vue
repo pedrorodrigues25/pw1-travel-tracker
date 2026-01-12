@@ -32,15 +32,6 @@
               <span v-if="trip.endDate">{{ trip.endDate }}</span>
             </template>
           </div>
-          <!-- <div class="figma-journal-avatars">
-            <img
-              v-for="n in 5"
-              :key="n"
-              :src="`/src/img/avatar${n}.png`"
-              class="figma-avatar"
-              alt="avatar"
-            />
-          </div> -->
         </div>
         <div class="figma-journal-main">
           <div class="figma-journal-image-block">
@@ -69,35 +60,42 @@
           </div>
         </div>
 
-        <!-- Secção de amigos na viagem -->
-        <div v-if="tripFriendsDetails.length > 0" class="figma-trip-friends">
-          <h3>Friends on this trip</h3>
-          <div class="friends-avatars">
-            <div v-for="friend in tripFriendsDetails" :key="friend.id" class="friend-avatar-item">
-              <div class="friend-avatar">
-                <div v-if="!friend.photo" class="avatar-placeholder">
-                  {{ friend.username.charAt(0).toUpperCase() }}
+        <!-- Secção de amigos e fotos lado a lado -->
+        <div class="figma-friends-photos-row">
+          <!-- Secção de amigos na viagem -->
+          <div v-if="tripFriendsDetails.length > 0" class="figma-trip-friends">
+            <h3>Friends on this trip</h3>
+            <div class="friends-avatars">
+              <div
+                v-for="friend in tripFriendsDetails"
+                :key="friend.id"
+                class="friend-avatar-item clickable"
+                @click="openPersonProfile(friend)"
+              >
+                <div class="friend-avatar">
+                  <div v-if="!friend.photo" class="avatar-placeholder">
+                    {{ friend.username.charAt(0).toUpperCase() }}
+                  </div>
+                  <img v-else :src="friend.photo" :alt="friend.username" />
                 </div>
-                <img v-else :src="friend.photo" :alt="friend.username" />
               </div>
-              <span class="friend-name">{{ friend.username }}</span>
             </div>
           </div>
-        </div>
 
-        <!-- Secção de fotos polaroid -->
-        <div class="figma-journal-polaroids">
-          <div v-for="(photo, index) in photos" :key="index" class="figma-polaroid">
-            <img v-if="photo" :src="photo" alt="Foto da viagem" class="polaroid-photo" />
-          </div>
-          <!-- Slots vazios para completar 4 -->
-          <div
-            v-for="n in Math.max(0, 4 - photos.length)"
-            :key="'empty-' + n"
-            class="figma-polaroid empty"
-            @click="triggerFileInput"
-          >
-            <span class="add-photo-icon">+</span>
+          <!-- Secção de fotos polaroid -->
+          <div class="figma-journal-polaroids">
+            <div v-for="(photo, index) in photos" :key="index" class="figma-polaroid">
+              <img v-if="photo" :src="photo" alt="Foto da viagem" class="polaroid-photo" />
+            </div>
+            <!-- Slots vazios para completar 4 -->
+            <div
+              v-for="n in Math.max(0, 4 - photos.length)"
+              :key="'empty-' + n"
+              class="figma-polaroid empty"
+              @click="triggerFileInput"
+            >
+              <span class="add-photo-icon">+</span>
+            </div>
           </div>
         </div>
 
@@ -136,7 +134,6 @@
                     :checked="tripFriends.includes(friend.id)"
                     @change="toggleFriend(friend.id)"
                   />
-                  <label :for="'friend-' + friend.id">{{ friend.username }}</label>
                 </div>
               </div>
               <p v-if="availableFriends.length === 0" class="no-friends">No friends available.</p>
@@ -152,6 +149,42 @@
       <div v-else class="journal-not-found">
         <p>Viagem não encontrada.</p>
       </div>
+
+      <!-- Profile Modal -->
+      <div
+        v-if="showProfileModal && selectedPerson"
+        class="profile-modal-overlay"
+        @click.self="closeProfileModal"
+      >
+        <div class="profile-modal">
+          <button class="modal-close" @click="closeProfileModal">×</button>
+          <div class="profile-modal-header">
+            <div class="person-avatar modal-avatar">
+              <img
+                v-if="selectedPerson.photo"
+                :src="selectedPerson.photo"
+                :alt="selectedPerson.username"
+              />
+              <div v-else class="avatar-placeholder">
+                {{ selectedPerson.username.charAt(0).toUpperCase() }}
+              </div>
+            </div>
+            <div class="profile-meta">
+              <h3>{{ selectedPerson.username }}</h3>
+              <p class="profile-email" v-if="selectedPerson.email">{{ selectedPerson.email }}</p>
+            </div>
+          </div>
+          <p class="profile-about" v-if="selectedPerson.aboutMe">{{ selectedPerson.aboutMe }}</p>
+          <div
+            v-if="selectedPerson.interests && selectedPerson.interests.length"
+            class="profile-interests"
+          >
+            <span v-for="interest in selectedPerson.interests" :key="interest" class="chip">{{
+              interest
+            }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -164,6 +197,7 @@ import { fetchCountryWikipediaSummary, fetchWikipediaImages } from '../api/count
 import { useAuthStore } from '../stores/auth'
 import { getUserFriends, getFriends } from '../api/api'
 import '../css/Journal.css'
+import '../css/FriendsPage.css'
 
 const API_BASE = 'http://localhost:3001'
 
@@ -188,6 +222,10 @@ const editedText = ref('')
 const availableFriends = ref([])
 const tripFriends = ref([])
 const allFriendsData = ref([])
+
+// Profile modal state
+const showProfileModal = ref(false)
+const selectedPerson = ref(null)
 
 // Carregar fotos da viagem do servidor
 async function loadPhotos() {
@@ -238,6 +276,16 @@ function cancelEdit() {
   editingPanel.value = false
   editedText.value = ''
   tripFriends.value = []
+}
+
+function openPersonProfile(person) {
+  selectedPerson.value = person
+  showProfileModal.value = true
+}
+
+function closeProfileModal() {
+  showProfileModal.value = false
+  selectedPerson.value = null
 }
 
 function toggleFriend(friendId) {

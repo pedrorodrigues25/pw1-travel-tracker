@@ -1,1 +1,32 @@
-/* LoginForm styles */
+.register-quote {
+  position: absolute;
+  top: 75px;
+  left: 305px;
+  right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  z-index: 2;
+}
+
+.quote-title {
+  color: #014f76;
+  text-align: center;
+  font-family: Syncopate, sans-serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 149.146%;
+  margin: 0;
+}
+
+.quote-sub {
+  color: #014f76;
+  text-align: center;
+  font-family: Syncopate, sans-serif;
+  font-size: 20px;
+  line-height: 149.146%;
+  width: 613px;
+  margin: 0;
+} /* LoginForm styles */

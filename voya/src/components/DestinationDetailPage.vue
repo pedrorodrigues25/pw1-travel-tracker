@@ -4,9 +4,7 @@
       <div v-if="destination">
         <div class="figma-journal-header">
           <button class="figma-back-btn" @click="$router.back()">←</button>
-          <div class="figma-journal-title">
-            {{ destination.city }}, {{ destination.country }}
-          </div>
+          <div class="figma-journal-title">{{ destination.city }}, {{ destination.country }}</div>
           <div class="figma-journal-tags">
             <span v-for="tag in destination.tags" :key="tag" class="tag-badge">{{ tag }}</span>
           </div>
@@ -29,26 +27,10 @@
             </div>
           </div>
         </div>
-        <div class="figma-journal-polaroids">
-          <template v-if="wikiImages.length">
-            <div v-for="(img, idx) in wikiImages.slice(0, 8)" :key="idx" class="figma-polaroid">
-              <img
-                :src="img"
-                alt="Foto do destino"
-                style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px"
-              />
-            </div>
-          </template>
-          <template v-else>
-            <div v-for="n in 4" :key="n" class="figma-polaroid"></div>
-          </template>
-        </div>
-        
+
         <!-- Botão para adicionar às viagens -->
         <div class="add-trip-section">
-          <button class="add-trip-btn" @click="goToTrips">
-            + Add to My Trips
-          </button>
+          <button class="add-trip-btn" @click="goToTrips">+ Add to My Trips</button>
         </div>
       </div>
       <div v-else class="journal-not-found">
@@ -67,11 +49,11 @@ import { fetchCountryWikipediaSummary, fetchWikipediaImages } from '../api/count
 
 const API_BASE = 'http://localhost:3001'
 
-const props = defineProps({ 
+const props = defineProps({
   destinationId: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const router = useRouter()
@@ -95,7 +77,7 @@ async function loadDestination() {
 
 async function loadWikiInfo() {
   if (!destination.value) return
-  
+
   const query = destination.value.city || destination.value.name
   if (query) {
     wikiLoading.value = true
@@ -119,18 +101,21 @@ async function goToTrips() {
     alert('Please log in first')
     return
   }
-  
+
   // Adicionar viagem
-  await selections.add({
-    destination: destination.value.country,
-    city: destination.value.city || '',
-    notes: '',
-    status: 'upcoming',
-    startDate: '',
-    endDate: '',
-    imageUrl: wikiInfo.value?.originalimage?.source || '',
-  }, userEmail)
-  
+  await selections.add(
+    {
+      destination: destination.value.country,
+      city: destination.value.city || '',
+      notes: '',
+      status: 'upcoming',
+      startDate: '',
+      endDate: '',
+      imageUrl: wikiInfo.value?.originalimage?.source || '',
+    },
+    userEmail,
+  )
+
   // Navegar para trips
   router.push('/trips')
 }

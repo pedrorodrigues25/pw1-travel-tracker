@@ -62,9 +62,6 @@
                 <span class="trip-status pill upcoming">Recommended</span>
               </div>
               <div class="trip-updates">Matches your interests</div>
-              <div class="trip-avatars">
-                <span class="avatar tiny" v-for="n in 3" :key="n"></span>
-              </div>
             </div>
             <div class="trip-actions">
               <button class="open-journal-btn pill" @click="goToDestination(destination.id)">

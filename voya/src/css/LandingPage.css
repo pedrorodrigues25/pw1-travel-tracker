@@ -1,6 +1,6 @@
 .landing {
   min-height: 100vh;
-  background: #8EA5B5;
+  background: #8ea5b5;
   display: grid;
   grid-template-rows: auto 1fr auto auto;
   overflow-x: hidden;
@@ -19,7 +19,8 @@
 }
 
 .logo {
-  height: 30px;
+  height: 40px;
+  margin-top: 10px;
 }
 
 .auth-nav {
@@ -37,7 +38,7 @@
 
 .small-caps {
   letter-spacing: 0.8px;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 .visitor-link {
@@ -49,19 +50,23 @@
   opacity: 0.7;
 }
 
-.btn {
+.landing .btn {
   border: none;
   padding: 10px 18px;
   border-radius: 22px;
   font-weight: 800;
   cursor: pointer;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.btn-primary {
+.landing .btn-primary {
   background: #0c3959;
   color: #ffffff;
   box-shadow: 0 6px 14px rgba(12, 57, 89, 0.35);
+  font-size: 16px;
 }
 
 .hero {
@@ -89,7 +94,7 @@
   background: transparent;
   box-shadow: none;
   clip-path: path(
-    "M133,11 Q224,0 308,56 T392,196 Q420,280 364,364 T224,420 Q126,434 56,350 T0,196 Q14,98 84,42 Z"
+    'M133,11 Q224,0 308,56 T392,196 Q420,280 364,364 T224,420 Q126,434 56,350 T0,196 Q14,98 84,42 Z'
   );
   animation: blobGrow 0.8s ease-out forwards;
   opacity: 0;
@@ -170,10 +175,11 @@
   display: flex;
 }
 
-.btn-accent {
+.landing .btn-accent {
   background: #ff8e5a;
   color: #0c3959;
   box-shadow: 0 8px 20px rgba(255, 142, 90, 0.55);
+  font-size: 16px;
 }
 
 .about-section {

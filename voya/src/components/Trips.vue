@@ -71,7 +71,9 @@
                 }}</span>
               </div>
               <div class="trip-date">{{ formatMonthYear(it.startDate || it.createdAt) }}</div>
-              <div class="trip-updates">0 New Updates</div>
+              <div class="trip-updates">
+                {{ getUpdatesCount(it) }} New Update{{ getUpdatesCount(it) !== 1 ? 's' : '' }}
+              </div>
               <div v-if="it.friends && it.friends.length" class="trip-avatars">
                 <span
                   class="avatar tiny"
@@ -174,6 +176,24 @@ function getFriendInitial(friendId) {
 function getFriendName(friendId) {
   const friend = getFriendById(friendId)
   return friend?.username || 'Unknown'
+}
+
+// Conta updates de uma viagem (fotos, customText, etc.)
+function getUpdatesCount(trip) {
+  let count = 0
+  // Conta fotos
+  if (trip.photos && Array.isArray(trip.photos)) {
+    count += trip.photos.length
+  }
+  // Conta customText como 1 update se existir
+  if (trip.customText && trip.customText.trim()) {
+    count += 1
+  }
+  // Conta entradas de journal se existirem
+  if (trip.journalEntries && Array.isArray(trip.journalEntries)) {
+    count += trip.journalEntries.length
+  }
+  return count
 }
 
 // Filter out archived trips from display

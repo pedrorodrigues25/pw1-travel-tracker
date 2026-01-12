@@ -188,9 +188,6 @@ For questions, improvements, or bug reports, please contact the development team
 
 ---
 
-**Built with ❤️ for travel enthusiasts | Made with Vue.js & ☕**
-
----
 
 # Voya - Rastreador de Viagens 🌍✈️
 

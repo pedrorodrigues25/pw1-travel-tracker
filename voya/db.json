@@ -130,26 +130,6 @@
       ]
     },
     {
-      "destination": "Japan",
-      "city": "Tokyo",
-      "notes": "",
-      "status": "completed",
-      "startDate": "2026-01-09",
-      "endDate": "2026-01-11",
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg",
-      "userEmail": "arroz@gmail.com",
-      "createdAt": "2026-01-09T16:44:03.871Z",
-      "id": "ebOM6Wm",
-      "customText": "Tokyo, officially the Tokyo Metropolis, is the capital and most populous city of Japan. With a population of over 14 million in the city proper in 2023, it is one of the most populous urban areas in the world. The Greater Tokyo Area, which includes Tokyo and parts of six neighboring prefectures, is the most populous metropolitan area in the world, with 41 million residents as of 2024.",
-      "friends": [
-        "f1",
-        "f2",
-        "f5",
-        "f3",
-        "f4"
-      ]
-    },
-    {
       "destination": "Greece",
       "city": "Athens",
       "notes": "",
@@ -220,42 +200,6 @@
       "id": "Zmy8SoU"
     },
     {
-      "destination": "United States",
-      "city": "New York City",
-      "notes": "",
-      "status": "upcoming",
-      "startDate": "2026-01-16",
-      "endDate": "2026-01-18",
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7a/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg",
-      "userEmail": "arroz@gmail.com",
-      "createdAt": "2026-01-12T15:48:50.876Z",
-      "id": "sA2y3z2"
-    },
-    {
-      "destination": "Italy",
-      "city": "Rome",
-      "notes": "",
-      "status": "upcoming",
-      "startDate": "2026-01-22",
-      "endDate": "2026-01-27",
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Trevi_Fountain%2C_Rome%2C_Italy_2_-_May_2007.jpg",
-      "userEmail": "arroz@gmail.com",
-      "createdAt": "2026-01-12T15:52:00.781Z",
-      "id": "YgP93bW"
-    },
-    {
-      "destination": "Portugal",
-      "city": "Lisbon",
-      "notes": "",
-      "status": "completed",
-      "startDate": "2026-01-10",
-      "endDate": "2026-01-11",
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Lisboa_-_Portugal_%2852597836992%29.jpg",
-      "userEmail": "arroz@gmail.com",
-      "createdAt": "2026-01-12T16:00:31.734Z",
-      "id": "ijWM4Ke"
-    },
-    {
       "destination": "Portugal",
       "city": "Porto",
       "notes": "",
@@ -278,6 +222,26 @@
       "userEmail": "arroz@gmail.com",
       "createdAt": "2026-01-12T16:01:44.419Z",
       "id": "V2mQJdc"
+    },
+    {
+      "destination": "Singapore",
+      "city": "Tuas",
+      "notes": "",
+      "status": "upcoming",
+      "startDate": "2026-01-10",
+      "endDate": "2026-01-12",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Raffles_Marina_-_Johor_Lighthouse.jpg",
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-12T16:45:17.688Z",
+      "id": "2guXYgA",
+      "customText": "Tuas is a planning area located within the West Region of Singapore. It is bounded by the Western Water Catchment to its north, Pioneer to its east and the Straits of Johor to its west. Tuas also shares a maritime boundary with the Western Islands planning area to its east. It has six subzones, Tengeh, Tuas Bay, Tuas North, Tuas Promenade, Tuas View and Tuas View Extension.",
+      "friends": [
+        "f2",
+        "f3",
+        "f4",
+        "f5"
+      ],
+      "archived": true
     }
   ],
   "destinations": [

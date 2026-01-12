@@ -72,8 +72,14 @@
               </div>
               <div class="trip-date">{{ formatMonthYear(it.startDate || it.createdAt) }}</div>
               <div class="trip-updates">0 New Updates</div>
-              <div class="trip-avatars">
-                <span class="avatar tiny" v-for="n in 3" :key="n"></span>
+              <div v-if="it.friends && it.friends.length" class="trip-avatars">
+                <span
+                  class="avatar tiny"
+                  v-for="friendId in it.friends.slice(0, 5)"
+                  :key="friendId"
+                  :title="getFriendName(friendId)"
+                  >{{ getFriendInitial(friendId) }}</span
+                >
               </div>
             </div>
             <div class="trip-actions">
@@ -131,6 +137,7 @@ import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
 import { searchCountries } from '../api/countries'
 import { fetchCountryWikipediaSummary } from '../api/countries'
+import { getFriends } from '../api/api'
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -138,6 +145,36 @@ const selections = useSelectionsStore()
 
 const user = auth.user
 const showLoginAlert = ref(false)
+
+// Friends data for avatar display
+const allFriends = ref([])
+
+async function loadFriends() {
+  try {
+    allFriends.value = await getFriends()
+  } catch (e) {
+    console.error('Error loading friends:', e)
+  }
+}
+
+loadFriends()
+
+function getFriendById(friendId) {
+  return allFriends.value.find((f) => f.id === friendId)
+}
+
+function getFriendInitial(friendId) {
+  const friend = getFriendById(friendId)
+  if (friend && friend.username) {
+    return friend.username.charAt(0).toUpperCase()
+  }
+  return '?'
+}
+
+function getFriendName(friendId) {
+  const friend = getFriendById(friendId)
+  return friend?.username || 'Unknown'
+}
 
 // Filter out archived trips from display
 const activeTrips = computed(() => selections.items.filter((t) => !t.archived))

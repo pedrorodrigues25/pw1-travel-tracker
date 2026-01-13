@@ -91,9 +91,18 @@
       <h2 class="collect-title">COLLECT MEMORIES. EARN YOUR STATUS</h2>
       <p class="collect-subtitle">Every trip counts. Level up your profile, unlock exclusive badges.</p>
       <div class="badges-container">
-        <div class="badge-item" v-for="i in 7" :key="i">
-          <div class="badge-circle-landing">
-            <span class="badge-text">BADGE {{ i }}</span>
+        <div class="badges-row">
+          <div class="badge-item" v-for="i in 4" :key="i">
+            <div class="badge-circle-landing">
+              <span class="badge-text">BADGE {{ i }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="badges-row">
+          <div class="badge-item" v-for="i in 3" :key="i + 4">
+            <div class="badge-circle-landing">
+              <span class="badge-text">BADGE {{ i + 4 }}</span>
+            </div>
           </div>
         </div>
       </div>

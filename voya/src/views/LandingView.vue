@@ -33,21 +33,17 @@
     <!-- Connection Section -->
     <section class="connection-section">
       <div class="connection-content">
-        <h2 class="connection-title">NEVER MISS A CONNECTION</h2>
-        <p class="connection-text">Share your bucket list and see where your friends are headed next.</p>
-        <div class="profile-circles">
-          <div class="profile-circle">
-            <img src="@/img/modelofoto.png" alt="Profile" />
-          </div>
-          <div class="profile-circle">
-            <img src="@/img/barco.png" alt="Profile" />
-          </div>
-          <div class="profile-circle">
-            <img src="@/img/caminho.png" alt="Profile" />
-          </div>
-          <div class="profile-circle small">
-            <img src="@/img/escrita.png" alt="Profile" />
-          </div>
+        <!-- Profile circles scattered around -->
+        <div class="profile-circle circle-1"></div>
+        <div class="profile-circle circle-2"></div>
+        <div class="profile-circle circle-3"></div>
+        <div class="profile-circle circle-4"></div>
+        <div class="profile-circle circle-5"></div>
+        <div class="profile-circle circle-6"></div>
+        
+        <div class="connection-text-container">
+          <h2 class="connection-title">NEVER MISS A CONNECTION</h2>
+          <p class="connection-text">Share your bucket list and see where your friends are headed next.</p>
         </div>
       </div>
     </section>

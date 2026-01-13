@@ -175,7 +175,7 @@
 /* ===== Connection Section ===== */
 .connection-section {
   background: #ED9875;
-  padding: 60px 32px;
+  padding: 80px 32px;
   position: relative;
 }
 
@@ -193,55 +193,93 @@
 .connection-content {
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+  min-height: 300px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 40px;
+  justify-content: center;
+}
+
+.connection-text-container {
+  text-align: center;
+  max-width: 500px;
+  z-index: 2;
 }
 
 .connection-title {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 800;
   color: #0c3959;
-  margin: 0 0 8px 0;
+  margin: 0 0 16px 0;
   text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .connection-text {
-  font-size: 14px;
+  font-size: 16px;
   color: #0c3959;
   margin: 0;
-  max-width: 400px;
-}
-
-.profile-circles {
-  display: flex;
-  align-items: center;
-  gap: -10px;
+  line-height: 1.6;
 }
 
 .profile-circle {
-  width: 80px;
-  height: 80px;
+  position: absolute;
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid #ffffff;
-  margin-left: -15px;
-}
-
-.profile-circle:first-child {
-  margin-left: 0;
-}
-
-.profile-circle.small {
-  width: 50px;
-  height: 50px;
+  border: 3px solid #8ea5b5;
+  background: #ccc;
 }
 
 .profile-circle img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Circle positions - scattered around the text */
+.circle-1 {
+  width: 70px;
+  height: 70px;
+  top: 10px;
+  left: 15%;
+}
+
+.circle-2 {
+  width: 100px;
+  height: 100px;
+  top: 0;
+  right: 20%;
+}
+
+.circle-3 {
+  width: 50px;
+  height: 50px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.circle-4 {
+  width: 60px;
+  height: 60px;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.circle-5 {
+  width: 90px;
+  height: 90px;
+  bottom: 0;
+  left: 20%;
+}
+
+.circle-6 {
+  width: 45px;
+  height: 45px;
+  bottom: 20px;
+  right: 15%;
 }
 
 /* ===== Travel Section ===== */

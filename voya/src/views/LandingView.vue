@@ -59,11 +59,11 @@
         </div>
         <div class="travel-right">
           <div class="travel-tags">
-            <span class="tag tag-filled">✓ PERFECT FOR</span>
-            <span class="tag tag-outline">✗ INSPIRE ME TO EXPLORE</span>
-            <span class="tag tag-outline">◇ CULTURE & MUSEUMS</span>
-            <span class="tag tag-outline">☆ CITY WALKTHROUGH</span>
-            <span class="tag tag-filled">◐ PEACEFUL TRIPS</span>
+            <span class="tag tag-filled"><span class="tag-icon">✕</span> ROAD TRIPS</span>
+            <span class="tag tag-filled"><span class="tag-icon">✕</span> BEACH AND RELAXATION</span>
+            <span class="tag tag-outline"><span class="tag-icon">+</span> CULTURAL EXPERIENCES</span>
+            <span class="tag tag-outline"><span class="tag-icon">+</span> CITY EXPLORATION</span>
+            <span class="tag tag-outline"><span class="tag-icon">+</span> FAMILY TRIPS</span>
           </div>
         </div>
       </div>
@@ -71,17 +71,16 @@
 
     <!-- Know Before You Go Section -->
     <section class="know-section">
+      <h2 class="know-title">KNOW BEFORE YOU GO</h2>
       <div class="know-content">
         <div class="know-left">
-          <div class="know-image-container">
-            <img src="@/img/caminho.png" alt="Destination" class="know-image" />
-            <div class="know-image-label">Sei, Kyoto</div>
+          <div class="know-card">
+            <img src="@/img/journal.png" alt="Porto, Portugal" class="know-card-image" />
           </div>
         </div>
         <div class="know-right">
-          <h2 class="know-title">KNOW BEFORE YOU GO</h2>
           <p class="know-text">
-            Get curated insights on every destination. From local etiquette tips to essential travel requirements, we provide the data so you can focus on the experience.
+            Get curated insights on every destination. From local hidden gems to essential travel requirements, we provide the data so you can focus on the experience.
           </p>
         </div>
       </div>

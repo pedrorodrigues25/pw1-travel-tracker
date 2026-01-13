@@ -225,7 +225,13 @@
       "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/73/Marginal_Pinheiros_e_Jockey_Club.jpg",
       "userEmail": "arroz@gmail.com",
       "createdAt": "2026-01-12T16:01:44.419Z",
-      "id": "V2mQJdc"
+      "id": "V2mQJdc",
+      "customText": "São Paulo is the capital city of the state of São Paulo, as well as the most populous city in Brazil, in the Americas and in the southern hemisphere. Listed by the Globalization and World Cities Research Network (GaWC) as an alpha global city, it exerts international influence in commerce, finance, culture, gastronomy, arts, fashion, technology, entertainment and media, which has earned it inclusion in UNESCO's Creative Cities Network as a \"City of Film\" and the title of \"World Capital of Gastronomy\". It is the largest urban area by population outside Asia and the most populous Portuguese-speaking city in the world. The city's name honors Paul the Apostle and people from the city are known as paulistanos. The city's Latin motto is Non ducor, duco, which translates as \"I am not led, I lead\".",
+      "friends": [
+        "f3",
+        "f2",
+        "f4"
+      ]
     },
     {
       "destination": "Singapore",

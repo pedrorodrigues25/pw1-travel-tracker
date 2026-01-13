@@ -1,4 +1,6 @@
 /* DestinationDetailPage.vue Styles */
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+
 .figma-journal-bg {
   min-height: 100vh;
   background: #e9e6e2;
@@ -20,7 +22,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 5%;
 }
 .figma-back-btn {
   position: absolute;
@@ -77,9 +79,9 @@
   justify-content: flex-start;
 }
 .figma-journal-day-title {
-  font-size: 2.1rem;
-  font-family: 'Amatic SC', cursive, sans-serif;
-  font-weight: 700;
+  font-size: 1.8rem;
+  font-family: 'Montserrat', cursive, sans-serif;
+  font-weight: 500;
   margin-bottom: 8px;
   color: #222;
 }
@@ -87,13 +89,13 @@
   font-size: 1.08rem;
   color: #444;
   line-height: 1.5;
-  font-family: 'Quicksand', 'Inter', Arial, sans-serif;
+  font-family: 'Montserrat', 'Inter', Arial, sans-serif;
 }
 .figma-journal-polaroids {
   display: flex;
   gap: 18px;
-  margin-top: 18px;
-  justify-content: flex-start;
+  margin-top: 32px;
+  justify-content: center;
   flex-wrap: wrap;
 }
 .figma-polaroid {

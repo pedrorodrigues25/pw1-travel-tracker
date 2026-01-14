@@ -68,9 +68,9 @@ A modern web application for tracking, sharing, and managing your travel experie
 ## 👤 Default Admin Account
 
 For testing admin features:
-- **Email:** `admin@gmail.com`
+- **Username:** `admin`
 - **Password:** `admin123`
-- Click **"Admin Login"** button on the login page
+- Use the **regular login form** with these credentials
 
 ## 📚 User Accounts
 
@@ -186,9 +186,6 @@ This project is created for educational purposes as part of ESMAD curriculum.
 
 For questions, improvements, or bug reports, please contact the development team or open an issue on GitHub.
 
----
-
-**Built with ❤️ for travel enthusiasts | Made with Vue.js & ☕**
 
 ---
 
@@ -336,8 +333,8 @@ voya/
 6. **Ver Estatísticas** - Ver o progresso da sua viagem com gráficos interativos
 
 ### Como Admin
-1. Clique no botão **"Admin Login"** na página de login
-2. Introduza credenciais de admin (`admin@gmail.com` / `admin123`)
+1. Na página de login, escreva `admin` no campo de email
+2. Escreva `admin123` no campo de password
 3. Aceda ao dashboard de admin com gestão de utilizadores
 4. **Banir Utilizadores** - Selecionar duração (1h, 3h, 6h, 24h, 3 dias, 1 semana)
 5. **Desbanir Utilizadores** - Remover bans ativos
@@ -346,7 +343,7 @@ voya/
 ## 🚫 Notas Importantes
 
 - ⛔ **Utilizadores banidos não podem fazer login** até o ban expirar
-- 🔐 **Conta admin** não pode usar login regular (deve usar Admin Login)
+- 🔐 **Conta admin** - Usar `admin` no campo de email
 - 💾 **Persistência de dados** - Todas as alterações são guardadas em `db.json`
 - 🌐 **Obtenção de imagens** - Requer ligação à internet para obter imagens da Wikipedia
 - 📱 **Responsivo** - A aplicação adapta-se a todos os tamanhos de ecrã

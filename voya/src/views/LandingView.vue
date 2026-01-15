@@ -8,7 +8,9 @@
         </div>
         <nav class="auth-nav">
           <a class="link small-caps visitor-link" @click="enterAsGuest">GUEST</a>
+          <router-link class="btn btn-secondary" to="/register">SIGN UP</router-link>
           <router-link class="btn btn-primary" to="/login">LOG IN</router-link>
+
         </nav>
       </header>
 

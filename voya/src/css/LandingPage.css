@@ -29,7 +29,7 @@
 }
 
 .link {
-  color: #ffffff;
+  color: #fffb01;
   opacity: 0.9;
   text-decoration: none;
   font-weight: 600;
@@ -67,6 +67,18 @@
   color: #ffffff;
 }
 
+.landing .btn-primary:hover {
+  background: #153e5c;
+}
+
+.landing .btn-secondary {
+  background: #0c3959;
+  color: #ffffff;
+}
+
+.landing .btn-secondary:hover {
+  background: #153e5c;
+}
 /* ===== Hero Section ===== */
 .hero-section {
   background: #8ea5b5;

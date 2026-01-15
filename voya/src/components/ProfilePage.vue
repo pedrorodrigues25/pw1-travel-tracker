@@ -88,6 +88,7 @@
       <br />
       <button type="button" class="action-btn save-btn" @click="saveAboutMe">Save</button>
 
+      
       <div class="profile-archived-card" v-if="archivedTrips.length">
         <h3>Viagens arquivadas</h3>
         <ul class="archived-list">
@@ -107,6 +108,8 @@
           </li>
         </ul>
       </div>
+
+      
     </div>
   </div>
 </template>

@@ -3,7 +3,7 @@ import LandingView from '../views/LandingView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import InterestsView from '../views/InterestsView.vue'
-import DestinationsView from '../views/DestinationsView.vue'
+import HomePage from '../views/HomePageView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import RecomendationsView from '../views/RecomendationsView.vue'
 import FriendsView from '../views/FriendsView.vue'
@@ -20,6 +20,11 @@ const router = createRouter({
       name: 'Landing',
     },
     {
+      path: '/homepage',
+      component: HomePage,
+      name: 'Homepage',
+    },
+    {
       path: '/login',
       component: LoginView,
       name: 'Login',
@@ -33,11 +38,6 @@ const router = createRouter({
       path: '/interests',
       component: InterestsView,
       name: 'Interests',
-    },
-    {
-      path: '/destinations',
-      component: DestinationsView,
-      name: 'Destinations',
     },
     {
       path: '/profile',

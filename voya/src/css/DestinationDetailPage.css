@@ -35,7 +35,7 @@
   cursor: pointer;
 }
 .figma-journal-title {
-  font-size: 3rem;
+  font-size: 60px;
   font-family: 'Amatic SC', cursive, sans-serif;
   font-weight: 700;
   letter-spacing: 2px;
@@ -48,7 +48,7 @@
   gap: 8px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 18px;
+  margin-top: 16px;
 }
 .tag-badge {
   background-color: #e8f4fc;
@@ -63,7 +63,7 @@
 .figma-journal-main {
   display: flex;
   gap: 32px;
-  margin-bottom: 24px;
+  margin-top: 50px;
 }
 .figma-journal-image-block {
   width: 220px;
@@ -117,7 +117,7 @@
 .add-trip-section {
   display: flex;
   justify-content: center;
-  margin-top: 32px;
+  margin-top: 100px;
 }
 .add-trip-btn {
   background-color: #014f76;

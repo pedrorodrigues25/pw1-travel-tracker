@@ -5,7 +5,7 @@
         <img src="@/img/logo-pw1-voya.png" alt="Voya Logo" height="38" />
       </router-link>
       <div class="navbar-links">
-        <router-link to="/destinations" active-class="active">Home</router-link>
+        <router-link to="/homepage" active-class="active">Home</router-link>
         <router-link to="/recommendations" active-class="active">Recommendations</router-link>
         <router-link to="/trips" active-class="active">Trips</router-link>
         <router-link to="/friends" active-class="active">Friends</router-link>
@@ -16,13 +16,15 @@
     <div class="friends-main">
       <!-- See where your friends are -->
       <section class="friends-locations">
-        <h2>See where your friends are</h2>
+        <h2 class="voya-section-title">See where your friends are</h2>
         <div class="friend-cards">
           <div v-for="friend in friends" :key="friend.id" class="friend-card">
             <div class="friend-card-header">
               <div class="friend-avatar">
                 <img v-if="friend.photo" :src="friend.photo" :alt="friend.username" />
-                <div v-else class="avatar-placeholder">{{ friend.username.charAt(0).toUpperCase() }}</div>
+                <div v-else class="avatar-placeholder">
+                  {{ friend.username.charAt(0).toUpperCase() }}
+                </div>
               </div>
               <div class="friend-info">
                 <h3 class="friend-name">{{ friend.name || friend.username }}</h3>
@@ -31,17 +33,19 @@
               <span class="friend-date">{{ formatLastTripDate(friend) }}</span>
             </div>
             <div class="friend-card-body">
-              <img 
-                v-if="friend.lastTrip && friend.lastTrip.imageUrl" 
-                :src="friend.lastTrip.imageUrl" 
-                :alt="friend.lastTrip.city || friend.lastTrip.destination" 
+              <img
+                v-if="friend.lastTrip && friend.lastTrip.imageUrl"
+                :src="friend.lastTrip.imageUrl"
+                :alt="friend.lastTrip.city || friend.lastTrip.destination"
                 class="friend-trip-image"
               />
               <div v-else class="no-trip-placeholder">
                 <span>No trips yet</span>
               </div>
               <div v-if="friend.lastTrip" class="friend-trip-overlay">
-                <span class="trip-location">{{ friend.lastTrip.city || friend.lastTrip.destination }}</span>
+                <span class="trip-location">{{
+                  friend.lastTrip.city || friend.lastTrip.destination
+                }}</span>
               </div>
             </div>
           </div>
@@ -75,18 +79,25 @@
             <div class="person-card-body">
               <div class="person-avatar large">
                 <img v-if="person.photo" :src="person.photo" :alt="person.username" />
-                <div v-else class="avatar-placeholder">{{ person.username.charAt(0).toUpperCase() }}</div>
+                <div v-else class="avatar-placeholder">
+                  {{ person.username.charAt(0).toUpperCase() }}
+                </div>
               </div>
               <div class="person-info">
                 <h4>{{ person.name || person.username }}</h4>
                 <p class="person-username">@{{ person.username }}</p>
               </div>
             </div>
-            <button class="see-profile-btn pill" @click="openPersonProfile(person)">See Profile</button>
+            <button class="see-profile-btn pill" @click="openPersonProfile(person)">
+              See Profile
+            </button>
           </div>
         </div>
         <div v-if="recommendations.length > 4" class="recommendations-toggle">
-          <button class="toggle-rec-btn" @click="showMoreRecommendations = !showMoreRecommendations">
+          <button
+            class="toggle-rec-btn"
+            @click="showMoreRecommendations = !showMoreRecommendations"
+          >
             {{ showMoreRecommendations ? 'Show Less' : 'Show More' }}
           </button>
         </div>
@@ -107,7 +118,9 @@
           >
             <div class="friend-avatar-small">
               <img v-if="friend.photo" :src="friend.photo" :alt="friend.username" />
-              <div v-else class="avatar-placeholder-small">{{ friend.username.charAt(0).toUpperCase() }}</div>
+              <div v-else class="avatar-placeholder-small">
+                {{ friend.username.charAt(0).toUpperCase() }}
+              </div>
             </div>
             <span>{{ friend.username }}</span>
           </div>
@@ -116,13 +129,23 @@
     </div>
 
     <!-- Profile Modal -->
-    <div v-if="showProfileModal && selectedPerson" class="profile-modal-overlay" @click.self="closeProfileModal">
+    <div
+      v-if="showProfileModal && selectedPerson"
+      class="profile-modal-overlay"
+      @click.self="closeProfileModal"
+    >
       <div class="profile-modal">
         <button class="modal-close" @click="closeProfileModal">×</button>
         <div class="profile-modal-header">
           <div class="person-avatar modal-avatar">
-            <img v-if="selectedPerson.photo" :src="selectedPerson.photo" :alt="selectedPerson.username" />
-            <div v-else class="avatar-placeholder">{{ selectedPerson.username.charAt(0).toUpperCase() }}</div>
+            <img
+              v-if="selectedPerson.photo"
+              :src="selectedPerson.photo"
+              :alt="selectedPerson.username"
+            />
+            <div v-else class="avatar-placeholder">
+              {{ selectedPerson.username.charAt(0).toUpperCase() }}
+            </div>
           </div>
           <div class="profile-meta">
             <h3>{{ selectedPerson.username }}</h3>
@@ -130,8 +153,13 @@
           </div>
         </div>
         <p class="profile-about" v-if="selectedPerson.aboutMe">{{ selectedPerson.aboutMe }}</p>
-        <div v-if="selectedPerson.interests && selectedPerson.interests.length" class="profile-interests">
-          <span v-for="interest in selectedPerson.interests" :key="interest" class="chip">{{ interest }}</span>
+        <div
+          v-if="selectedPerson.interests && selectedPerson.interests.length"
+          class="profile-interests"
+        >
+          <span v-for="interest in selectedPerson.interests" :key="interest" class="chip">{{
+            interest
+          }}</span>
         </div>
         <button
           v-if="selectedPerson && !isPersonFriend"
@@ -155,7 +183,13 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
-import { getFriends, getSelections, getUserFriends, addUserFriend, removeUserFriend } from '../api/api'
+import {
+  getFriends,
+  getSelections,
+  getUserFriends,
+  addUserFriend,
+  removeUserFriend,
+} from '../api/api'
 import { fetchCountryWikipediaSummary } from '../api/countries'
 
 const auth = useAuthStore()
@@ -185,26 +219,26 @@ async function loadFriendsData() {
 
   // Get user's actual friends (from userFriends table)
   const userFriendsList = await getUserFriends(user.email)
-  const userFriendIds = userFriendsList.map(f => f.id)
-  
+  const userFriendIds = userFriendsList.map((f) => f.id)
+
   // Get all available people
   const allPeople = await getFriends()
-  
+
   // Fetch last trip for each friend
   const friendsWithTrips = await Promise.all(
     userFriendsList.map(async (friend) => {
       console.log('Loading trips for friend:', friend.username, friend.email)
       const friendTrips = await getSelections(friend.email)
       console.log('Friend trips:', friendTrips)
-      
+
       // Get the most recent trip (by createdAt or startDate)
-      const sortedTrips = friendTrips.sort((a, b) => 
-        new Date(b.createdAt || b.startDate) - new Date(a.createdAt || a.startDate)
+      const sortedTrips = friendTrips.sort(
+        (a, b) => new Date(b.createdAt || b.startDate) - new Date(a.createdAt || a.startDate),
       )
-      
+
       let lastTrip = sortedTrips[0] || null
       console.log('Last trip for', friend.username, ':', lastTrip)
-      
+
       // Fetch image from Wikipedia API if trip exists but no imageUrl
       if (lastTrip) {
         if (!lastTrip.imageUrl) {
@@ -227,19 +261,19 @@ async function loadFriendsData() {
           console.log('Using existing imageUrl:', lastTrip.imageUrl)
         }
       }
-      
+
       return {
         ...friend,
-        lastTrip
+        lastTrip,
       }
-    })
+    }),
   )
-  
+
   console.log('Friends with trips:', friendsWithTrips)
   friends.value = friendsWithTrips
-  
+
   // Recommendations are people not yet added as friends
-  recommendations.value = allPeople.filter(p => !userFriendIds.includes(p.id))
+  recommendations.value = allPeople.filter((p) => !userFriendIds.includes(p.id))
 
   // Get user's trips to find shared destinations
   const userTrips = await getSelections(user.email)
@@ -248,15 +282,28 @@ async function loadFriendsData() {
 
 function formatLastTripDate(friend) {
   // Format the last trip date for display
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-  
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
+
   if (friend.lastTrip && friend.lastTrip.startDate) {
     const tripDate = new Date(friend.lastTrip.startDate)
     const month = months[tripDate.getMonth()]
     const year = tripDate.getFullYear()
     return `${month} ${year}`
   }
-  
+
   // Fallback to current date if no trip
   const now = new Date()
   const month = months[now.getMonth()]
@@ -267,7 +314,7 @@ function formatLastTripDate(friend) {
 const filteredFriends = computed(() => {
   if (!searchQuery.value) return friends.value
   return friends.value.filter((f) =>
-    f.username.toLowerCase().includes(searchQuery.value.toLowerCase())
+    f.username.toLowerCase().includes(searchQuery.value.toLowerCase()),
   )
 })
 
@@ -318,4 +365,3 @@ onMounted(() => {
 
 <style src="../css/NavBar.css"></style>
 <style src="../css/FriendsPage.css"></style>
-

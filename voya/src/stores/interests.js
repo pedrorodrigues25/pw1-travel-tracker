@@ -20,8 +20,6 @@ export const useInterestsStore = defineStore('interests', () => {
     }
   }
 
-  // save removido, agora é feito via API
-
   async function setInterests(interests, email) {
     if (!email) return
     // 1. Carregar interesses antigos do utilizador

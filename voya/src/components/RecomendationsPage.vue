@@ -6,7 +6,7 @@
         <img src="@/img/logo-pw1-voya.png" alt="Voya Logo" height="38" />
       </router-link>
       <div class="navbar-links">
-        <router-link to="/destinations" active-class="active">Home</router-link>
+        <router-link to="/homepage" active-class="active">Home</router-link>
         <router-link to="/recommendations" active-class="active">Recommendations</router-link>
         <router-link to="/trips" active-class="active">Trips</router-link>
         <router-link to="/friends" active-class="active">Friends</router-link>
@@ -17,8 +17,8 @@
     <!-- Filters Section -->
     <div class="filters-section">
       <div class="filters-container">
-        <button 
-          v-for="interest in availableInterests" 
+        <button
+          v-for="interest in availableInterests"
           :key="interest"
           :class="['filter-tag', { active: selectedFilters.includes(interest) }]"
           @click="toggleFilter(interest)"
@@ -31,39 +31,50 @@
 
     <!-- Recommendations Section -->
     <div class="recommendations-content">
-      <h2 class="section-title">TRIPS JUST FOR YOU</h2>
-      
-      <div class="cards-container">
-        <div 
-          v-for="destination in filteredRecommendations" 
-          :key="destination.id"
-          class="trip-card"
-        >
-          <div class="trip-cover clickable" @click="goToDestination(destination.id)">
-            <img :src="destination.imageUrl || '/src/img/mountains.png'" :alt="destination.city || destination.country" />
-          </div>
-          <div class="trip-info">
-            <div class="trip-title-row">
-              <h4 class="trip-title">
-                <template v-if="destination.city">{{ destination.city }}, {{ destination.country }}</template>
-                <template v-else>{{ destination.country }}</template>
-              </h4>
-              <span class="trip-status pill upcoming">Recommended</span>
-            </div>
-            <div class="trip-updates">Matches your interests</div>
-            <div class="trip-avatars">
-              <span class="avatar tiny" v-for="n in 3" :key="n"></span>
-            </div>
-          </div>
-          <div class="trip-actions">
-            <button class="open-journal-btn pill" @click="goToDestination(destination.id)">See Trip</button>
-          </div>
-        </div>
+      <h2 class="voya-section-title">TRIPS JUST FOR YOU</h2>
+
+      <div v-if="isLoading" class="loading-state" aria-live="polite">
+        <div class="loading-spinner" aria-hidden="true"></div>
+        <p class="loading-text">Loading recommendations...</p>
       </div>
 
-      <div v-if="filteredRecommendations.length === 0" class="no-recommendations">
-        <p>No recommendations available for your selected interests</p>
-      </div>
+      <template v-else>
+        <div class="cards-container">
+          <div
+            v-for="destination in filteredRecommendations"
+            :key="destination.id"
+            class="trip-card"
+          >
+            <div class="trip-cover clickable" @click="goToDestination(destination.id)">
+              <img
+                :src="destination.imageUrl || '/src/img/mountains.png'"
+                :alt="destination.city || destination.country"
+              />
+            </div>
+            <div class="trip-info">
+              <div class="trip-title-row">
+                <h4 class="trip-title">
+                  <template v-if="destination.city"
+                    >{{ destination.city }}, {{ destination.country }}</template
+                  >
+                  <template v-else>{{ destination.country }}</template>
+                </h4>
+                <span class="trip-status pill upcoming">Recommended</span>
+              </div>
+              <div class="trip-updates">Matches your interests</div>
+            </div>
+            <div class="trip-actions">
+              <button class="open-journal-btn pill" @click="goToDestination(destination.id)">
+                See Trip
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="filteredRecommendations.length === 0" class="no-recommendations">
+          <p>No recommendations available for your selected interests</p>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -84,6 +95,7 @@ const interestsStore = useInterestsStore()
 const selections = useSelectionsStore()
 const allDestinations = ref([])
 const selectedFilters = ref([])
+const isLoading = ref(false)
 
 const availableInterests = [
   'Traveling with Friends',
@@ -95,7 +107,7 @@ const availableInterests = [
   'Cultural Experiences',
   'Food & Gastronomy',
   'Photography',
-  'Road Trips'
+  'Road Trips',
 ]
 
 async function loadUserInterests() {
@@ -103,7 +115,7 @@ async function loadUserInterests() {
   if (userEmail) {
     await interestsStore.load(userEmail)
     // Extrair apenas os nomes dos interesses
-    selectedFilters.value = interestsStore.items.map(item => item.interest)
+    selectedFilters.value = interestsStore.items.map((item) => item.interest)
   }
 }
 
@@ -132,15 +144,15 @@ const filteredRecommendations = computed(() => {
   if (selectedFilters.value.length === 0) {
     return [] // Se não há filtros selecionados, não mostra nenhum destino
   }
-  return allDestinations.value.filter(dest =>
-    dest.tags && dest.tags.some(tag => selectedFilters.value.includes(tag))
+  return allDestinations.value.filter(
+    (dest) => dest.tags && dest.tags.some((tag) => selectedFilters.value.includes(tag)),
   )
 })
 
 // Retorna apenas as tags que estão selecionadas nos filtros
 function getMatchingTags(tags) {
   if (!tags) return []
-  return tags.filter(tag => selectedFilters.value.includes(tag))
+  return tags.filter((tag) => selectedFilters.value.includes(tag))
 }
 
 function toggleFilter(interest) {
@@ -166,20 +178,28 @@ async function addToTrips(dest) {
     alert('Please log in first')
     return
   }
-  await selections.add({
-    destination: dest.country,
-    city: dest.city || '',
-    notes: '',
-    status: 'upcoming',
-    startDate: '',
-    endDate: '',
-    imageUrl: dest.imageUrl || '',
-  }, userEmail)
+  await selections.add(
+    {
+      destination: dest.country,
+      city: dest.city || '',
+      notes: '',
+      status: 'upcoming',
+      startDate: '',
+      endDate: '',
+      imageUrl: dest.imageUrl || '',
+    },
+    userEmail,
+  )
 }
 
 onMounted(async () => {
-  await loadUserInterests()
-  await loadDestinations()
+  isLoading.value = true
+  try {
+    await loadUserInterests()
+    await loadDestinations()
+  } finally {
+    isLoading.value = false
+  }
 })
 </script>
 

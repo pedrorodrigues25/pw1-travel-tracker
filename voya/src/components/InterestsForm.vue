@@ -16,12 +16,12 @@
     <!-- Right Panel - Interests Selection -->
     <div class="interests-card">
       <img src="/src/img/Vector.png" alt="Decorative flight vector" class="vector-art-interests" />
-      
+
       <h2 class="interests-title">Add your interests</h2>
 
       <div class="interests-tags">
-        <button 
-          v-for="interest in availableInterests" 
+        <button
+          v-for="interest in availableInterests"
           :key="interest"
           :class="['interest-tag', { selected: selectedInterests.includes(interest) }]"
           @click="toggleInterest(interest)"
@@ -55,7 +55,7 @@ const availableInterests = [
   'Cultural Experiences',
   'Food & Gastronomy',
   'Photography',
-  'Road Trips'
+  'Road Trips',
 ]
 
 const selectedInterests = ref([])
@@ -75,7 +75,7 @@ async function handleContinue() {
   if (userEmail) {
     await interestsStore.setInterests(selectedInterests.value, userEmail)
   }
-  router.push('/destinations')
+  router.push('/homepage')
 }
 
 function goBack() {

@@ -1,52 +1,56 @@
 /* Import Syncopate for quote typography */
 @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap');
 
-/* Quote overlay styling for RegisterForm */
 .register-quote {
-	position: absolute;
-	top: 85px; /* moved further up */
-	left: 305px; /* +50px further right */
-	right: auto;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 8px;
-	z-index: 2; /* above background, below card */
+  position: absolute;
+  top: 75px;
+  left: 305px;
+  right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  z-index: 2;
 }
 
 .quote-title {
-	color: #014F76;
-	text-align: center;
-	font-family: Syncopate, sans-serif;
-	font-size: 32px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 149.146%; /* ~47.727px */
-	margin: 0;
+  color: #014f76;
+  text-align: center;
+  font-family: Syncopate, sans-serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 149.146%;
+  margin: 0;
 }
 
 .quote-sub {
-	color: #014F76;
-	text-align: center;
-	font-family: Syncopate, sans-serif;
-	font-size: 20px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: 149.146%; /* ~29.829px */
-	width: 513px;
-	height: 73px;
-	margin: 0;
+  color: #014f76;
+  text-align: center;
+  font-family: Syncopate, sans-serif;
+  font-size: 20px;
+  line-height: 149.146%;
+  width: 613px;
+  margin: 0;
 }
 
 /* Ensure the card sits above the quote */
 .login-card {
-	position: relative;
-	z-index: 3;
+  position: relative;
+  z-index: 3;
 }
 
 @media (max-width: 900px) {
-	.register-quote { top: 40px; left: 340px; }
-	.quote-title { font-size: 26px; }
-	.quote-sub { font-size: 16px; width: 88%; height: auto; }
+  .register-quote {
+    top: 40px;
+    left: 340px;
+  }
+  .quote-title {
+    font-size: 26px;
+  }
+  .quote-sub {
+    font-size: 16px;
+    width: 88%;
+    height: auto;
+  }
 }
-    

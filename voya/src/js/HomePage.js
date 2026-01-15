@@ -9,14 +9,6 @@ const selections = useSelectionsStore()
 
 const user = auth.user
 
-const options = [
-  'Lisboa, Portugal',
-  'Porto, Portugal',
-  'Funchal, Madeira',
-  'Faro, Algarve',
-  'Braga, Portugal',
-]
-
 const form = reactive({ destination: '', notes: '' })
 
 const editing = ref(false)
@@ -99,7 +91,6 @@ export {
   auth,
   selections,
   user,
-  options,
   form,
   editing,
   editId,

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap');
+
 .landing {
   min-height: 100vh;
   display: flex;
@@ -160,6 +162,7 @@
 }
 
 .hero-title {
+  font-family: 'Syncopate', 'Montserrat';
   font-size: 48px;
   line-height: 1.1;
   color: #0c3959;
@@ -186,6 +189,7 @@
 
 /* ===== Connection Section ===== */
 .connection-section {
+  font-family: 'Syncopate', 'Montserrat';
   background: #ED9875;
   padding: 80px 32px;
   position: relative;
@@ -206,7 +210,7 @@
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
-  min-height: 300px;
+  min-height: 450px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -214,12 +218,12 @@
 
 .connection-text-container {
   text-align: center;
-  max-width: 500px;
+  /* max-width: 800px; */
   z-index: 2;
 }
 
 .connection-title {
-  font-size: 28px;
+  font-size: 48px;
   font-weight: 800;
   color: #0c3959;
   margin: 0 0 16px 0;
@@ -228,7 +232,7 @@
 }
 
 .connection-text {
-  font-size: 16px;
+  font-size: 32px;
   color: #0c3959;
   margin: 0;
   line-height: 1.6;
@@ -314,21 +318,23 @@
 }
 
 .travel-title {
-  font-size: 28px;
+  font-family: 'Syncopate', 'Montserrat';
+  font-size: 48px;
   font-weight: 800;
   color: #0c3959;
   text-align: center;
-  margin: 0 0 50px 0;
+  margin: 0 0 8% 0;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .travel-content {
-  max-width: 900px;
+  font-family: 'Syncopate', 'Montserrat';
+  max-width: 90%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: 10%;
   align-items: start;
 }
 
@@ -338,7 +344,8 @@
 }
 
 .travel-text {
-  font-size: 15px;
+  font-family: 'Syncopate', 'Montserrat';
+  font-size: 24px;
   color: #0c3959;
   line-height: 1.7;
   margin: 0;
@@ -405,6 +412,7 @@
 }
 
 .know-title {
+  font-family: 'Syncopate', 'Montserrat';
   font-size: 32px;
   font-weight: 800;
   color: #ffffff;
@@ -415,6 +423,7 @@
 }
 
 .know-content {
+  font-family: 'Syncopate', 'Montserrat';
   max-width: 1100px;
   margin: 0 auto;
   display: grid;
@@ -463,7 +472,8 @@
 }
 
 .collect-title {
-  font-size: 28px;
+  font-family: 'Syncopate', 'Montserrat';
+  font-size: 48px;
   font-weight: 800;
   color: #0c3959;
   margin: 0 0 8px 0;
@@ -471,7 +481,8 @@
 }
 
 .collect-subtitle {
-  font-size: 14px;
+  font-family: 'Syncopate', 'Montserrat';
+  font-size: 24px;
   color: #0c3959;
   margin: 0 0 50px 0;
 }

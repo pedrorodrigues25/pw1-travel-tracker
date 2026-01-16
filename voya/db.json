@@ -43,6 +43,12 @@
       "username": "lu1spcneri",
       "id": "cJ1iNgS",
       "aboutMe": ""
+    },
+    {
+      "email": "miguelmeniciocaldas@gmail.com",
+      "password": "123",
+      "username": "mcaldas11",
+      "id": "DdZKK__"
     }
   ],
   "interests": [
@@ -90,6 +96,11 @@
       "id": "176808375926919l62x",
       "interest": "Food & Gastronomy",
       "userEmail": "luisneri@gmail.com"
+    },
+    {
+      "id": "1768586279423wg0ltq",
+      "interest": "Traveling with Friends",
+      "userEmail": "miguelmeniciocaldas@gmail.com"
     }
   ],
   "selections": [
@@ -233,6 +244,301 @@
       "userEmail": "arroz@gmail.com",
       "createdAt": "2026-01-16T17:10:33.464Z",
       "id": "uXZLNwG"
+    },
+    {
+      "destination": "Brazil",
+      "city": "São Paulo",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-08",
+      "endDate": "2026-01-09",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/73/Marginal_Pinheiros_e_Jockey_Club.jpg",
+      "friends": [
+        "f2",
+        "f10"
+      ],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T17:59:40.472Z",
+      "id": "aRjq9Iw"
+    },
+    {
+      "destination": "Portugal",
+      "city": "Porto",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-01",
+      "endDate": "2026-01-01",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Puente_Don_Luis_I%2C_Oporto%2C_Portugal%2C_2012-05-09%2C_DD_13.JPG",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:00:25.118Z",
+      "id": "eKv_iUm"
+    },
+    {
+      "destination": "Norway",
+      "city": "Oslo",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-08",
+      "endDate": "2026-01-08",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Nationaltheatret_evening.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:00:51.816Z",
+      "id": "mYQZZx7"
+    },
+    {
+      "destination": "South Korea",
+      "city": "Daejeon",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-01",
+      "endDate": "2026-01-08",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/de/Korea-Daejeon-Uam_Historic_Park-01.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:01:15.752Z",
+      "id": "yrGRbMq"
+    },
+    {
+      "destination": "Japan",
+      "city": "Hakodate",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-10",
+      "endDate": "2026-01-10",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/69/Hakodate_montage.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:01:57.377Z",
+      "id": "QRX7ft_",
+      "customText": "Hakodate  is a city and port located in Oshima Subprefecture, Hokkaido, Japan. It is the capital city of Oshima Subprefecture. As of January 31, 2024, the city had an estimated population of 239,813 with 138,807 households, and a population density of 354 inhabitants per square kilometre (920/sq mi). The total area is 677.86 square kilometres (261.72 sq mi). The city is the third largest in Hokkaido after Sapporo and Asahikawa."
+    },
+    {
+      "destination": "Denmark",
+      "city": "Aalborg",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-01",
+      "endDate": "2026-01-01",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Aalborg_from_the_Aalborg_tower.jpg",
+      "friends": [
+        "f12"
+      ],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:02:24.615Z",
+      "id": "cA4ds8P"
+    },
+    {
+      "destination": "Armenia",
+      "city": "Aarhus",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-02",
+      "endDate": "2026-01-03",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/05/Drone_photo_of_Dokk1_in_Aarhus%2C_Denmark.jpg",
+      "friends": [
+        "f10"
+      ],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:02:46.827Z",
+      "id": "wnnhS1V"
+    },
+    {
+      "destination": "Albania",
+      "city": "Bajram Curri",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-01",
+      "endDate": "2026-01-07",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Bajram_Curri_%28portret%29.jpg",
+      "friends": [
+        "f10"
+      ],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:03:11.236Z",
+      "id": "0Zta0lZ"
+    },
+    {
+      "destination": "Italy",
+      "city": "Rome",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-02",
+      "endDate": "2026-01-02",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Trevi_Fountain%2C_Rome%2C_Italy_2_-_May_2007.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:03:48.610Z",
+      "id": "LM0xMOo"
+    },
+    {
+      "destination": "Italy",
+      "city": "Milan",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-09",
+      "endDate": "2026-01-10",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Milan_skyline_skyscrapers_of_Porta_Nuova_business_district_%28cropped%29.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:04:06.979Z",
+      "id": "S5hFKjd"
+    },
+    {
+      "destination": "Ireland",
+      "city": "Ballyconnell",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-02",
+      "endDate": "2026-01-08",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/00/Ballyconnell_main_street.JPG",
+      "friends": [],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:04:38.395Z",
+      "id": "k0qKfTd"
+    },
+    {
+      "destination": "Egypt",
+      "city": "Cairo",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-01",
+      "endDate": "2026-01-06",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Cairo_Skyline_%282020%29.jpg",
+      "friends": [],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:04:58.119Z",
+      "id": "O5JuuyG"
+    },
+    {
+      "destination": "Barbados",
+      "city": "Bridgetown",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-02",
+      "endDate": "2026-01-02",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Bridgetown2.jpg",
+      "friends": [],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:05:28.956Z",
+      "id": "dmmd7WK"
+    },
+    {
+      "destination": "United States",
+      "city": "",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-01",
+      "endDate": "2026-01-01",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Flag_of_the_United_States_%28DDD-F-416E_specifications%29.svg/1280px-Flag_of_the_United_States_%28DDD-F-416E_specifications%29.svg.png",
+      "friends": [],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:05:41.228Z",
+      "id": "IqsMZ35"
+    },
+    {
+      "destination": "Romania",
+      "city": "",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-01",
+      "endDate": "2026-01-01",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Romania.svg/960px-Flag_of_Romania.svg.png",
+      "friends": [],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:05:53.547Z",
+      "id": "dbPP3M9"
+    },
+    {
+      "destination": "Portugal",
+      "city": "Washington, D.C.",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-09",
+      "endDate": "2026-01-10",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e4/12-07-13-washington-by-RalfR-08.jpg",
+      "friends": [],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:06:13.990Z",
+      "id": "i3EbB4M"
+    },
+    {
+      "destination": "Singapore",
+      "city": "",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-01",
+      "endDate": "2026-01-14",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Flag_of_Singapore.svg/960px-Flag_of_Singapore.svg.png",
+      "friends": [],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:06:34.373Z",
+      "id": "uzdFWQO"
+    },
+    {
+      "destination": "Bolivia",
+      "city": "Sucre",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-01",
+      "endDate": "2026-01-01",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e3/Sucre%2C_Capital_Bolivia.jpg",
+      "friends": [],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:06:49.825Z",
+      "id": "EtnPRjH"
+    },
+    {
+      "destination": "Madagascar",
+      "city": "Miarinarivo",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-01",
+      "endDate": "2026-01-08",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7f/Antananarivo_Miarinarivo.png",
+      "friends": [],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:07:20.742Z",
+      "id": "PL59Cld"
+    },
+    {
+      "destination": "Mexico",
+      "city": "Cancun",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2025-12-31",
+      "endDate": "2025-12-31",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d8/Cancun_Strand_Luftbild_%2822143397586%29.jpg",
+      "friends": [],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:07:56.536Z",
+      "id": "vlOkK_I"
+    },
+    {
+      "destination": "Portugal",
+      "city": "",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-07",
+      "endDate": "2026-01-09",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Flag_of_Portugal_%28official%29.svg/960px-Flag_of_Portugal_%28official%29.svg.png",
+      "friends": [],
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "createdAt": "2026-01-16T18:26:43.873Z",
+      "id": "fpzQmfE"
     }
   ],
   "destinations": [
@@ -848,6 +1154,21 @@
       "userEmail": "luisneri@gmail.com",
       "friendId": "f9",
       "id": "QUwpAwl"
+    },
+    {
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "friendId": "f2",
+      "id": "0l0bA6O"
+    },
+    {
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "friendId": "f10",
+      "id": "eaGlzwY"
+    },
+    {
+      "userEmail": "miguelmeniciocaldas@gmail.com",
+      "friendId": "f12",
+      "id": "eN9ur1f"
     }
   ]
 }

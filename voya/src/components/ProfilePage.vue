@@ -49,7 +49,7 @@
       <div class="profile-progress-card">
         <div class="progress-header-lg">
           <span>Progresso</span>
-          <span>{{ tripCount }}/10 viagens</span>
+          <span>{{ tripCount }}/{{ nextStep }} viagens</span>
         </div>
         <div class="progress-bar-container-lg">
           <div class="progress-bar-fill-lg" :style="{ width: progressPercentage + '%' }"></div>
@@ -197,7 +197,15 @@ const userInitial = computed(() => {
 const tripCount = computed(() => selections.count || 0)
 const interestsCount = computed(() => interestsStore.items.length)
 const userInterests = computed(() => interestsStore.items)
-const progressPercentage = computed(() => (tripCount.value % 10) * 10)
+const nextStep = computed(() => {
+  const c = tripCount.value || 0
+  return c === 0 ? 10 : Math.ceil(c / 10) * 10
+})
+const progressPercentage = computed(() => {
+  const c = tripCount.value || 0
+  const step = nextStep.value
+  return Math.min(100, Math.round((c / step) * 100))
+})
 
 const archivedTrips = computed(() => selections.items.filter((t) => t.archived))
 

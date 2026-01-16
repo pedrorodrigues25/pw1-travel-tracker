@@ -93,20 +93,20 @@
       <h2 class="collect-title">COLLECT MEMORIES. EARN YOUR STATUS</h2>
       <p class="collect-subtitle">Every trip counts. Level up your profile, unlock exclusive badges.</p>
       <div class="badges-container">
-        <div class="badges-row">
-          <div class="badge-item" v-for="i in 4" :key="i">
-            <div class="badge-circle-landing">
-              <span class="badge-text">BADGE {{ i }}</span>
+          <div class="badges-row">
+            <div class="badge-item" v-for="(badge, index) in topBadges" :key="index">
+              <div class="badge-circle-landing">
+                <img :src="badge" alt="badge" />
+              </div>
             </div>
           </div>
-        </div>
-        <div class="badges-row">
-          <div class="badge-item" v-for="i in 3" :key="i + 4">
-            <div class="badge-circle-landing">
-              <span class="badge-text">BADGE {{ i + 4 }}</span>
+          <div class="badges-row">
+            <div class="badge-item" v-for="(badge, index) in bottomBadges" :key="index">
+              <div class="badge-circle-landing">
+                <img :src="badge" alt="badge" />
+              </div>
             </div>
           </div>
-        </div>
       </div>
     </section>
 
@@ -135,6 +135,17 @@ function enterAsGuest() {
   auth.enterAsGuest()
   router.push('/destinations')
 }
+
+const badges = [
+  new URL('../img/badges/Badge-Friend1.png', import.meta.url).href,
+  new URL('../img/badges/Badge-Friend2.png', import.meta.url).href,
+  new URL('../img/badges/Badge-Friend3.png', import.meta.url).href,
+  new URL('../img/badges/badge-user-1 1.png', import.meta.url).href,
+  new URL('../img/badges/badge-user-2 1.png', import.meta.url).href,
+]
+
+const topBadges = badges.slice(0, 3)
+const bottomBadges = badges.slice(3, 5)
 </script>
 
 <style src="../css/LandingPage.css"></style>

@@ -137,6 +137,7 @@ import { reactive, ref, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
+import { useBadgesStore } from '../stores/badges'
 import { searchCountries } from '../api/countries'
 import { fetchCountryWikipediaSummary } from '../api/countries'
 import { getFriends } from '../api/api'
@@ -144,6 +145,7 @@ import { getFriends } from '../api/api'
 const router = useRouter()
 const auth = useAuthStore()
 const selections = useSelectionsStore()
+const badgesStore = useBadgesStore()
 
 const user = auth.user
 const showLoginAlert = ref(false)

@@ -113,21 +113,58 @@
     <div class="badges-section">
       <h2>BADGES</h2>
       <div class="badges-grid">
-        <div class="badges-card your-badges clickable">
+        <!-- YOUR BADGES -->
+        <div class="badges-card your-badges">
           <div class="badge-label">YOUR BADGES</div>
-          <div class="badge-list">
-            <p class="empty-message">Badges will appear here</p>
+          <div class="badge-list badges-earned-list">
+            <div v-if="unlockedBadges.length" class="earned-badges-container">
+              <div
+                v-for="badge in unlockedBadges"
+                :key="badge.id"
+                class="earned-badge-item"
+              >
+                <img :src="badge.imageUrl" :alt="badge.name" class="earned-badge-img" />
+                <span class="earned-badge-name">{{ badge.name }}</span>
+              </div>
+            </div>
+            <p v-else class="empty-message">Complete trips with friends to earn badges!</p>
           </div>
         </div>
-        <div class="badges-card badges-to-unlock clickable">
+        <!-- BADGES TO UNLOCK -->
+        <div class="badges-card badges-to-unlock">
           <div class="badge-label">BADGES TO UNLOCK</div>
-          <div class="badge-list">
-            <p class="empty-message">Locked badges will appear here</p>
+          <div class="badge-list badges-locked-list">
+            <div v-if="lockedBadges.length" class="locked-badges-container">
+              <div
+                v-for="badge in lockedBadges"
+                :key="badge.id"
+                class="locked-badge-item"
+              >
+                <div class="locked-badge-info">
+                  <img :src="badge.imageUrl" :alt="badge.name" class="locked-badge-img" />
+                  <div class="locked-badge-details">
+                    <span class="locked-badge-name">{{ badge.name }}</span>
+                    <span class="locked-badge-req">{{ badge.current }}/{{ badge.requirement }} trips with friends</span>
+                  </div>
+                </div>
+                <div class="badge-progress-container">
+                  <div class="badge-progress-bar" :style="{ width: badge.progress + '%' }"></div>
+                </div>
+              </div>
+            </div>
+            <p v-else class="empty-message">🎉 You've unlocked all badges!</p>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Badge Notification -->
+  <BadgeNotification
+    :show="badgesStore.showNotification"
+    :badge="badgesStore.newBadge"
+    @close="badgesStore.closeNotification()"
+  />
 </template>
 
 <script setup>
@@ -136,13 +173,16 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
 import { useInterestsStore } from '../stores/interests'
+import { useBadgesStore } from '../stores/badges'
 import { getFriends } from '../api/api'
+import BadgeNotification from './BadgeNotification.vue'
 import '../css/HomePage.css'
 
 const router = useRouter()
 const auth = useAuthStore()
 const selections = useSelectionsStore()
 const interestsStore = useInterestsStore()
+const badgesStore = useBadgesStore()
 
 function goToJournal(tripId) {
   if (tripId) router.push({ name: 'Journal', params: { tripId } })
@@ -151,6 +191,10 @@ function goToJournal(tripId) {
 const user = auth.user
 const userInterests = ref([])
 const allFriends = ref([])
+
+// Badges computed
+const unlockedBadges = computed(() => badgesStore.unlockedBadges)
+const lockedBadges = computed(() => badgesStore.getLockedBadgesWithProgress(selections.items || []))
 
 // Última viagem concluída (ordenada por endDate/startDate/createdAt desc)
 const lastCompletedTrip = computed(() => {
@@ -198,6 +242,10 @@ async function loadUserData() {
     await selections.load(user.email)
     await interestsStore.load(user.email)
     userInterests.value = interestsStore.items.map((item) => item.interest)
+
+    // Load badges and check for new ones
+    badgesStore.loadBadges(user.email)
+    badgesStore.checkBadges(selections.items || [], user.email)
 
     // Load all friends
     try {

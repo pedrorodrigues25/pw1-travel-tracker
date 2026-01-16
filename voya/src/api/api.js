@@ -81,6 +81,21 @@ async function deleteSelection(id) {
   }
 }
 
+async function updateSelection(id, updatedFields) {
+  try {
+    const res = await fetch(`${API_BASE}/selections/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedFields),
+    })
+    if (!res.ok) throw new Error('Erro ao atualizar viagem')
+    return await res.json()
+  } catch (e) {
+    console.error('Erro ao atualizar viagem:', e)
+    return null
+  }
+}
+
 // INTERESTS
 async function getInterests(userEmail) {
   try {
@@ -189,6 +204,7 @@ export {
   updateUser,
   getSelections,
   saveSelection,
+  updateSelection,
   deleteSelection,
   getInterests,
   saveInterest,

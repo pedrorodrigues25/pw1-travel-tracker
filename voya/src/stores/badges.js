@@ -1,0 +1,153 @@
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+
+// Badge definitions for friend trips
+const FRIEND_BADGES = [
+  {
+    id: 'friend-1',
+    name: 'First Adventure Together',
+    description: 'Complete your first trip with friends',
+    image: 'Badge-Friend1.png',
+    requirement: 1,
+  },
+  {
+    id: 'friend-2',
+    name: 'Travel Crew',
+    description: 'Complete 5 trips with friends',
+    image: 'Badge-Friend2.png',
+    requirement: 5,
+  },
+  {
+    id: 'friend-3',
+    name: 'Ultimate Travel Squad',
+    description: 'Complete 10 trips with friends',
+    image: 'Badge-Friend3.png',
+    requirement: 10,
+  },
+]
+
+export const useBadgesStore = defineStore('badges', () => {
+  // State
+  const earnedBadges = ref([])
+  const newBadge = ref(null) // For showing notification
+  const showNotification = ref(false)
+
+  // Get badge image URL
+  function getBadgeImageUrl(imageName) {
+    return new URL(`../img/badges/${imageName}`, import.meta.url).href
+  }
+
+  // Calculate friend trips count from selections
+  function countFriendTrips(trips) {
+    return trips.filter(
+      (trip) =>
+        trip.status === 'completed' &&
+        !trip.archived &&
+        trip.friends &&
+        trip.friends.length > 0
+    ).length
+  }
+
+  // Check and update badges based on trips
+  function checkBadges(trips, userEmail) {
+    const friendTripsCount = countFriendTrips(trips)
+    const previousEarned = [...earnedBadges.value]
+
+    // Check each friend badge
+    FRIEND_BADGES.forEach((badge) => {
+      const alreadyEarned = earnedBadges.value.some((b) => b.id === badge.id)
+      if (!alreadyEarned && friendTripsCount >= badge.requirement) {
+        // Badge earned!
+        const earnedBadge = {
+          ...badge,
+          earnedAt: new Date().toISOString(),
+          userEmail,
+        }
+        earnedBadges.value.push(earnedBadge)
+
+        // Show notification for newly earned badge
+        newBadge.value = earnedBadge
+        showNotification.value = true
+      }
+    })
+
+    // Save to localStorage
+    saveBadges(userEmail)
+  }
+
+  // Get unlocked badges
+  const unlockedBadges = computed(() => {
+    return earnedBadges.value.map((badge) => ({
+      ...badge,
+      imageUrl: getBadgeImageUrl(badge.image),
+    }))
+  })
+
+  // Get locked badges with progress
+  function getLockedBadgesWithProgress(trips) {
+    const friendTripsCount = countFriendTrips(trips)
+
+    return FRIEND_BADGES.filter(
+      (badge) => !earnedBadges.value.some((b) => b.id === badge.id)
+    ).map((badge) => ({
+      ...badge,
+      imageUrl: getBadgeImageUrl(badge.image),
+      progress: Math.min((friendTripsCount / badge.requirement) * 100, 100),
+      current: friendTripsCount,
+    }))
+  }
+
+  // Close notification
+  function closeNotification() {
+    showNotification.value = false
+    newBadge.value = null
+  }
+
+  // Save badges to localStorage
+  function saveBadges(userEmail) {
+    if (!userEmail) return
+    const key = `voya_badges_${userEmail}`
+    localStorage.setItem(key, JSON.stringify(earnedBadges.value))
+  }
+
+  // Load badges from localStorage
+  function loadBadges(userEmail) {
+    if (!userEmail) return
+    const key = `voya_badges_${userEmail}`
+    const stored = localStorage.getItem(key)
+    if (stored) {
+      try {
+        earnedBadges.value = JSON.parse(stored)
+      } catch (e) {
+        earnedBadges.value = []
+      }
+    } else {
+      earnedBadges.value = []
+    }
+  }
+
+  // Reset store
+  function reset() {
+    earnedBadges.value = []
+    newBadge.value = null
+    showNotification.value = false
+  }
+
+  return {
+    // State
+    earnedBadges,
+    newBadge,
+    showNotification,
+    // Getters
+    unlockedBadges,
+    // Actions
+    checkBadges,
+    getLockedBadgesWithProgress,
+    closeNotification,
+    loadBadges,
+    saveBadges,
+    reset,
+    getBadgeImageUrl,
+    countFriendTrips,
+  }
+})

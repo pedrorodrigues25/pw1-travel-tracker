@@ -176,24 +176,20 @@
       "id": "Zmy8SoU"
     },
     {
-      "destination": "Singapore",
-      "city": "Tuas",
+      "destination": "Portugal",
+      "city": "Porto",
       "notes": "",
-      "status": "upcoming",
-      "startDate": "2026-01-10",
-      "endDate": "2026-01-12",
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Raffles_Marina_-_Johor_Lighthouse.jpg",
+      "status": "completed",
+      "startDate": "2026-01-15",
+      "endDate": "2026-01-15",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Puente_Don_Luis_I%2C_Oporto%2C_Portugal%2C_2012-05-09%2C_DD_13.JPG",
       "userEmail": "arroz@gmail.com",
-      "createdAt": "2026-01-12T16:45:17.688Z",
-      "id": "2guXYgA",
-      "customText": "Tuas is a planning area located within the West Region of Singapore. It is bounded by the Western Water Catchment to its north, Pioneer to its east and the Straits of Johor to its west. Tuas also shares a maritime boundary with the Western Islands planning area to its east. It has six subzones, Tengeh, Tuas Bay, Tuas North, Tuas Promenade, Tuas View and Tuas View Extension.",
+      "createdAt": "2026-01-16T16:38:15.879Z",
+      "id": "dmpYHsJ",
+      "customText": "Porto, officially the Ancient, Very Noble, Ever Loyal and Undefeated City of Porto, also known in English as Oporto, is the second largest city in Portugal, after Lisbon. It is the capital of the Porto District and one of the Iberian Peninsula's major urban areas. Porto city proper, which is the entire municipality of Porto, is small compared to its metropolitan area, with an estimated population of 252,687 people in a municipal area of 41.42 km2 (16 sq mi). As of 2025, Porto's urban area has around 1.8 million people in an area of 2,395 km2 (925 sq mi), making it the second-largest urban area in Portugal. while the Porto metro area has more than 1.8 million people. It is recognized as a global city with a Gamma + rating from the Globalization and World Cities Research Network.",
       "friends": [
-        "f2",
-        "f3",
-        "f4",
-        "f5"
-      ],
-      "archived": true
+        "f2"
+      ]
     }
   ],
   "destinations": [

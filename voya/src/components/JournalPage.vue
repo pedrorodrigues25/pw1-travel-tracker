@@ -187,15 +187,24 @@
       </div>
     </div>
   </div>
+
+  <!-- Badge Notification -->
+  <BadgeNotification
+    :show="badgesStore.showNotification"
+    :badge="badgesStore.newBadge"
+    @close="badgesStore.closeNotification()"
+  />
 </template>
 
 <script setup>
 import { computed, ref, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSelectionsStore } from '../stores/selections'
+import { useBadgesStore } from '../stores/badges'
 import { fetchCountryWikipediaSummary, fetchWikipediaImages } from '../api/countries'
 import { useAuthStore } from '../stores/auth'
 import { getUserFriends, getFriends } from '../api/api'
+import BadgeNotification from './BadgeNotification.vue'
 import '../css/Journal.css'
 import '../css/FriendsPage.css'
 
@@ -204,6 +213,7 @@ const API_BASE = 'http://localhost:3001'
 const props = defineProps({ tripId: [String, Number] })
 const router = useRouter()
 const selections = useSelectionsStore()
+const badgesStore = useBadgesStore()
 const auth = useAuthStore()
 const trip = computed(() => selections.items.find((t) => t.id == props.tripId))
 
@@ -313,6 +323,11 @@ async function saveEdits() {
       const index = selections.items.findIndex((t) => t.id == props.tripId)
       if (index !== -1) selections.items[index] = updatedTrip
       editingPanel.value = false
+
+      // Check for new badges after adding friends to a trip
+      if (auth.user?.email) {
+        badgesStore.checkBadges(selections.items, auth.user.email)
+      }
     } else {
       alert('Could not save changes.')
     }

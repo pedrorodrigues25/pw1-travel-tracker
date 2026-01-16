@@ -253,16 +253,6 @@ Uma aplicação web moderna para rastrear, partilhar e gerir as suas experiênci
    pnpm run dev
    ```
 
-4. **Abrir no browser**
-   - Navegar para `http://localhost:5173` (ou a URL mostrada no terminal de dev)
-
-## 👤 Conta Admin Padrão
-
-Para testar funcionalidades de admin:
-- **Email:** `admin@gmail.com`
-- **Password:** `admin123`
-- Clique no botão **"Admin Login"** na página de login
-
 ## 📚 Contas de Utilizador
 
 Pode criar a sua própria conta ou usar contas de demonstração já na base de dados.

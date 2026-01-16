@@ -190,6 +190,49 @@
       "friends": [
         "f2"
       ]
+    },
+    {
+      "destination": "Poland",
+      "city": "Lebus",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-09",
+      "endDate": "2026-01-10",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/02/Lebus_-_Unterstadt_-_panoramio.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-16T16:59:57.612Z",
+      "id": "Sa6zsQ8"
+    },
+    {
+      "destination": "Portugal",
+      "city": "Porto",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-01",
+      "endDate": "2026-01-02",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Puente_Don_Luis_I%2C_Oporto%2C_Portugal%2C_2012-05-09%2C_DD_13.JPG",
+      "friends": [],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-16T17:00:32.777Z",
+      "id": "WgrbAyL"
+    },
+    {
+      "destination": "Mali",
+      "city": "Timbuktu",
+      "notes": "",
+      "status": "upcoming",
+      "startDate": "2026-01-30",
+      "endDate": "2026-01-31",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/67/Donkeys%2C_Timbuktu.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-16T17:10:33.464Z",
+      "id": "uXZLNwG"
     }
   ],
   "destinations": [

@@ -53,22 +53,50 @@
         <!-- Friends Selection -->
         <label>Travel with friends (optional):</label>
         <div class="friends-selection">
-          <div v-if="allFriends.length" class="friends-checkboxes">
-            <label
-              v-for="friend in allFriends"
-              :key="friend.id"
-              class="friend-checkbox-item"
-            >
+          <div v-if="userFriends.length" class="friends-search-container">
+            <!-- Selected friends bubbles -->
+            <div v-if="selectedFriends.length" class="selected-friends-bubbles">
+              <div
+                v-for="friendId in selectedFriends"
+                :key="friendId"
+                class="selected-friend-bubble"
+                @click="removeFriend(friendId)"
+                :title="getFriendById(friendId)?.username + ' (click to remove)'"
+              >
+                {{ getFriendById(friendId)?.username?.charAt(0).toUpperCase() || '?' }}
+                <span class="remove-x">×</span>
+              </div>
+            </div>
+            
+            <!-- Search input -->
+            <div class="friends-search-wrapper">
               <input
-                type="checkbox"
-                :value="friend.id"
-                v-model="selectedFriends"
+                v-model="friendSearchQuery"
+                type="text"
+                class="friends-search-input"
+                placeholder="Search your friends..."
+                @focus="showFriendsDropdown = true"
               />
-              <span class="friend-checkbox-avatar">
-                {{ friend.username?.charAt(0).toUpperCase() || '?' }}
-              </span>
-              <span class="friend-checkbox-name">{{ friend.username }}</span>
-            </label>
+              <!-- Dropdown results -->
+              <div v-if="showFriendsDropdown && friendSearchQuery" class="friends-dropdown">
+                <div
+                  v-for="friend in filteredUserFriends"
+                  :key="friend.id"
+                  class="friend-dropdown-item"
+                  :class="{ selected: selectedFriends.includes(friend.id) }"
+                  @click="toggleFriendSelection(friend.id)"
+                >
+                  <span class="friend-dropdown-avatar">
+                    {{ friend.username?.charAt(0).toUpperCase() || '?' }}
+                  </span>
+                  <span class="friend-dropdown-name">{{ friend.username }}</span>
+                  <span v-if="selectedFriends.includes(friend.id)" class="friend-check">✓</span>
+                </div>
+                <p v-if="filteredUserFriends.length === 0" class="no-results-msg">
+                  No friends found
+                </p>
+              </div>
+            </div>
           </div>
           <p v-else class="no-friends-msg">No friends added yet. Add friends in the Friends page.</p>
         </div>
@@ -171,7 +199,7 @@ import { useSelectionsStore } from '../stores/selections'
 import { useBadgesStore } from '../stores/badges'
 import { searchCountries } from '../api/countries'
 import { fetchCountryWikipediaSummary } from '../api/countries'
-import { getFriends } from '../api/api'
+import { getFriends, getUserFriends } from '../api/api'
 import BadgeNotification from './BadgeNotification.vue'
 
 const router = useRouter()
@@ -184,14 +212,63 @@ const showLoginAlert = ref(false)
 
 // Friends data for avatar display
 const allFriends = ref([])
+// User's added friends for trip creation
+const userFriends = ref([])
+// Search query for friends
+const friendSearchQuery = ref('')
+const showFriendsDropdown = ref(false)
 
 async function loadFriends() {
   try {
     allFriends.value = await getFriends()
+    // Load user's added friends
+    if (user?.email) {
+      userFriends.value = await getUserFriends(user.email)
+    }
   } catch (e) {
     console.error('Error loading friends:', e)
   }
 }
+
+// Filtered friends based on search query
+const filteredUserFriends = computed(() => {
+  if (!friendSearchQuery.value.trim()) {
+    return userFriends.value
+  }
+  const query = friendSearchQuery.value.toLowerCase()
+  return userFriends.value.filter(friend => 
+    friend.username?.toLowerCase().includes(query) ||
+    friend.email?.toLowerCase().includes(query)
+  )
+})
+
+// Toggle friend selection
+function toggleFriendSelection(friendId) {
+  const idx = selectedFriends.value.indexOf(friendId)
+  if (idx === -1) {
+    selectedFriends.value.push(friendId)
+  } else {
+    selectedFriends.value.splice(idx, 1)
+  }
+  friendSearchQuery.value = ''
+  showFriendsDropdown.value = false
+}
+
+// Remove friend from selection
+function removeFriend(friendId) {
+  const idx = selectedFriends.value.indexOf(friendId)
+  if (idx !== -1) {
+    selectedFriends.value.splice(idx, 1)
+  }
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  const wrapper = document.querySelector('.friends-search-wrapper')
+  if (wrapper && !wrapper.contains(e.target)) {
+    showFriendsDropdown.value = false
+  }
+})
 
 loadFriends()
 

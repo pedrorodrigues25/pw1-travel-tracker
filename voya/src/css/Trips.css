@@ -269,65 +269,145 @@ select {
   margin-bottom: 16px;
 }
 
-.friends-checkboxes {
+.friends-search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.friends-search-wrapper {
+  position: relative;
+}
+
+.friends-search-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.friends-search-input:focus {
+  outline: none;
+  border-color: #0d5678;
+  box-shadow: 0 0 0 3px rgba(13, 86, 120, 0.1);
+}
+
+.friends-search-input::placeholder {
+  color: #999;
+}
+
+/* Selected friends bubbles */
+.selected-friends-bubbles {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  padding: 12px;
-  background: #f5f8fa;
-  border-radius: 10px;
-  border: 1px solid #e0e5ea;
+  gap: 8px;
 }
 
-.friend-checkbox-item {
+.selected-friend-bubble {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0d5678, #1a7a9e);
+  color: #fff;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
   cursor: pointer;
-  padding: 6px 12px;
-  background: #fff;
-  border-radius: 20px;
-  border: 1px solid #ddd;
-  transition: all 0.2s ease;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.friend-checkbox-item:hover {
-  border-color: #0d5678;
+.selected-friend-bubble:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(13, 86, 120, 0.3);
+}
+
+.selected-friend-bubble .remove-x {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  background: #e74c3c;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.selected-friend-bubble:hover .remove-x {
+  opacity: 1;
+}
+
+/* Dropdown */
+.friends-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 4px;
+}
+
+.friend-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.friend-dropdown-item:hover {
+  background: #f0f4fa;
+}
+
+.friend-dropdown-item.selected {
   background: #e8f4f8;
 }
 
-.friend-checkbox-item input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  accent-color: #0d5678;
-  cursor: pointer;
-}
-
-.friend-checkbox-avatar {
-  width: 28px;
-  height: 28px;
+.friend-dropdown-avatar {
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: linear-gradient(135deg, #5b8ba8, #7ba4c2);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 700;
 }
 
-.friend-checkbox-name {
-  font-size: 0.9rem;
+.friend-dropdown-name {
+  flex: 1;
+  font-size: 0.95rem;
   color: #333;
-  font-weight: 500;
 }
 
-.no-friends-msg {
+.friend-check {
+  color: #0d5678;
+  font-weight: 700;
+}
+
+.no-friends-msg,
+.no-results-msg {
   color: #888;
   font-size: 0.9rem;
   padding: 12px;
   text-align: center;
-  background: #f5f8fa;
-  border-radius: 8px;
   margin: 0;
 }

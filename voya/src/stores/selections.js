@@ -13,9 +13,27 @@ export const useSelectionsStore = defineStore('selections', () => {
     }
     try {
       items.value = await getSelections(email)
+      // Auto-update trip status based on dates
+      await autoUpdateTripStatus()
     } catch (e) {
       console.error('failed to load selections', e)
       items.value = []
+    }
+  }
+
+  // Automatically mark trips as completed if endDate has passed
+  async function autoUpdateTripStatus() {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+
+    for (const trip of items.value) {
+      if (trip.status === 'upcoming' && trip.endDate) {
+        const endDateObj = new Date(trip.endDate)
+        if (endDateObj < today) {
+          // Update to completed
+          await update(trip.id, { status: 'completed' })
+        }
+      }
     }
   }
 

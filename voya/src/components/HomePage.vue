@@ -127,7 +127,7 @@
                 <span class="earned-badge-name">{{ badge.name }}</span>
               </div>
             </div>
-            <p v-else class="empty-message">Complete trips with friends to earn badges!</p>
+            <p v-else class="empty-message">Complete trips to earn badges!</p>
           </div>
         </div>
         <!-- BADGES TO UNLOCK -->
@@ -144,7 +144,10 @@
                   <img :src="badge.imageUrl" :alt="badge.name" class="locked-badge-img" />
                   <div class="locked-badge-details">
                     <span class="locked-badge-name">{{ badge.name }}</span>
-                    <span class="locked-badge-req">{{ badge.current }}/{{ badge.requirement }} trips with friends</span>
+                    <span class="locked-badge-req">
+                      {{ badge.current }}/{{ badge.requirement }} 
+                      {{ badge.type === 'solo' ? 'solo trips' : 'trips with friends' }}
+                    </span>
                   </div>
                 </div>
                 <div class="badge-progress-container">

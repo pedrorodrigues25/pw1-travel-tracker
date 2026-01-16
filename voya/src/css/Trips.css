@@ -263,3 +263,71 @@ select {
   border-top: 1px dashed #ccc;
   padding-top: 12px;
 }
+
+/* Friends Selection in Create Form */
+.friends-selection {
+  margin-bottom: 16px;
+}
+
+.friends-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px;
+  background: #f5f8fa;
+  border-radius: 10px;
+  border: 1px solid #e0e5ea;
+}
+
+.friend-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 6px 12px;
+  background: #fff;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  transition: all 0.2s ease;
+}
+
+.friend-checkbox-item:hover {
+  border-color: #0d5678;
+  background: #e8f4f8;
+}
+
+.friend-checkbox-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #0d5678;
+  cursor: pointer;
+}
+
+.friend-checkbox-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #5b8ba8, #7ba4c2);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.friend-checkbox-name {
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.no-friends-msg {
+  color: #888;
+  font-size: 0.9rem;
+  padding: 12px;
+  text-align: center;
+  background: #f5f8fa;
+  border-radius: 8px;
+  margin: 0;
+}

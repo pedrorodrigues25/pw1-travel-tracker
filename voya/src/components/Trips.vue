@@ -49,6 +49,30 @@
         <input type="date" v-model="form.startDate" required />
         <label>End Date:</label>
         <input type="date" v-model="form.endDate" :min="form.startDate" required />
+        
+        <!-- Friends Selection -->
+        <label>Travel with friends (optional):</label>
+        <div class="friends-selection">
+          <div v-if="allFriends.length" class="friends-checkboxes">
+            <label
+              v-for="friend in allFriends"
+              :key="friend.id"
+              class="friend-checkbox-item"
+            >
+              <input
+                type="checkbox"
+                :value="friend.id"
+                v-model="selectedFriends"
+              />
+              <span class="friend-checkbox-avatar">
+                {{ friend.username?.charAt(0).toUpperCase() || '?' }}
+              </span>
+              <span class="friend-checkbox-name">{{ friend.username }}</span>
+            </label>
+          </div>
+          <p v-else class="no-friends-msg">No friends added yet. Add friends in the Friends page.</p>
+        </div>
+        
         <button class="btn" @click="addSelection" :disabled="!form.destination">Save</button>
       </section>
       <section class="list">
@@ -128,6 +152,13 @@
       </section>
     </div>
   </div>
+
+  <!-- Badge Notification -->
+  <BadgeNotification
+    :show="badgesStore.showNotification"
+    :badge="badgesStore.newBadge"
+    @close="badgesStore.closeNotification()"
+  />
 </template>
 
 <script setup>
@@ -141,6 +172,7 @@ import { useBadgesStore } from '../stores/badges'
 import { searchCountries } from '../api/countries'
 import { fetchCountryWikipediaSummary } from '../api/countries'
 import { getFriends } from '../api/api'
+import BadgeNotification from './BadgeNotification.vue'
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -209,6 +241,9 @@ const form = reactive({
   startDate: '',
   endDate: '',
 })
+
+// Selected friends for new trip
+const selectedFriends = ref([])
 
 // Unused edit state - kept for potential future use
 // const editing = ref(false)
@@ -312,9 +347,10 @@ async function addSelection() {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const endDateObj = new Date(form.endDate)
-  const status = endDateObj < today ? 'completed' : 'upcoming'
+  endDateObj.setHours(0, 0, 0, 0)
+  const status = endDateObj <= today ? 'completed' : 'upcoming'
 
-  await selections.add(
+  const newTrip = await selections.add(
     {
       destination: form.destination,
       city: form.city,
@@ -323,9 +359,20 @@ async function addSelection() {
       startDate: form.startDate,
       endDate: form.endDate,
       imageUrl,
+      friends: selectedFriends.value.length > 0 ? [...selectedFriends.value] : [],
     },
     user.email,
   )
+
+  // Check for new badges after adding a trip
+  if (newTrip && user.email) {
+    badgesStore.loadBadges(user.email)
+    badgesStore.checkBadges(selections.items, user.email)
+  }
+
+  // Reset form
+  selectedFriends.value = []
+
   form.destination = ''
   form.city = ''
   form.notes = ''

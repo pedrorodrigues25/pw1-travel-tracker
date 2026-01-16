@@ -26,6 +26,27 @@ const FRIEND_BADGES = [
   },
 ]
 
+// Badge definitions for solo trips
+const SOLO_BADGES = [
+  {
+    id: 'solo-1',
+    name: 'Solo Explorer',
+    description: 'Complete your first solo trip',
+    image: 'badge-user-1 1.png',
+    requirement: 1,
+  },
+  {
+    id: 'solo-2',
+    name: 'Lone Wanderer',
+    description: 'Complete 10 solo trips',
+    image: 'badge-user-2 1.png',
+    requirement: 10,
+  },
+]
+
+// All badges combined
+const ALL_BADGES = [...FRIEND_BADGES, ...SOLO_BADGES]
+
 export const useBadgesStore = defineStore('badges', () => {
   // State
   const earnedBadges = ref([])
@@ -48,15 +69,44 @@ export const useBadgesStore = defineStore('badges', () => {
     ).length
   }
 
+  // Calculate solo trips count from selections (no friends or empty friends array)
+  function countSoloTrips(trips) {
+    return trips.filter(
+      (trip) =>
+        trip.status === 'completed' &&
+        !trip.archived &&
+        (!trip.friends || trip.friends.length === 0)
+    ).length
+  }
+
   // Check and update badges based on trips
   function checkBadges(trips, userEmail) {
     const friendTripsCount = countFriendTrips(trips)
+    const soloTripsCount = countSoloTrips(trips)
     const previousEarned = [...earnedBadges.value]
 
     // Check each friend badge
     FRIEND_BADGES.forEach((badge) => {
       const alreadyEarned = earnedBadges.value.some((b) => b.id === badge.id)
       if (!alreadyEarned && friendTripsCount >= badge.requirement) {
+        // Badge earned!
+        const earnedBadge = {
+          ...badge,
+          earnedAt: new Date().toISOString(),
+          userEmail,
+        }
+        earnedBadges.value.push(earnedBadge)
+
+        // Show notification for newly earned badge
+        newBadge.value = earnedBadge
+        showNotification.value = true
+      }
+    })
+
+    // Check each solo badge
+    SOLO_BADGES.forEach((badge) => {
+      const alreadyEarned = earnedBadges.value.some((b) => b.id === badge.id)
+      if (!alreadyEarned && soloTripsCount >= badge.requirement) {
         // Badge earned!
         const earnedBadge = {
           ...badge,
@@ -86,15 +136,31 @@ export const useBadgesStore = defineStore('badges', () => {
   // Get locked badges with progress
   function getLockedBadgesWithProgress(trips) {
     const friendTripsCount = countFriendTrips(trips)
+    const soloTripsCount = countSoloTrips(trips)
 
-    return FRIEND_BADGES.filter(
+    // Friend badges progress
+    const lockedFriendBadges = FRIEND_BADGES.filter(
       (badge) => !earnedBadges.value.some((b) => b.id === badge.id)
     ).map((badge) => ({
       ...badge,
       imageUrl: getBadgeImageUrl(badge.image),
       progress: Math.min((friendTripsCount / badge.requirement) * 100, 100),
       current: friendTripsCount,
+      type: 'friend',
     }))
+
+    // Solo badges progress
+    const lockedSoloBadges = SOLO_BADGES.filter(
+      (badge) => !earnedBadges.value.some((b) => b.id === badge.id)
+    ).map((badge) => ({
+      ...badge,
+      imageUrl: getBadgeImageUrl(badge.image),
+      progress: Math.min((soloTripsCount / badge.requirement) * 100, 100),
+      current: soloTripsCount,
+      type: 'solo',
+    }))
+
+    return [...lockedFriendBadges, ...lockedSoloBadges]
   }
 
   // Close notification

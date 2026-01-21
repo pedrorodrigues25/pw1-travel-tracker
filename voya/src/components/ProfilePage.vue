@@ -220,9 +220,7 @@ onMounted(async () => {
 async function loadFriends() {
   if (!auth.user?.email) return
   try {
-    const userFriendIds = await getUserFriends(auth.user.email)
-    const allFriends = await getFriends()
-    friends.value = allFriends.filter((f) => userFriendIds.includes(f.id))
+    friends.value = await getUserFriends(auth.user.email)
   } catch (e) {
     console.error('Error loading friends:', e)
   }

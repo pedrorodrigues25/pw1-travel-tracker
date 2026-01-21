@@ -23,23 +23,7 @@
           <div class="profile-cover"></div>
           <div class="profile-avatar-section">
             <div class="profile-avatar-wrapper">
-              <label class="profile-photo-label" v-if="editMode">
-                <input type="file" accept="image/*" @change="onPhotoChange" />
-                <span class="photo-edit-overlay">📷</span>
-              </label>
-              <img
-                v-if="user?.photoUrl && !previewPhoto"
-                :src="user.photoUrl"
-                class="profile-avatar-img"
-                alt="Profile Photo"
-              />
-              <img
-                v-else-if="previewPhoto"
-                :src="previewPhoto"
-                class="profile-avatar-img"
-                alt="Preview"
-              />
-              <div v-else class="profile-avatar-placeholder">{{ userInitial }}</div>
+              <div class="profile-avatar-placeholder">{{ userInitial }}</div>
             </div>
           </div>
 

@@ -15,18 +15,20 @@
   </div>
 
   <div class="home-container">
-    <!-- Welcome Section -->
     <div class="welcome-section">
       <h1 class="welcome-title">
         Welcome back, <span class="username">{{ user?.username || 'User' }}</span>
       </h1>
     </div>
 
-    <!-- User Profile Card -->
     <div class="user-profile-card">
       <div class="profile-left">
         <div class="profile-avatar">
-          <div class="avatar-placeholder">{{ user?.username?.charAt(0).toUpperCase() || 'U' }}</div>
+          <img 
+            :src="avatarQuery" 
+            :alt="user?.username" 
+            class="avatar-img"
+          />
         </div>
       </div>
       <div class="profile-center">
@@ -53,23 +55,16 @@
     <div class="badges-section">
       <h2>SEE YOUR TRIPS</h2>
       <div class="badges-grid">
-        <!-- YOUR LAST TRIP (última concluída) -->
         <div
           class="badges-card your-badges has-bg clickable"
-          :style="
-            lastCompletedTrip?.imageUrl
-              ? { backgroundImage: `url(${lastCompletedTrip.imageUrl})` }
-              : {}
-          "
+          :style="lastCompletedTrip?.imageUrl ? { backgroundImage: `url(${lastCompletedTrip.imageUrl})` } : {}"
           @click="lastCompletedTrip && goToJournal(lastCompletedTrip.id)"
         >
           <div class="badge-label">YOUR LAST TRIP</div>
           <div class="badge-list">
             <div v-if="lastCompletedTrip" class="badge-trip">
               <h4 class="trip-title">
-                <template v-if="lastCompletedTrip.city"
-                  >{{ lastCompletedTrip.city }}, {{ lastCompletedTrip.destination }}</template
-                >
+                <template v-if="lastCompletedTrip.city">{{ lastCompletedTrip.city }}, {{ lastCompletedTrip.destination }}</template>
                 <template v-else>{{ lastCompletedTrip.destination }}</template>
               </h4>
               <p class="badge-trip-dates">{{ formatTripDates(lastCompletedTrip) }}</p>
@@ -77,14 +72,10 @@
             <p v-else class="empty-message">No completed trips yet</p>
           </div>
         </div>
-        <!-- NEXT TRIPS (próximas upcoming) -->
+
         <div
           class="badges-card badges-to-unlock has-bg clickable"
-          :style="
-            upcomingTrips[0]?.imageUrl
-              ? { backgroundImage: `url(${upcomingTrips[0].imageUrl})` }
-              : {}
-          "
+          :style="upcomingTrips[0]?.imageUrl ? { backgroundImage: `url(${upcomingTrips[0].imageUrl})` } : {}"
           @click="upcomingTrips[0] && goToJournal(upcomingTrips[0].id)"
         >
           <div class="badge-label">NEXT TRIPS</div>
@@ -109,20 +100,14 @@
       </div>
     </div>
 
-    <!-- Badges Section -->
     <div class="badges-section">
       <h2>BADGES</h2>
       <div class="badges-grid">
-        <!-- YOUR BADGES -->
         <div class="badges-card your-badges">
           <div class="badge-label">YOUR BADGES</div>
           <div class="badge-list badges-earned-list">
             <div v-if="unlockedBadges.length" class="earned-badges-container">
-              <div
-                v-for="badge in unlockedBadges"
-                :key="badge.id"
-                class="earned-badge-item"
-              >
+              <div v-for="badge in unlockedBadges" :key="badge.id" class="earned-badge-item">
                 <img :src="badge.imageUrl" :alt="badge.name" class="earned-badge-img" />
                 <span class="earned-badge-name">{{ badge.name }}</span>
               </div>
@@ -130,16 +115,12 @@
             <p v-else class="empty-message">Complete trips to earn badges!</p>
           </div>
         </div>
-        <!-- BADGES TO UNLOCK -->
+
         <div class="badges-card badges-to-unlock">
           <div class="badge-label">BADGES TO UNLOCK</div>
           <div class="badge-list badges-locked-list">
             <div v-if="lockedBadges.length" class="locked-badges-container">
-              <div
-                v-for="badge in lockedBadges"
-                :key="badge.id"
-                class="locked-badge-item"
-              >
+              <div v-for="badge in lockedBadges" :key="badge.id" class="locked-badge-item">
                 <div class="locked-badge-info">
                   <img :src="badge.imageUrl" :alt="badge.name" class="locked-badge-img" />
                   <div class="locked-badge-details">
@@ -162,7 +143,6 @@
     </div>
   </div>
 
-  <!-- Badge Notification -->
   <BadgeNotification
     :show="badgesStore.showNotification"
     :badge="badgesStore.newBadge"
@@ -187,6 +167,12 @@ const selections = useSelectionsStore()
 const interestsStore = useInterestsStore()
 const badgesStore = useBadgesStore()
 
+// Lógica de Avatar do DiceBear
+const avatarQuery = computed(() => {
+  const seed = auth.user?.username || 'voya-user';
+  return `https://api.dicebear.com/9.x/identicon/png?seed=${seed}&scale=70&backgroundColor=#ffffff`;
+});
+
 function goToJournal(tripId) {
   if (tripId) router.push({ name: 'Journal', params: { tripId } })
 }
@@ -195,11 +181,9 @@ const user = auth.user
 const userInterests = ref([])
 const allFriends = ref([])
 
-// Badges computed
 const unlockedBadges = computed(() => badgesStore.unlockedBadges)
 const lockedBadges = computed(() => badgesStore.getLockedBadgesWithProgress(selections.items || []))
 
-// Última viagem concluída (ordenada por endDate/startDate/createdAt desc)
 const lastCompletedTrip = computed(() => {
   const trips = (selections.items || []).filter((t) => t && t.status === 'completed' && !t.archived)
   if (!trips.length) return null
@@ -211,7 +195,6 @@ const lastCompletedTrip = computed(() => {
   return trips.slice().sort((a, b) => toTime(b) - toTime(a))[0]
 })
 
-// Próximas viagens (upcoming) ordenadas por startDate asc
 const upcomingTrips = computed(() => {
   const trips = (selections.items || []).filter((t) => t && t.status === 'upcoming' && !t.archived)
   const toTime = (t) => {
@@ -222,7 +205,6 @@ const upcomingTrips = computed(() => {
   return trips.slice().sort((a, b) => toTime(a) - toTime(b))
 })
 
-// Formata datas de uma viagem
 function formatTripDates(trip) {
   if (!trip) return ''
   const fmt = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
@@ -245,12 +227,8 @@ async function loadUserData() {
     await selections.load(user.email)
     await interestsStore.load(user.email)
     userInterests.value = interestsStore.items.map((item) => item.interest)
-
-    // Load badges and check for new ones
     badgesStore.loadBadges(user.email)
     badgesStore.checkBadges(selections.items || [], user.email)
-
-    // Load all friends
     try {
       allFriends.value = await getFriends()
     } catch (e) {
@@ -273,5 +251,22 @@ watch(
 )
 </script>
 
-<style src="../css/NavBar.css"></style>
-<style src="../css/HomePage.css"></style>
+<style scoped>
+/* Garante que a imagem do avatar preenche o círculo */
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  background-color: white;
+  display: block;
+}
+
+/* Caso o .profile-avatar tenha padding ou overflow estranho no CSS global */
+.profile-avatar {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>

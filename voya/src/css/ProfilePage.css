@@ -1,3 +1,16 @@
+/* Badges title row for icon-only mode */
+.badges-only-icons .badges-title-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-left: 4px;
+}
+.badges-only-icons .badges-title-row h3 {
+  font-size: 1.05rem;
+  color: #1a3a4a;
+  font-weight: 600;
+  margin: 0;
+}
 /* ========================================
    PROFILE PAGE - MODERN REDESIGN
    ======================================== */
@@ -442,22 +455,39 @@
 }
 
 /* Badges Grid */
-.badges-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
 
-.badge-item {
+.badges-icons-grid {
   display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-start;
   align-items: center;
-  gap: 12px;
-  padding: 10px 12px;
-  background: linear-gradient(135deg, #fef9e7 0%, #fdf6e3 100%);
-  border-radius: 10px;
-  border: 1px solid #f0e6c8;
 }
 
+
+.badge-img-only {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin: 4px;
+  border-radius: 50%;
+  background: #fdf6e3;
+  border: 1.5px solid #f0e6c8;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  transition: transform 0.15s;
+}
+.badge-img-only:hover {
+  transform: scale(1.08) rotate(-4deg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+.badges-only-icons .card-header,
+.badges-only-icons .badge-info,
+.badges-only-icons .badge-item,
+.badges-only-icons .badge-name,
+.badges-only-icons .badge-desc {
+  display: none !important;
+}
 .badge-img {
   width: 36px;
   height: 36px;

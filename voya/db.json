@@ -218,6 +218,286 @@
       "id": "Sa6zsQ8"
     },
     {
+      "destination": "Spain",
+      "city": "Madrid",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-11",
+      "endDate": "2026-01-12",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/10/Madrid_City.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T10:00:00.000Z",
+      "id": "badgef1"
+    },
+    {
+      "destination": "France",
+      "city": "Paris",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-13",
+      "endDate": "2026-01-14",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Paris_vue_d%27ensemble_tour_Eiffel.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T10:10:00.000Z",
+      "id": "badgef2"
+    },
+    {
+      "destination": "Italy",
+      "city": "Rome",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-15",
+      "endDate": "2026-01-16",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Trevi_Fountain%2C_Rome%2C_Italy_2_-_May_2007.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T10:20:00.000Z",
+      "id": "badgef3"
+    },
+    {
+      "destination": "Germany",
+      "city": "Berlin",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-17",
+      "endDate": "2026-01-18",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Berlin_Brandenburg_Gate.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T10:30:00.000Z",
+      "id": "badgef4"
+    },
+    {
+      "destination": "Netherlands",
+      "city": "Amsterdam",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-19",
+      "endDate": "2026-01-20",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/Amsterdam_Canals.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T10:40:00.000Z",
+      "id": "badgef5"
+    },
+    {
+      "destination": "Belgium",
+      "city": "Brussels",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-21",
+      "endDate": "2026-01-22",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Brussels_Grand_Place.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T10:50:00.000Z",
+      "id": "badgef6"
+    },
+    {
+      "destination": "Austria",
+      "city": "Vienna",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-23",
+      "endDate": "2026-01-24",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Vienna_Skyline.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T11:00:00.000Z",
+      "id": "badgef7"
+    },
+    {
+      "destination": "Switzerland",
+      "city": "Zurich",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-25",
+      "endDate": "2026-01-26",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Zurich_City.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T11:10:00.000Z",
+      "id": "badgef8"
+    },
+    {
+      "destination": "Portugal",
+      "city": "Lisbon",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-27",
+      "endDate": "2026-01-28",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/81/Lisbon_City.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T11:20:00.000Z",
+      "id": "badgef9"
+    },
+    {
+      "destination": "Czechia",
+      "city": "Prague",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-29",
+      "endDate": "2026-01-30",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Prague_City.jpg",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T11:30:00.000Z",
+      "id": "badgef10"
+    },
+    {
+      "destination": "Morocco",
+      "city": "Marrakech",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-31",
+      "endDate": "2026-02-01",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Marrakech_City.jpg",
+      "friends": [],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T12:00:00.000Z",
+      "id": "badges1"
+    },
+    {
+      "destination": "Peru",
+      "city": "Cusco",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-02-02",
+      "endDate": "2026-02-03",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Cusco_City.jpg",
+      "friends": [],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T12:10:00.000Z",
+      "id": "badges2"
+    },
+    {
+      "destination": "Japan",
+      "city": "Tokyo",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-02-04",
+      "endDate": "2026-02-05",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1e/Tokyo_City.jpg",
+      "friends": [],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T12:20:00.000Z",
+      "id": "badges3"
+    },
+    {
+      "destination": "Australia",
+      "city": "Sydney",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-02-06",
+      "endDate": "2026-02-07",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Sydney_City.jpg",
+      "friends": [],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T12:30:00.000Z",
+      "id": "badges4"
+    },
+    {
+      "destination": "Canada",
+      "city": "Toronto",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-02-08",
+      "endDate": "2026-02-09",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Toronto_City.jpg",
+      "friends": [],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T12:40:00.000Z",
+      "id": "badges5"
+    },
+    {
+      "destination": "USA",
+      "city": "New York",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-02-10",
+      "endDate": "2026-02-11",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4d/New_York_City.jpg",
+      "friends": [],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T12:50:00.000Z",
+      "id": "badges6"
+    },
+    {
+      "destination": "Brazil",
+      "city": "Rio de Janeiro",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-02-12",
+      "endDate": "2026-02-13",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Rio_de_Janeiro_City.jpg",
+      "friends": [],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T13:00:00.000Z",
+      "id": "badges7"
+    },
+    {
+      "destination": "South Africa",
+      "city": "Cape Town",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-02-14",
+      "endDate": "2026-02-15",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Cape_Town_City.jpg",
+      "friends": [],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T13:10:00.000Z",
+      "id": "badges8"
+    },
+    {
+      "destination": "Russia",
+      "city": "Moscow",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-02-16",
+      "endDate": "2026-02-17",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Moscow_City.jpg",
+      "friends": [],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T13:20:00.000Z",
+      "id": "badges9"
+    },
+    {
+      "destination": "China",
+      "city": "Beijing",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-02-18",
+      "endDate": "2026-02-19",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1e/Beijing_City.jpg",
+      "friends": [],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-17T13:30:00.000Z",
+      "id": "badges10"
+    },
+    {
       "destination": "Portugal",
       "city": "Porto",
       "notes": "",
@@ -228,7 +508,8 @@
       "friends": [],
       "userEmail": "arroz@gmail.com",
       "createdAt": "2026-01-16T17:00:32.777Z",
-      "id": "WgrbAyL"
+      "id": "WgrbAyL",
+      "archived": true
     },
     {
       "destination": "Mali",

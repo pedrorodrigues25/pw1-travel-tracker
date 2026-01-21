@@ -143,24 +143,13 @@
         </div>
 
         <!-- Badges Card -->
-        <div class="badges-card">
-          <div class="card-header">
-            <h3>🏆 Badges Earned</h3>
-            <span class="badge-count">{{ unlockedBadges.length }} earned</span>
-          </div>
-          <div v-if="unlockedBadges.length > 0" class="badges-grid">
-            <div v-for="badge in unlockedBadges" :key="badge.id" class="badge-item">
-              <img :src="badge.imageUrl" :alt="badge.name" class="badge-img" />
-              <div class="badge-info">
-                <span class="badge-name">{{ badge.name }}</span>
-                <span class="badge-desc">{{ badge.description }}</span>
-              </div>
-            </div>
+        <div class="badges-card badges-only-icons">
+          <div class="badges-title-row"><h3>🏆 Badges Earned</h3></div>
+          <div v-if="unlockedBadges.length > 0" class="badges-grid badges-icons-grid">
+            <img v-for="badge in unlockedBadges" :key="badge.id" :src="badge.imageUrl" :alt="badge.name" class="badge-img-only" />
           </div>
           <div v-else class="empty-state">
             <span class="empty-icon">🎖️</span>
-            <p>No badges yet</p>
-            <span class="empty-hint">Complete trips to earn badges!</span>
           </div>
         </div>
 

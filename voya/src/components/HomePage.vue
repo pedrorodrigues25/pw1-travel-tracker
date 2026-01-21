@@ -45,8 +45,13 @@
         </div>
       </div>
       <div class="profile-right">
-        <div class="trips-counter">
-          <p class="counter-text">{{ selections.count }}/10 viagens</p>
+        <div class="trips-counter-container">
+          <div class="counter-info">
+            <span class="counter-text">{{ tripCount }}/{{ nextStep }} viagens</span>
+          </div>
+          <div class="home-progress-bar">
+            <div class="home-progress-fill" :style="{ width: progressPercentage + '%' }"></div>
+          </div>
         </div>
         <router-link to="/profile" class="see-profile-btn">SEE PROFILE</router-link>
       </div>
@@ -167,20 +172,32 @@ const selections = useSelectionsStore()
 const interestsStore = useInterestsStore()
 const badgesStore = useBadgesStore()
 
-// Lógica de Avatar do DiceBear
+const user = auth.user
+const userInterests = ref([])
+const allFriends = ref([])
+
+// --- Lógica de Avatar ---
 const avatarQuery = computed(() => {
   const seed = auth.user?.username || 'voya-user';
   return `https://api.dicebear.com/9.x/identicon/png?seed=${seed}&scale=70&backgroundColor=#ffffff`;
 });
 
-function goToJournal(tripId) {
-  if (tripId) router.push({ name: 'Journal', params: { tripId } })
-}
+// --- Lógica de Progresso (Mesma do Profile) ---
+const tripCount = computed(() => selections.count || 0)
 
-const user = auth.user
-const userInterests = ref([])
-const allFriends = ref([])
+const nextStep = computed(() => {
+  const c = tripCount.value || 0
+  // Se for 0, o objetivo é 10. Se for 12, o objetivo é 20.
+  return c === 0 ? 10 : Math.ceil((c + 0.1) / 10) * 10
+})
 
+const progressPercentage = computed(() => {
+  const c = tripCount.value || 0
+  const step = nextStep.value
+  return Math.min(100, Math.round((c / step) * 100))
+})
+
+// --- Outros Computed ---
 const unlockedBadges = computed(() => badgesStore.unlockedBadges)
 const lockedBadges = computed(() => badgesStore.getLockedBadgesWithProgress(selections.items || []))
 
@@ -205,6 +222,11 @@ const upcomingTrips = computed(() => {
   return trips.slice().sort((a, b) => toTime(a) - toTime(b))
 })
 
+// --- Funções e Ciclo de Vida ---
+function goToJournal(tripId) {
+  if (tripId) router.push({ name: 'Journal', params: { tripId } })
+}
+
 function formatTripDates(trip) {
   if (!trip) return ''
   const fmt = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
@@ -215,10 +237,6 @@ function formatTripDates(trip) {
   if (startOk && endOk) return `${fmt.format(start)} – ${fmt.format(end)}`
   if (endOk) return fmt.format(end)
   if (startOk) return fmt.format(start)
-  if (trip.createdAt) {
-    const created = new Date(trip.createdAt)
-    if (!Number.isNaN(created.getTime())) return fmt.format(created)
-  }
   return ''
 }
 
@@ -237,36 +255,53 @@ async function loadUserData() {
   }
 }
 
-function ensureLoaded() {
-  if (user && user.email) loadUserData()
-}
+loadUserData()
 
-ensureLoaded()
-
-watch(
-  () => auth.user && auth.user.email,
-  (val) => {
-    if (val) loadUserData()
-  },
-)
+watch(() => auth.user?.email, (val) => { if (val) loadUserData() })
 </script>
 
 <style scoped>
-/* Garante que a imagem do avatar preenche o círculo */
 .avatar-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
   background-color: white;
-  display: block;
 }
 
-/* Caso o .profile-avatar tenha padding ou overflow estranho no CSS global */
-.profile-avatar {
+/* Estilos da Barra de Progresso no Card */
+.trips-counter-container {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.counter-info {
+  margin-bottom: 5px;
+  text-align: right;
+}
+
+.counter-text {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.home-progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+.home-progress-fill {
+  height: 100%;
+  background-color: #ffa27d; 
+  transition: width 0.5s ease-in-out;
+}
+
+.see-profile-btn {
+  display: block;
+  text-align: center;
 }
 </style>

@@ -62,7 +62,6 @@
         <!-- User Notes Section -->
         <div v-if="trip?.notes" class="notes-section">
           <div class="notes-header">
-            <span class="notes-icon">📝</span>
             <span class="notes-title">My Notes</span>
           </div>
           <div class="notes-content">{{ trip.notes }}</div>

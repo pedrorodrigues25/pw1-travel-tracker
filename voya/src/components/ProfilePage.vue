@@ -179,7 +179,7 @@ import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
 import { useInterestsStore } from '../stores/interests'
 import { useBadgesStore } from '../stores/badges'
-import { updateUser, getUserFriends, getFriends } from '../api/api'
+import { updateUser, getUserFriends } from '../api/api'
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -214,17 +214,6 @@ const editMode = ref(false)
 const editUsername = ref(user.value?.username || '')
 const editEmail = ref(user.value?.email || '')
 const previewPhoto = ref('')
-
-function onPhotoChange(e) {
-  const file = e.target.files[0]
-  if (file) {
-    const reader = new FileReader()
-    reader.onload = (ev) => {
-      previewPhoto.value = ev.target.result
-    }
-    reader.readAsDataURL(file)
-  }
-}
 
 async function saveProfile() {
   const updatedFields = {

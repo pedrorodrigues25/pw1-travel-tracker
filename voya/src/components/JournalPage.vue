@@ -117,37 +117,54 @@
         />
 
         <!-- Edit Panel -->
-        <div v-if="editingPanel" class="edit-panel-overlay">
+        <div v-if="editingPanel" class="edit-panel-overlay" @click.self="cancelEdit">
           <div class="edit-panel-modal">
-            <h3>Edit Trip Information</h3>
+            <div class="edit-modal-header">
+              <h3>Edit Trip</h3>
+              <button class="edit-close-btn" @click="cancelEdit">×</button>
+            </div>
 
             <div class="edit-section">
-              <label>My Notes:</label>
+              <label> My Notes</label>
               <textarea
                 v-model="editedNotes"
-                rows="6"
+                rows="5"
                 class="edit-textarea"
-                placeholder="Add your personal notes about this trip..."
+                placeholder="Write your personal notes, memories, tips..."
               ></textarea>
             </div>
 
             <div class="edit-section">
-              <label>Add Friends to this trip:</label>
+              <label>Friends on this trip</label>
               <div class="friends-list">
-                <div v-for="friend in availableFriends" :key="friend.id" class="friend-item">
+                <label
+                  v-for="friend in availableFriends"
+                  :key="friend.id"
+                  class="friend-checkbox-item"
+                  :class="{ selected: tripFriends.includes(friend.id) }"
+                >
                   <input
                     type="checkbox"
-                    :id="'friend-' + friend.id"
                     :checked="tripFriends.includes(friend.id)"
                     @change="toggleFriend(friend.id)"
                   />
-                </div>
+                  <div class="friend-avatar-mini">
+                    <img v-if="friend.photo" :src="friend.photo" :alt="friend.username" />
+                    <span v-else class="avatar-letter">{{ friend.username.charAt(0).toUpperCase() }}</span>
+                  </div>
+                  <span class="friend-name">{{ friend.username }}</span>
+                </label>
               </div>
-              <p v-if="availableFriends.length === 0" class="no-friends">No friends available.</p>
+              <p v-if="availableFriends.length === 0" class="no-friends">
+                <span class="no-friends-icon">😔</span>
+                You don't have any friends yet. Add some in the Friends page!
+              </p>
             </div>
 
             <div class="edit-actions">
-              <button class="btn-save" @click="saveEdits">Save</button>
+              <button class="btn-save" @click="saveEdits">
+                 Save Changes
+              </button>
               <button class="btn-cancel" @click="cancelEdit">Cancel</button>
             </div>
           </div>

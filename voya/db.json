@@ -1136,21 +1136,6 @@
   ],
   "userFriends": [
     {
-      "id": "uf2",
-      "userEmail": "arroz@gmail.com",
-      "friendId": "f2"
-    },
-    {
-      "id": "uf3",
-      "userEmail": "arroz@gmail.com",
-      "friendId": "f3"
-    },
-    {
-      "userEmail": "arroz@gmail.com",
-      "friendId": "f4",
-      "id": "I3teaGk"
-    },
-    {
       "userEmail": "mariamelo2006@gmail.com",
       "friendId": "f5",
       "id": "sG9A6nU"
@@ -1159,11 +1144,6 @@
       "userEmail": "mariamelo2006@gmail.com",
       "friendId": "f15",
       "id": "rFvCNHl"
-    },
-    {
-      "userEmail": "arroz@gmail.com",
-      "friendId": "f5",
-      "id": "uQL31oJ"
     },
     {
       "userEmail": "luisneri@gmail.com",
@@ -1184,6 +1164,26 @@
       "userEmail": "miguelmeniciocaldas@gmail.com",
       "friendId": "f12",
       "id": "eN9ur1f"
+    },
+    {
+      "userEmail": "arroz@gmail.com",
+      "friendId": "f2",
+      "id": "bnntPSZ"
+    },
+    {
+      "userEmail": "arroz@gmail.com",
+      "friendId": "f1",
+      "id": "hJlCf5j"
+    },
+    {
+      "userEmail": "arroz@gmail.com",
+      "friendId": "f3",
+      "id": "zDA_TM5"
+    },
+    {
+      "userEmail": "arroz@gmail.com",
+      "friendId": "f4",
+      "id": "a7WLxmk"
     }
   ],
   "availableInterests": [

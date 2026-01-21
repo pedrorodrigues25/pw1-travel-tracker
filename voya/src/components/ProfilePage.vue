@@ -1,6 +1,5 @@
 <template>
   <div class="profile-page">
-    <!-- Navbar -->
     <nav class="navbar">
       <router-link to="/" class="navbar-logo">
         <img src="@/img/logo-pw1-voya.png" alt="Voya Logo" height="38" />
@@ -14,16 +13,17 @@
       </div>
     </nav>
 
-    <!-- Main Content -->
     <div class="profile-content">
-      <!-- Left Column - Profile Info -->
       <div class="profile-left-column">
-        <!-- Profile Card -->
         <div class="profile-card">
           <div class="profile-cover"></div>
           <div class="profile-avatar-section">
             <div class="profile-avatar-wrapper">
-              <div class="profile-avatar-placeholder">{{ userInitial }}</div>
+              <img 
+                :src="avatarQuery" 
+                :alt="user?.username" 
+                class="profile-avatar-img"
+              />
             </div>
           </div>
 
@@ -37,7 +37,6 @@
               <input v-model="editEmail" placeholder="Email" class="edit-input" />
             </div>
 
-            <!-- Stats -->
             <div class="profile-stats-row">
               <div class="stat-box">
                 <span class="stat-number">{{ tripCount }}</span>
@@ -53,7 +52,6 @@
               </div>
             </div>
 
-            <!-- Progress -->
             <div class="profile-progress">
               <div class="progress-header">
                 <span>Trip Progress</span>
@@ -64,7 +62,6 @@
               </div>
             </div>
 
-            <!-- Actions -->
             <div class="profile-actions-row">
               <button v-if="!editMode" class="btn-edit" @click="editMode = true">
                 ✏️ Edit Profile
@@ -75,7 +72,6 @@
           </div>
         </div>
 
-        <!-- About Me Card -->
         <div class="about-card">
           <h3>📝 About Me</h3>
           <textarea
@@ -86,7 +82,6 @@
           ></textarea>
           <button class="btn-save-about" @click="saveAboutMe">Save</button>
 
-          <!-- Interests -->
           <div v-if="userInterests.length > 0" class="interests-section">
             <h4>🎯 My Interests</h4>
             <div class="interests-grid">
@@ -102,9 +97,7 @@
         </div>
       </div>
 
-      <!-- Right Column - Friends, Badges, Archived -->
       <div class="profile-right-column">
-        <!-- Friends Card -->
         <div class="friends-card">
           <div class="card-header">
             <h3>👥 Friends</h3>
@@ -113,8 +106,10 @@
           <div v-if="friends.length > 0" class="friends-grid">
             <div v-for="friend in friends.slice(0, 6)" :key="friend.id" class="friend-mini-card">
               <div class="friend-avatar">
-                <img v-if="friend.photo" :src="friend.photo" :alt="friend.username" />
-                <span v-else class="avatar-letter">{{ friend.username.charAt(0).toUpperCase() }}</span>
+                <img 
+                  :src="`https://api.dicebear.com/9.x/identicon/png?seed=${friend.username}&scale=70`" 
+                  :alt="friend.username" 
+                />
               </div>
               <span class="friend-name">{{ friend.username }}</span>
             </div>
@@ -126,7 +121,6 @@
           </div>
         </div>
 
-        <!-- Badges Card -->
         <div class="badges-card badges-only-icons">
           <div class="badges-title-row"><h3>🏆 Badges Earned</h3></div>
           <div v-if="unlockedBadges.length > 0" class="badges-grid badges-icons-grid">
@@ -137,7 +131,6 @@
           </div>
         </div>
 
-        <!-- Archived Trips Card -->
         <div class="archived-card">
           <div class="card-header">
             <h3>📦 Archived Trips</h3>
@@ -215,6 +208,12 @@ const editUsername = ref(user.value?.username || '')
 const editEmail = ref(user.value?.email || '')
 const previewPhoto = ref('')
 
+// Lógica de Avatar dinâmica baseada no username
+const avatarQuery = computed(() => {
+  const seed = user.value?.username || 'voya-user';
+  return `https://api.dicebear.com/9.x/identicon/png?seed=${seed}&scale=70&backgroundColor=#ffffff`;
+})
+
 async function saveProfile() {
   const updatedFields = {
     username: editUsername.value,
@@ -240,12 +239,6 @@ async function saveAboutMe() {
     aboutMe.value = updated.aboutMe
   }
 }
-
-const userInitial = computed(() => {
-  if (user.value?.username) return user.value.username.charAt(0).toUpperCase()
-  if (user.value?.email) return user.value.email.charAt(0).toUpperCase()
-  return 'U'
-})
 
 const tripCount = computed(() => selections.count || 0)
 const friendsCount = computed(() => friends.value.length)
@@ -281,5 +274,23 @@ function handleLogout() {
   router.push('/login')
 }
 </script>
+
+<style scoped>
+/* Estilos específicos para o Avatar */
+.profile-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.friend-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+</style>
 
 <style src="../css/ProfilePage.css"></style>

@@ -33,6 +33,7 @@ A modern web application for tracking, sharing, and managing your travel experie
 
 ### Installation
 
+
 1. **Clone the repository**
    ```bash
    git clone https://github.com/pedrorodrigues25/pw1-travel-tracker.git
@@ -46,17 +47,15 @@ A modern web application for tracking, sharing, and managing your travel experie
    pnpm install
    ```
 
-3. **Start the application (split terminal into 2 panels)**
+3. **Start the application (use two terminal panels):**
 
    **Terminal Panel 1 - Start JSON Server:**
    ```bash
-   cd voya
    npx json-server --watch db.json --port 3001
    ```
 
    **Terminal Panel 2 - Start Development Server:**
    ```bash
-   cd voya
    npm run dev
    # or
    pnpm run dev
@@ -98,6 +97,7 @@ voya/
 │   ├── api/              # API integration
 │   ├── css/              # Global styles
 │   ├── img/              # Images
+│   ├── js/               # Standalone JavaScript files
 │   ├── router/           # Vue Router configuration
 │   └── main.js           # Entry point
 ├── db.json               # Local database

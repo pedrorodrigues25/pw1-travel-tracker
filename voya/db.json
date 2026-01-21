@@ -189,7 +189,7 @@
     {
       "destination": "Portugal",
       "city": "Porto",
-      "notes": "",
+      "notes": "s j",
       "status": "completed",
       "startDate": "2026-01-15",
       "endDate": "2026-01-15",
@@ -233,7 +233,7 @@
     {
       "destination": "Mali",
       "city": "Timbuktu",
-      "notes": "",
+      "notes": "nice",
       "status": "upcoming",
       "startDate": "2026-01-30",
       "endDate": "2026-01-31",
@@ -539,6 +539,21 @@
       "userEmail": "miguelmeniciocaldas@gmail.com",
       "createdAt": "2026-01-16T18:26:43.873Z",
       "id": "fpzQmfE"
+    },
+    {
+      "destination": "Chile",
+      "city": "Concepción",
+      "notes": "Adorei esta viagem eu e o joao temos historia para contar",
+      "status": "completed",
+      "startDate": "2026-01-07",
+      "endDate": "2026-01-15",
+      "imageUrl": "",
+      "friends": [
+        "f2"
+      ],
+      "userEmail": "arroz@gmail.com",
+      "createdAt": "2026-01-21T14:45:15.356Z",
+      "id": "VJDGVrJ"
     }
   ],
   "destinations": [
@@ -1172,15 +1187,45 @@
     }
   ],
   "availableInterests": [
-    { "id": "int1", "name": "Traveling with Friends" },
-    { "id": "int2", "name": "Solo Adventure" },
-    { "id": "int3", "name": "Family Trips" },
-    { "id": "int4", "name": "Beach & Relaxation" },
-    { "id": "int5", "name": "City Exploration" },
-    { "id": "int6", "name": "Nature & Hiking" },
-    { "id": "int7", "name": "Cultural Experiences" },
-    { "id": "int8", "name": "Food & Gastronomy" },
-    { "id": "int9", "name": "Photography" },
-    { "id": "int10", "name": "Road Trips" }
+    {
+      "id": "int1",
+      "name": "Traveling with Friends"
+    },
+    {
+      "id": "int2",
+      "name": "Solo Adventure"
+    },
+    {
+      "id": "int3",
+      "name": "Family Trips"
+    },
+    {
+      "id": "int4",
+      "name": "Beach & Relaxation"
+    },
+    {
+      "id": "int5",
+      "name": "City Exploration"
+    },
+    {
+      "id": "int6",
+      "name": "Nature & Hiking"
+    },
+    {
+      "id": "int7",
+      "name": "Cultural Experiences"
+    },
+    {
+      "id": "int8",
+      "name": "Food & Gastronomy"
+    },
+    {
+      "id": "int9",
+      "name": "Photography"
+    },
+    {
+      "id": "int10",
+      "name": "Road Trips"
+    }
   ]
 }

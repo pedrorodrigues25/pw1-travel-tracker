@@ -405,6 +405,58 @@
   line-height: 1.5;
   font-family: 'Quicksand', 'Inter', Arial, sans-serif;
 }
+
+/* Notes section styling */
+.notes-section {
+  margin: 28px 32px;
+  background: linear-gradient(135deg, #fef9e7 0%, #fdf6e3 100%);
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 4px 16px rgba(139, 115, 85, 0.12);
+  border: 1px solid #e8dcc8;
+  position: relative;
+}
+
+.notes-section::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: linear-gradient(180deg, #e8c547 0%, #d4a839 100%);
+  border-radius: 16px 0 0 16px;
+}
+
+.notes-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.notes-icon {
+  font-size: 1.4rem;
+}
+
+.notes-title {
+  font-size: 1.6rem;
+  font-family: 'Amatic SC', cursive, sans-serif;
+  font-weight: 700;
+  color: #8b7355;
+  letter-spacing: 0.5px;
+}
+
+.notes-content {
+  font-size: 1.05rem;
+  color: #5a4a3a;
+  line-height: 1.7;
+  font-family: 'Quicksand', 'Inter', Arial, sans-serif;
+  font-style: italic;
+  white-space: pre-wrap;
+  padding-left: 8px;
+}
+
 .figma-journal-polaroids {
   display: flex;
   gap: 18px;

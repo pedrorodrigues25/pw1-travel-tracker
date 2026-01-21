@@ -53,11 +53,19 @@
           <div class="figma-journal-day-block">
             <div class="figma-journal-day-title">About the destination</div>
             <div class="figma-journal-day-text">
-              <template v-if="trip?.customText">{{ trip.customText }}</template>
-              <template v-else-if="wikiInfo">{{ wikiInfo.extract }}</template>
+              <template v-if="wikiInfo">{{ wikiInfo.extract }}</template>
               <template v-else>Information not available.</template>
             </div>
           </div>
+        </div>
+
+        <!-- User Notes Section -->
+        <div v-if="trip?.notes" class="notes-section">
+          <div class="notes-header">
+            <span class="notes-icon">📝</span>
+            <span class="notes-title">My Notes</span>
+          </div>
+          <div class="notes-content">{{ trip.notes }}</div>
         </div>
 
         <!-- Secção de amigos e fotos lado a lado -->
@@ -115,12 +123,12 @@
             <h3>Edit Trip Information</h3>
 
             <div class="edit-section">
-              <label>About the destination:</label>
+              <label>My Notes:</label>
               <textarea
-                v-model="editedText"
+                v-model="editedNotes"
                 rows="6"
                 class="edit-textarea"
-                placeholder="Edit the destination description..."
+                placeholder="Add your personal notes about this trip..."
               ></textarea>
             </div>
 
@@ -228,7 +236,7 @@ const fileInput = ref(null)
 
 // Edit panel state
 const editingPanel = ref(false)
-const editedText = ref('')
+const editedNotes = ref('')
 const availableFriends = ref([])
 const tripFriends = ref([])
 const allFriendsData = ref([])
@@ -278,13 +286,13 @@ function editTrip() {
     return
   }
   editingPanel.value = true
-  editedText.value = trip.value?.customText || wikiInfo.value?.extract || ''
+  editedNotes.value = trip.value?.notes || ''
   tripFriends.value = trip.value?.friends || []
 }
 
 function cancelEdit() {
   editingPanel.value = false
-  editedText.value = ''
+  editedNotes.value = ''
   tripFriends.value = []
 }
 
@@ -314,7 +322,7 @@ async function saveEdits() {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        customText: editedText.value,
+        notes: editedNotes.value,
         friends: tripFriends.value,
       }),
     })

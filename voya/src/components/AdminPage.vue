@@ -114,6 +114,30 @@
           </table>
         </div>
       </section>
+
+      <!-- Interests Management Section -->
+      <section class="users-section" style="margin-top: 30px;">
+        <h2>Interests Management</h2>
+        <p style="color: #666; margin-bottom: 20px;">Add or remove interests that appear for users</p>
+        
+        <div class="admin-controls" style="margin-bottom: 20px;">
+          <input
+            v-model="newInterestName"
+            type="text"
+            placeholder="Enter new interest name..."
+            class="search-input"
+            @keyup.enter="handleAddInterest"
+          />
+          <button class="btn btn-unban" @click="handleAddInterest">Add Interest</button>
+        </div>
+
+        <div class="interests-grid">
+          <div v-for="interest in availableInterests" :key="interest.id" class="interest-item">
+            <span class="interest-name">{{ interest.name }}</span>
+            <button class="btn btn-delete btn-small" @click="handleDeleteInterest(interest.id)">✕</button>
+          </div>
+        </div>
+      </section>
     </div>
 
     <!-- Ban Modal -->
@@ -163,7 +187,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
-import { getUsers, updateUser } from '../api/api'
+import { getUsers, updateUser, getAvailableInterests, addAvailableInterest, deleteAvailableInterest } from '../api/api'
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -175,6 +199,10 @@ const showBanModal = ref(false)
 const showDeleteModal = ref(false)
 const selectedUser = ref(null)
 const selectedBanDuration = ref(3)
+
+// Interests management
+const availableInterests = ref([])
+const newInterestName = ref('')
 
 const banDurations = [
   { hours: 1, label: '1 Hour' },
@@ -189,6 +217,28 @@ const banDurations = [
 async function loadUsers() {
   const allUsers = await getUsers()
   users.value = allUsers || []
+}
+
+// Load available interests
+async function loadInterests() {
+  const interests = await getAvailableInterests()
+  availableInterests.value = interests || []
+}
+
+async function handleAddInterest() {
+  if (!newInterestName.value.trim()) return
+  const result = await addAvailableInterest(newInterestName.value.trim())
+  if (result) {
+    availableInterests.value.push(result)
+    newInterestName.value = ''
+  }
+}
+
+async function handleDeleteInterest(id) {
+  const success = await deleteAvailableInterest(id)
+  if (success) {
+    availableInterests.value = availableInterests.value.filter((i) => i.id !== id)
+  }
 }
 
 const totalUsers = computed(() => users.value.length)
@@ -336,6 +386,7 @@ onMounted(() => {
     return
   }
   loadUsers()
+  loadInterests()
 })
 </script>
 

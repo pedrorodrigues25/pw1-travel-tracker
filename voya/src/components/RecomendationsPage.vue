@@ -85,6 +85,7 @@ import { useAuthStore } from '../stores/auth'
 import { useInterestsStore } from '../stores/interests'
 import { useSelectionsStore } from '../stores/selections'
 import { fetchCountryWikipediaSummary } from '../api/countries'
+import { getAvailableInterests } from '../api/api'
 
 const router = useRouter()
 
@@ -97,18 +98,12 @@ const allDestinations = ref([])
 const selectedFilters = ref([])
 const isLoading = ref(false)
 
-const availableInterests = [
-  'Traveling with Friends',
-  'Solo Adventure',
-  'Family Trips',
-  'Beach & Relaxation',
-  'City Exploration',
-  'Nature & Hiking',
-  'Cultural Experiences',
-  'Food & Gastronomy',
-  'Photography',
-  'Road Trips',
-]
+const availableInterests = ref([])
+
+async function loadAvailableInterestsFromAPI() {
+  const interests = await getAvailableInterests()
+  availableInterests.value = interests.map(i => i.name) || []
+}
 
 async function loadUserInterests() {
   const userEmail = auth.user?.email
@@ -195,6 +190,7 @@ async function addToTrips(dest) {
 onMounted(async () => {
   isLoading.value = true
   try {
+    await loadAvailableInterestsFromAPI()
     await loadUserInterests()
     await loadDestinations()
   } finally {

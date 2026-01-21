@@ -1170,5 +1170,17 @@
       "friendId": "f12",
       "id": "eN9ur1f"
     }
+  ],
+  "availableInterests": [
+    { "id": "int1", "name": "Traveling with Friends" },
+    { "id": "int2", "name": "Solo Adventure" },
+    { "id": "int3", "name": "Family Trips" },
+    { "id": "int4", "name": "Beach & Relaxation" },
+    { "id": "int5", "name": "City Exploration" },
+    { "id": "int6", "name": "Nature & Hiking" },
+    { "id": "int7", "name": "Cultural Experiences" },
+    { "id": "int8", "name": "Food & Gastronomy" },
+    { "id": "int9", "name": "Photography" },
+    { "id": "int10", "name": "Road Trips" }
   ]
 }

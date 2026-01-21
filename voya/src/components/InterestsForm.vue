@@ -36,29 +36,27 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useInterestsStore } from '../stores/interests'
+import { getAvailableInterests } from '../api/api'
 
 const router = useRouter()
 const auth = useAuthStore()
 const interestsStore = useInterestsStore()
 
-const availableInterests = [
-  'Traveling with Friends',
-  'Solo Adventure',
-  'Family Trips',
-  'Beach & Relaxation',
-  'City Exploration',
-  'Nature & Hiking',
-  'Cultural Experiences',
-  'Food & Gastronomy',
-  'Photography',
-  'Road Trips',
-]
-
+const availableInterests = ref([])
 const selectedInterests = ref([])
+
+async function loadAvailableInterests() {
+  const interests = await getAvailableInterests()
+  availableInterests.value = interests.map(i => i.name) || []
+}
+
+onMounted(() => {
+  loadAvailableInterests()
+})
 
 function toggleInterest(interest) {
   const index = selectedInterests.value.indexOf(interest)

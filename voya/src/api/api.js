@@ -198,6 +198,45 @@ async function saveInterest(interest) {
   }
 }
 
+// AVAILABLE INTERESTS (global interests managed by admin)
+async function getAvailableInterests() {
+  try {
+    const res = await fetch(`${API_BASE}/availableInterests`)
+    if (!res.ok) throw new Error('Erro ao obter interesses disponíveis')
+    return await res.json()
+  } catch (e) {
+    console.error('Erro ao ler interesses disponíveis:', e)
+    return []
+  }
+}
+
+async function addAvailableInterest(name) {
+  try {
+    const id = 'int' + Date.now()
+    const res = await fetch(`${API_BASE}/availableInterests`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, name }),
+    })
+    if (!res.ok) throw new Error('Erro ao adicionar interesse')
+    return await res.json()
+  } catch (e) {
+    console.error('Erro ao adicionar interesse:', e)
+    return null
+  }
+}
+
+async function deleteAvailableInterest(id) {
+  try {
+    const res = await fetch(`${API_BASE}/availableInterests/${id}`, { method: 'DELETE' })
+    if (!res.ok) throw new Error('Erro ao apagar interesse')
+    return true
+  } catch (e) {
+    console.error('Erro ao apagar interesse:', e)
+    return false
+  }
+}
+
 export {
   getUsers,
   saveUser,
@@ -208,6 +247,9 @@ export {
   deleteSelection,
   getInterests,
   saveInterest,
+  getAvailableInterests,
+  addAvailableInterest,
+  deleteAvailableInterest,
   getRecommendations,
   getFriends,
   getUserFriends,

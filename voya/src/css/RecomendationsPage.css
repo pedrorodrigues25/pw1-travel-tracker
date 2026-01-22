@@ -124,6 +124,45 @@
 }
 
 /* Card Image */
+.trip-cover {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background-color: #e8f4f8;
+}
+
+.trip-cover-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e8f4f8;
+  z-index: 1;
+}
+
+.trip-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.trip-cover img.loaded {
+  opacity: 1;
+}
+
+.trip-cover.clickable {
+  cursor: pointer;
+}
+
+.trip-cover.clickable:hover img {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
 .card-image {
   cursor: pointer;
 }

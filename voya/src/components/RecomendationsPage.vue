@@ -46,9 +46,15 @@
             class="trip-card"
           >
             <div class="trip-cover clickable" @click="goToDestination(destination.id)">
+              <div v-if="!destination.imageLoaded" class="trip-cover-loading">
+                <div class="loading-spinner"></div>
+              </div>
               <img
                 :src="destination.imageUrl || '/src/img/mountains.png'"
                 :alt="destination.city || destination.country"
+                :class="{ loaded: destination.imageLoaded }"
+                @load="onImageLoad(destination)"
+                @error="onImageError(destination)"
               />
             </div>
             <div class="trip-info">
@@ -102,7 +108,7 @@ const availableInterests = ref([])
 
 async function loadAvailableInterestsFromAPI() {
   const interests = await getAvailableInterests()
-  availableInterests.value = interests.map(i => i.name) || []
+  availableInterests.value = interests.map((i) => i.name) || []
 }
 
 async function loadUserInterests() {
@@ -122,6 +128,7 @@ async function loadDestinations() {
       const dests = await res.json()
       // Fetch Wikipedia image for each destination
       for (const dest of dests) {
+        dest.imageLoaded = false
         try {
           const wiki = await fetchCountryWikipediaSummary(dest.city || dest.country)
           dest.imageUrl = wiki?.originalimage?.source || ''
@@ -132,6 +139,14 @@ async function loadDestinations() {
   } catch (e) {
     console.error('Erro ao carregar destinos:', e)
   }
+}
+
+function onImageLoad(destination) {
+  destination.imageLoaded = true
+}
+
+function onImageError(destination) {
+  destination.imageLoaded = true
 }
 
 // Filtrar destinos localmente com base nos filtros selecionados na UI

@@ -73,7 +73,7 @@
 }
 
 .add-trip-btn {
-  background: #ed9875;
+  background: #efa36d;
   color: #1a1a1a;
   border: none;
   border-radius: 8px;
@@ -95,12 +95,11 @@
 }
 
 .add-trip-btn:hover:not(:disabled) {
-  background: #e6a070;
   transform: translateY(-1px);
 }
 
 .add-trip-btn:disabled {
-  opacity: 0.6;
+  opacity: 1;
   cursor: not-allowed;
 }
 
@@ -460,6 +459,9 @@ select {
 
 .trip-info {
   padding: 10px 8px 8px 8px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
 }
 .trip-title-row {
   display: flex;
@@ -506,7 +508,9 @@ select {
 .trip-avatars {
   display: flex;
   gap: 6px;
-  margin-top: 6px;
+  margin-top: auto;
+  padding-top: 6px;
+  min-height: 30px;
 }
 .avatar.tiny {
   width: 26px;

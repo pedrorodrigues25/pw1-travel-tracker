@@ -54,7 +54,7 @@
 
       <!-- Your trips with friends -->
       <section class="shared-trips">
-        <h2>Your trips with friends <a href="#" class="see-full">see full list here</a></h2>
+        <h2>Your trips with friends</h2>
         <div class="trips-cards">
           <div v-for="trip in sharedTrips" :key="trip.id" class="trip-card-small">
             <div class="trip-image">

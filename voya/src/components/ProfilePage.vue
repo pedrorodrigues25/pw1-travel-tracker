@@ -19,11 +19,7 @@
           <div class="profile-cover"></div>
           <div class="profile-avatar-section">
             <div class="profile-avatar-wrapper">
-              <img 
-                :src="avatarQuery" 
-                :alt="user?.username" 
-                class="profile-avatar-img"
-              />
+              <img :src="avatarQuery" :alt="user?.username" class="profile-avatar-img" />
             </div>
           </div>
 
@@ -64,16 +60,16 @@
 
             <div class="profile-actions-row">
               <button v-if="!editMode" class="btn-edit" @click="editMode = true">
-                ✏️ Edit Profile
+                Edit Profile
               </button>
-              <button v-else class="btn-save" @click="saveProfile">💾 Save</button>
-              <button class="btn-logout" @click="handleLogout">🚪 Logout</button>
+              <button v-else class="btn-save" @click="saveProfile">Save</button>
+              <button class="btn-logout" @click="handleLogout">Logout</button>
             </div>
           </div>
         </div>
 
         <div class="about-card">
-          <h3>📝 About Me</h3>
+          <h3>About Me</h3>
           <textarea
             v-model="aboutMe"
             placeholder="Tell us about yourself..."
@@ -83,7 +79,7 @@
           <button class="btn-save-about" @click="saveAboutMe">Save</button>
 
           <div v-if="userInterests.length > 0" class="interests-section">
-            <h4>🎯 My Interests</h4>
+            <h4>My Interests</h4>
             <div class="interests-grid">
               <span
                 v-for="interest in userInterests"
@@ -100,40 +96,43 @@
       <div class="profile-right-column">
         <div class="friends-card">
           <div class="card-header">
-            <h3>👥 Friends</h3>
+            <h3>Friends</h3>
             <router-link to="/friends" class="see-all-link">See all →</router-link>
           </div>
           <div v-if="friends.length > 0" class="friends-grid">
             <div v-for="friend in friends.slice(0, 6)" :key="friend.id" class="friend-mini-card">
               <div class="friend-avatar">
-                <img 
-                  :src="`https://api.dicebear.com/9.x/identicon/png?seed=${friend.username}&scale=70`" 
-                  :alt="friend.username" 
+                <img
+                  :src="`https://api.dicebear.com/9.x/identicon/png?seed=${friend.username}&scale=70`"
+                  :alt="friend.username"
                 />
               </div>
               <span class="friend-name">{{ friend.username }}</span>
             </div>
           </div>
           <div v-else class="empty-state">
-            <span class="empty-icon">😔</span>
             <p>No friends yet</p>
             <router-link to="/friends" class="add-friends-link">Find friends</router-link>
           </div>
         </div>
 
         <div class="badges-card badges-only-icons">
-          <div class="badges-title-row"><h3>🏆 Badges Earned</h3></div>
+          <div class="badges-title-row"><h3>Badges Earned</h3></div>
           <div v-if="unlockedBadges.length > 0" class="badges-grid badges-icons-grid">
-            <img v-for="badge in unlockedBadges" :key="badge.id" :src="badge.imageUrl" :alt="badge.name" class="badge-img-only" />
+            <img
+              v-for="badge in unlockedBadges"
+              :key="badge.id"
+              :src="badge.imageUrl"
+              :alt="badge.name"
+              class="badge-img-only"
+            />
           </div>
-          <div v-else class="empty-state">
-            <span class="empty-icon">🎖️</span>
-          </div>
+          <div v-else class="empty-state"></div>
         </div>
 
         <div class="archived-card">
           <div class="card-header">
-            <h3>📦 Archived Trips</h3>
+            <h3>Archived Trips</h3>
             <span class="archived-count">{{ archivedTrips.length }} trips</span>
           </div>
           <div v-if="archivedTrips.length > 0" class="archived-list">
@@ -143,19 +142,19 @@
               class="archived-item"
               @click="goToJournal(trip.id)"
             >
-              <div class="archived-icon">🗺️</div>
               <div class="archived-info">
                 <span class="archived-destination">
                   <template v-if="trip.city">{{ trip.city }}, {{ trip.destination }}</template>
                   <template v-else>{{ trip.destination }}</template>
                 </span>
-                <span class="archived-date">{{ formatMonthYear(trip.startDate || trip.createdAt) }}</span>
+                <span class="archived-date">{{
+                  formatMonthYear(trip.startDate || trip.createdAt)
+                }}</span>
               </div>
               <span class="archived-arrow">→</span>
             </div>
           </div>
           <div v-else class="empty-state">
-            <span class="empty-icon">📁</span>
             <p>No archived trips</p>
             <span class="empty-hint">Archive completed trips to save memories</span>
           </div>
@@ -210,8 +209,8 @@ const previewPhoto = ref('')
 
 // Lógica de Avatar dinâmica baseada no username
 const avatarQuery = computed(() => {
-  const seed = user.value?.username || 'voya-user';
-  return `https://api.dicebear.com/9.x/identicon/png?seed=${seed}&scale=70&backgroundColor=#ffffff`;
+  const seed = user.value?.username || 'voya-user'
+  return `https://api.dicebear.com/9.x/identicon/png?seed=${seed}&scale=70&backgroundColor=#ffffff`
 })
 
 async function saveProfile() {
@@ -261,7 +260,20 @@ const archivedTrips = computed(() => selections.items.filter((t) => t.archived))
 function formatMonthYear(dateStr) {
   const d = new Date(dateStr)
   if (Number.isNaN(d.getTime())) return ''
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ]
   return `${months[d.getMonth()]} ${d.getFullYear()}`
 }
 

@@ -891,6 +891,23 @@
       "userEmail": "contanova@gmail.com",
       "createdAt": "2026-01-22T14:19:20.512Z",
       "id": "ebGDFTh"
+    },
+    {
+      "destination": "Malawi",
+      "city": "Muloza",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-08",
+      "endDate": "2026-01-13",
+      "imageUrl": "",
+      "imageLoaded": false,
+      "friends": [
+        "f3",
+        "f5"
+      ],
+      "userEmail": "contanova@gmail.com",
+      "createdAt": "2026-01-22T14:22:41.659Z",
+      "id": "tYHu3le"
     }
   ],
   "destinations": [

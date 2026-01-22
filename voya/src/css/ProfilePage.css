@@ -19,7 +19,7 @@
 
 .profile-page {
   min-height: 100vh;
-  background: linear-gradient(180deg, #e8f4f8 0%, #f5f9fb 100%);
+  background: #b8c9d9;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -464,7 +464,6 @@
   align-items: center;
 }
 
-
 .badge-img-only {
   width: 48px;
   height: 48px;
@@ -473,12 +472,12 @@
   border-radius: 50%;
   background: #fdf6e3;
   border: 1.5px solid #f0e6c8;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   transition: transform 0.15s;
 }
 .badge-img-only:hover {
   transform: scale(1.08) rotate(-4deg);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .badges-only-icons .card-header,
@@ -681,7 +680,10 @@
   border-radius: 10px;
   border: 1px solid #e3e8ed;
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s,
+    transform 0.1s;
 }
 
 .archived-item:hover {

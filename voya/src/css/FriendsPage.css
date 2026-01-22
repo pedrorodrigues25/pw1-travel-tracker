@@ -314,15 +314,44 @@
 .recommendations h2:not(.voya-section-title) {
   color: #0d5678;
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 0;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 1.2px;
 }
 
+.recommendations-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.refresh-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #0d5678;
+  color: #fff;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.3s,
+    background 0.2s;
+}
+
+.refresh-btn:hover {
+  background: #0a4d6b;
+  transform: rotate(180deg);
+}
+
 .recommendations-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
 }
 

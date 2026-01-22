@@ -72,7 +72,12 @@
 
       <!-- People you may know -->
       <section class="recommendations">
-        <h2>People you may know</h2>
+        <div class="recommendations-header">
+          <h2>People you may know</h2>
+          <button class="refresh-btn" @click="refreshRecommendations" title="Show different people">
+            ↻
+          </button>
+        </div>
         <div class="recommendations-grid">
           <div v-for="person in recommendationsToShow" :key="person.id" class="person-card">
             <div class="person-card-top"></div>
@@ -92,14 +97,6 @@
               See Profile
             </button>
           </div>
-        </div>
-        <div v-if="recommendations.length > 4" class="recommendations-toggle">
-          <button
-            class="toggle-rec-btn"
-            @click="showMoreRecommendations = !showMoreRecommendations"
-          >
-            {{ showMoreRecommendations ? 'Show Less' : 'Show More' }}
-          </button>
         </div>
       </section>
 
@@ -201,12 +198,21 @@ const sharedTrips = ref([])
 const searchQuery = ref('')
 const showProfileModal = ref(false)
 const selectedPerson = ref(null)
-const showMoreRecommendations = ref(false)
+const shuffledRecommendations = ref([])
 
 const recommendationsToShow = computed(() => {
-  if (showMoreRecommendations.value) return recommendations.value
-  return recommendations.value.slice(0, 4)
+  return shuffledRecommendations.value.slice(0, 5)
 })
+
+// Shuffle and show different recommendations
+function refreshRecommendations() {
+  const shuffled = [...recommendations.value]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  shuffledRecommendations.value = shuffled
+}
 
 const isPersonFriend = computed(() => {
   if (!selectedPerson.value) return false
@@ -274,6 +280,9 @@ async function loadFriendsData() {
 
   // Recommendations are people not yet added as friends
   recommendations.value = allPeople.filter((p) => !userFriendIds.includes(p.id))
+
+  // Initialize shuffled recommendations
+  refreshRecommendations()
 
   // Get user's trips to find shared destinations
   const userTrips = await getSelections(user.email)

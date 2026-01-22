@@ -51,6 +51,12 @@
   text-decoration: underline;
 }
 
+.input-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
 .country-search-input,
 .city-search-input,
 select {
@@ -63,6 +69,7 @@ select {
   background: #fff;
   color: #222;
 }
+
 .country-suggestions,
 .city-suggestions {
   list-style: none;
@@ -74,9 +81,12 @@ select {
   max-height: 180px;
   overflow-y: auto;
   position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   z-index: 10;
-  width: 350px;
-  min-width: 220px;
+  margin-top: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .country-suggestions li,
 .city-suggestions li {
@@ -150,17 +160,36 @@ select {
 }
 
 .trip-cover {
+  position: relative;
   width: 100%;
   height: 140px;
-  background: #d7d8da;
+  background: #e8f4f8;
   border-radius: 12px;
   overflow: hidden;
 }
+
+.trip-cover-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e8f4f8;
+  z-index: 1;
+}
+
 .trip-cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
+
+.trip-cover img.loaded {
+  opacity: 1;
+}
+
 .trip-cover-placeholder {
   width: 100%;
   height: 100%;
@@ -286,7 +315,9 @@ select {
   border-radius: 8px;
   font-size: 0.95rem;
   background: #fff;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .friends-search-input:focus {
@@ -319,7 +350,9 @@ select {
   font-weight: 700;
   cursor: pointer;
   position: relative;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .selected-friend-bubble:hover {
@@ -355,7 +388,7 @@ select {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   z-index: 100;
   max-height: 200px;
   overflow-y: auto;
@@ -410,4 +443,20 @@ select {
   padding: 12px;
   text-align: center;
   margin: 0;
+}
+
+/* Loading spinner for trip images */
+.loading-spinner {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 5px solid rgba(1, 79, 118, 0.18);
+  border-top-color: #014f76;
+  animation: voya-spin 0.95s linear infinite;
+}
+
+@keyframes voya-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

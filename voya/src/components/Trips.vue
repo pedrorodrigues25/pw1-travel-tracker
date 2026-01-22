@@ -17,39 +17,46 @@
       <!-- Conteúdo principal da antiga DestinationsList.vue -->
       <section class="create">
         <label>Destination (Country):</label>
-        <input
-          v-model="countryQuery"
-          @input="onCountryInput"
-          @focus="onCountryInput"
-          placeholder="Type a country..."
-          autocomplete="off"
-          class="country-search-input"
-        />
-        <ul v-if="showSuggestions && countryResults.length" class="country-suggestions">
-          <li v-for="country in countryResults" :key="country.code" @click="selectCountry(country)">
-            <img v-if="country.flag" :src="country.flag" alt="flag" class="country-flag" />
-            {{ country.name }}
-          </li>
-        </ul>
+        <div class="input-wrapper">
+          <input
+            v-model="countryQuery"
+            @input="onCountryInput"
+            @focus="onCountryInput"
+            placeholder="Type a country..."
+            autocomplete="off"
+            class="country-search-input"
+          />
+          <ul v-if="showSuggestions && countryResults.length" class="country-suggestions">
+            <li
+              v-for="country in countryResults"
+              :key="country.code"
+              @click="selectCountry(country)"
+            >
+              <img v-if="country.flag" :src="country.flag" alt="flag" class="country-flag" />
+              {{ country.name }}
+            </li>
+          </ul>
+        </div>
         <label v-if="form.destination">City:</label>
-        <input
-          v-if="form.destination"
-          v-model="form.city"
-          @focus="showCitySuggestions = true"
-          placeholder="Type or select a city..."
-          autocomplete="off"
-          class="city-search-input"
-        />
-        <ul v-if="showCitySuggestions && cityResults.length" class="city-suggestions">
-          <li v-for="city in cityResults" :key="city" @click="selectCity(city)">{{ city }}</li>
-        </ul>
+        <div v-if="form.destination" class="input-wrapper">
+          <input
+            v-model="form.city"
+            @focus="showCitySuggestions = true"
+            placeholder="Type or select a city..."
+            autocomplete="off"
+            class="city-search-input"
+          />
+          <ul v-if="showCitySuggestions && cityResults.length" class="city-suggestions">
+            <li v-for="city in cityResults" :key="city" @click="selectCity(city)">{{ city }}</li>
+          </ul>
+        </div>
         <label>Notes (optional):</label>
         <input v-model="form.notes" placeholder="Notes about the trip" />
         <label>Start Date:</label>
         <input type="date" v-model="form.startDate" required />
         <label>End Date:</label>
         <input type="date" v-model="form.endDate" :min="form.startDate" required />
-        
+
         <!-- Friends Selection -->
         <label>Travel with friends (optional):</label>
         <div class="friends-selection">
@@ -67,7 +74,7 @@
                 <span class="remove-x">×</span>
               </div>
             </div>
-            
+
             <!-- Search input -->
             <div class="friends-search-wrapper">
               <input
@@ -98,9 +105,11 @@
               </div>
             </div>
           </div>
-          <p v-else class="no-friends-msg">No friends added yet. Add friends in the Friends page.</p>
+          <p v-else class="no-friends-msg">
+            No friends added yet. Add friends in the Friends page.
+          </p>
         </div>
-        
+
         <button class="btn" @click="addSelection" :disabled="!form.destination">Save</button>
       </section>
       <section class="list">
@@ -109,7 +118,17 @@
           <div v-for="it in activeTrips" :key="it.id" class="trip-card">
             <div class="card-icons"></div>
             <div class="trip-cover">
-              <img v-if="it.imageUrl" :src="it.imageUrl" :alt="it.city || it.destination" />
+              <div v-if="it.imageUrl && !it.imageLoaded" class="trip-cover-loading">
+                <div class="loading-spinner"></div>
+              </div>
+              <img
+                v-if="it.imageUrl"
+                :src="it.imageUrl"
+                :alt="it.city || it.destination"
+                :class="{ loaded: it.imageLoaded }"
+                @load="onImageLoad(it)"
+                @error="onImageError(it)"
+              />
               <div v-else class="trip-cover-placeholder"></div>
             </div>
             <div class="trip-info">
@@ -168,11 +187,6 @@
         </div>
         <label>Notes:</label>
         <input v-model="editForm.notes" />
-        <label>Status:</label>
-        <select v-model="editForm.status">
-          <option value="upcoming">Upcoming</option>
-          <option value="completed">Completed</option>
-        </select>
         <div class="edit-actions">
           <button class="btn" @click="confirmEdit">Save</button>
           <button class="btn small" @click="cancelEdit">Cancel</button>
@@ -236,9 +250,9 @@ const filteredUserFriends = computed(() => {
     return userFriends.value
   }
   const query = friendSearchQuery.value.toLowerCase()
-  return userFriends.value.filter(friend => 
-    friend.username?.toLowerCase().includes(query) ||
-    friend.email?.toLowerCase().includes(query)
+  return userFriends.value.filter(
+    (friend) =>
+      friend.username?.toLowerCase().includes(query) || friend.email?.toLowerCase().includes(query),
   )
 })
 
@@ -311,6 +325,16 @@ function getUpdatesCount(trip) {
 const activeTrips = computed(() => selections.items.filter((t) => !t.archived))
 const activeTripCount = computed(() => activeTrips.value.length)
 
+function onImageLoad(trip) {
+  trip.imageLoaded = true
+  console.log('Image loaded successfully for:', trip.destination)
+}
+
+function onImageError(trip) {
+  trip.imageLoaded = true
+  console.error('Failed to load image for trip:', trip.destination, 'URL:', trip.imageUrl)
+}
+
 const form = reactive({
   destination: '',
   city: '',
@@ -341,7 +365,15 @@ watch(
 )
 
 function ensureLoaded() {
-  if (user && user.email) selections.load(user.email)
+  if (user && user.email) {
+    selections.load(user.email)
+    // Initialize imageLoaded state for existing trips
+    selections.items.forEach((trip) => {
+      if (!('imageLoaded' in trip)) {
+        trip.imageLoaded = false
+      }
+    })
+  }
 }
 
 ensureLoaded()
@@ -349,7 +381,17 @@ ensureLoaded()
 watch(
   () => auth.user && auth.user.email,
   (val) => {
-    if (val) selections.load(val)
+    if (val) {
+      selections.load(val)
+      // Initialize imageLoaded for loaded trips
+      setTimeout(() => {
+        selections.items.forEach((trip) => {
+          if (trip.imageUrl && !('imageLoaded' in trip)) {
+            trip.imageLoaded = false
+          }
+        })
+      }, 100)
+    }
   },
 )
 
@@ -417,8 +459,9 @@ async function addSelection() {
   try {
     const wikiResult = await fetchCountryWikipediaSummary(wikiQuery)
     imageUrl = wikiResult?.originalimage?.source || ''
+    console.log('Fetched image for', wikiQuery, ':', imageUrl)
   } catch (e) {
-    console.error(e)
+    console.error('Error fetching wiki image:', e)
   }
   // Calcular status automaticamente com base na data de fim
   const today = new Date()
@@ -436,6 +479,7 @@ async function addSelection() {
       startDate: form.startDate,
       endDate: form.endDate,
       imageUrl,
+      imageLoaded: false,
       friends: selectedFriends.value.length > 0 ? [...selectedFriends.value] : [],
     },
     user.email,

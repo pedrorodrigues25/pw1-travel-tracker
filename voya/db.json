@@ -874,6 +874,23 @@
       "userEmail": "contanova@gmail.com",
       "createdAt": "2026-01-22T13:46:52.154Z",
       "id": "L65_D1e"
+    },
+    {
+      "destination": "Italy",
+      "city": "Padua",
+      "notes": "",
+      "status": "upcoming",
+      "startDate": "2026-01-16",
+      "endDate": "2026-01-29",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ee/View_of_Padua_from_La_Specola.jpg",
+      "imageLoaded": false,
+      "friends": [
+        "f3",
+        "f5"
+      ],
+      "userEmail": "contanova@gmail.com",
+      "createdAt": "2026-01-22T14:19:20.512Z",
+      "id": "ebGDFTh"
     }
   ],
   "destinations": [
@@ -1509,6 +1526,16 @@
       "userEmail": "arroz@gmail.com",
       "friendId": "f8",
       "id": "60wbSTw"
+    },
+    {
+      "userEmail": "contanova@gmail.com",
+      "friendId": "f3",
+      "id": "bQG9KVv"
+    },
+    {
+      "userEmail": "contanova@gmail.com",
+      "friendId": "f5",
+      "id": "5Y_H8Jd"
     }
   ],
   "availableInterests": [

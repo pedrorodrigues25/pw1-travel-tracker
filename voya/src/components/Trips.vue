@@ -57,6 +57,52 @@
               </ul>
             </div>
           </div>
+          <!-- Friends Button with Dropdown -->
+          <div class="form-group form-group-friends">
+            <label>Friends:</label>
+            <div class="friends-btn-wrapper">
+              <button
+                type="button"
+                class="friends-add-btn"
+                @click="showFriendsDropdown = !showFriendsDropdown"
+              >
+                <span v-if="selectedFriends.length">{{ selectedFriends.length }} selected</span>
+                <span v-else>Add friends</span>
+              </button>
+              <!-- Selected friends avatars -->
+              <div v-if="selectedFriends.length" class="selected-friends-mini">
+                <span
+                  v-for="friendId in selectedFriends.slice(0, 3)"
+                  :key="friendId"
+                  class="mini-avatar"
+                  :title="getFriendName(friendId)"
+                  >{{ getFriendInitial(friendId) }}</span
+                >
+                <span v-if="selectedFriends.length > 3" class="mini-avatar more"
+                  >+{{ selectedFriends.length - 3 }}</span
+                >
+              </div>
+              <!-- Dropdown -->
+              <div v-if="showFriendsDropdown" class="friends-dropdown-form">
+                <div v-if="userFriends.length === 0" class="no-friends-msg">
+                  No friends yet. Add friends in the Friends page.
+                </div>
+                <div
+                  v-for="friend in userFriends"
+                  :key="friend.id"
+                  class="friend-option"
+                  :class="{ selected: selectedFriends.includes(friend.id) }"
+                  @click="toggleFriendSelection(friend.id)"
+                >
+                  <span class="friend-avatar">{{
+                    friend.username?.charAt(0).toUpperCase() || '?'
+                  }}</span>
+                  <span class="friend-name">{{ friend.username }}</span>
+                  <span v-if="selectedFriends.includes(friend.id)" class="friend-check">✓</span>
+                </div>
+              </div>
+            </div>
+          </div>
           <button class="btn add-trip-btn" @click="addSelection" :disabled="!form.destination">
             <span class="plus-icon">+</span> Add Trip
           </button>
@@ -236,7 +282,7 @@ function toggleFriendSelection(friendId) {
     selectedFriends.value.splice(idx, 1)
   }
   friendSearchQuery.value = ''
-  showFriendsDropdown.value = false
+  // Keep dropdown open to allow multiple selections
 }
 
 // Remove friend from selection
@@ -249,7 +295,7 @@ function removeFriend(friendId) {
 
 // Close dropdown when clicking outside
 document.addEventListener('click', (e) => {
-  const wrapper = document.querySelector('.friends-search-wrapper')
+  const wrapper = document.querySelector('.friends-btn-wrapper')
   if (wrapper && !wrapper.contains(e.target)) {
     showFriendsDropdown.value = false
   }

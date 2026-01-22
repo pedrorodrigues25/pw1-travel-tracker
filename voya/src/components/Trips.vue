@@ -14,104 +14,75 @@
     </nav>
     <div class="trips-main">
       <h2 class="voya-section-title">Choose Destinations</h2>
-      <!-- Conteúdo principal da antiga DestinationsList.vue -->
-      <section class="create">
-        <label>Destination (Country):</label>
-        <div class="input-wrapper">
-          <input
-            v-model="countryQuery"
-            @input="onCountryInput"
-            @focus="onCountryInput"
-            placeholder="Type a country..."
-            autocomplete="off"
-            class="country-search-input"
-          />
-          <ul v-if="showSuggestions && countryResults.length" class="country-suggestions">
-            <li
-              v-for="country in countryResults"
-              :key="country.code"
-              @click="selectCountry(country)"
-            >
-              <img v-if="country.flag" :src="country.flag" alt="flag" class="country-flag" />
-              {{ country.name }}
-            </li>
-          </ul>
-        </div>
-        <label v-if="form.destination">City:</label>
-        <div v-if="form.destination" class="input-wrapper">
-          <input
-            v-model="form.city"
-            @focus="showCitySuggestions = true"
-            placeholder="Type or select a city..."
-            autocomplete="off"
-            class="city-search-input"
-          />
-          <ul v-if="showCitySuggestions && cityResults.length" class="city-suggestions">
-            <li v-for="city in cityResults" :key="city" @click="selectCity(city)">{{ city }}</li>
-          </ul>
-        </div>
-        <label>Notes (optional):</label>
-        <input v-model="form.notes" placeholder="Notes about the trip" />
-        <label>Start Date:</label>
-        <input type="date" v-model="form.startDate" required />
-        <label>End Date:</label>
-        <input type="date" v-model="form.endDate" :min="form.startDate" required />
-
-        <!-- Friends Selection -->
-        <label>Travel with friends (optional):</label>
-        <div class="friends-selection">
-          <div v-if="userFriends.length" class="friends-search-container">
-            <!-- Selected friends bubbles -->
-            <div v-if="selectedFriends.length" class="selected-friends-bubbles">
-              <div
-                v-for="friendId in selectedFriends"
-                :key="friendId"
-                class="selected-friend-bubble"
-                @click="removeFriend(friendId)"
-                :title="getFriendById(friendId)?.username + ' (click to remove)'"
-              >
-                {{ getFriendById(friendId)?.username?.charAt(0).toUpperCase() || '?' }}
-                <span class="remove-x">×</span>
-              </div>
-            </div>
-
-            <!-- Search input -->
-            <div class="friends-search-wrapper">
+      <!-- Formulário compacto para adicionar trip -->
+      <section class="create-trip-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Destination:</label>
+            <div class="input-wrapper">
               <input
-                v-model="friendSearchQuery"
-                type="text"
-                class="friends-search-input"
-                placeholder="Search your friends..."
-                @focus="showFriendsDropdown = true"
+                v-model="countryQuery"
+                @input="onCountryInput"
+                @focus="onCountryInput"
+                placeholder="Ex: Portugal"
+                autocomplete="off"
+                class="country-search-input"
               />
-              <!-- Dropdown results -->
-              <div v-if="showFriendsDropdown && friendSearchQuery" class="friends-dropdown">
-                <div
-                  v-for="friend in filteredUserFriends"
-                  :key="friend.id"
-                  class="friend-dropdown-item"
-                  :class="{ selected: selectedFriends.includes(friend.id) }"
-                  @click="toggleFriendSelection(friend.id)"
+              <ul v-if="showSuggestions && countryResults.length" class="country-suggestions">
+                <li
+                  v-for="country in countryResults"
+                  :key="country.code"
+                  @click="selectCountry(country)"
                 >
-                  <span class="friend-dropdown-avatar">
-                    {{ friend.username?.charAt(0).toUpperCase() || '?' }}
-                  </span>
-                  <span class="friend-dropdown-name">{{ friend.username }}</span>
-                  <span v-if="selectedFriends.includes(friend.id)" class="friend-check">✓</span>
-                </div>
-                <p v-if="filteredUserFriends.length === 0" class="no-results-msg">
-                  No friends found
-                </p>
-              </div>
+                  <img v-if="country.flag" :src="country.flag" alt="flag" class="country-flag" />
+                  {{ country.name }}
+                </li>
+              </ul>
             </div>
           </div>
-          <p v-else class="no-friends-msg">
-            No friends added yet. Add friends in the Friends page.
-          </p>
+          <div class="form-group">
+            <label>City:</label>
+            <div class="input-wrapper">
+              <input
+                v-model="form.city"
+                @focus="showCitySuggestions = true"
+                placeholder="Ex: Porto"
+                autocomplete="off"
+                class="city-search-input"
+              />
+              <ul v-if="showCitySuggestions && cityResults.length" class="city-suggestions">
+                <li v-for="city in cityResults" :key="city" @click="selectCity(city)">
+                  {{ city }}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <button class="btn add-trip-btn" @click="addSelection" :disabled="!form.destination">
+            <span class="plus-icon">+</span> Add Trip
+          </button>
         </div>
-
-        <button class="btn" @click="addSelection" :disabled="!form.destination">Save</button>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Start date:</label>
+            <input type="date" v-model="form.startDate" required class="date-input" />
+          </div>
+          <div class="form-group">
+            <label>End date:</label>
+            <input
+              type="date"
+              v-model="form.endDate"
+              :min="form.startDate"
+              required
+              class="date-input"
+            />
+          </div>
+          <div class="form-group form-group-notes">
+            <label>Notes (optional):</label>
+            <input v-model="form.notes" placeholder="" class="notes-input" />
+          </div>
+        </div>
       </section>
+
       <section class="list">
         <h3>My selections ({{ activeTripCount }})</h3>
         <div class="cards-container">
@@ -341,6 +312,7 @@ const form = reactive({
   notes: '',
   startDate: '',
   endDate: '',
+  status: 'upcoming',
 })
 
 // Selected friends for new trip
@@ -463,19 +435,13 @@ async function addSelection() {
   } catch (e) {
     console.error('Error fetching wiki image:', e)
   }
-  // Calcular status automaticamente com base na data de fim
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const endDateObj = new Date(form.endDate)
-  endDateObj.setHours(0, 0, 0, 0)
-  const status = endDateObj <= today ? 'completed' : 'upcoming'
 
   const newTrip = await selections.add(
     {
       destination: form.destination,
       city: form.city,
       notes: form.notes,
-      status,
+      status: form.status,
       startDate: form.startDate,
       endDate: form.endDate,
       imageUrl,
@@ -499,6 +465,7 @@ async function addSelection() {
   form.notes = ''
   form.startDate = ''
   form.endDate = ''
+  form.status = 'upcoming'
   countryQuery.value = ''
 }
 

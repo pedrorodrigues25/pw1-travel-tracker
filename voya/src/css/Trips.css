@@ -1,5 +1,137 @@
 @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap');
 
+/* Create Trip Form - Compact horizontal layout */
+.create-trip-form {
+  background: #014f76;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 30px;
+  border: 3px solid #2a5060;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: 16px;
+}
+
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.form-group-notes {
+  flex: 2;
+}
+
+.form-group label {
+  color: #e8f1f5;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.form-group .input-wrapper {
+  margin-bottom: 0;
+}
+
+.form-group .country-search-input,
+.form-group .city-search-input,
+.form-group .date-input,
+.form-group .notes-input,
+.form-group .status-select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.95rem;
+  background: #f2ede7;
+  color: #014f76;
+  box-sizing: border-box;
+}
+
+.form-group .country-search-input::placeholder,
+.form-group .city-search-input::placeholder,
+.form-group .notes-input::placeholder {
+  color: #8ba3ad;
+}
+
+.form-group .status-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238ba3ad' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+.add-trip-btn {
+  background: #ed9875;
+  color: #1a1a1a;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+  height: fit-content;
+}
+
+.add-trip-btn:hover:not(:disabled) {
+  background: #e6a070;
+  transform: translateY(-1px);
+}
+
+.add-trip-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.plus-icon {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .form-row {
+    flex-wrap: wrap;
+  }
+
+  .form-group {
+    min-width: 150px;
+  }
+
+  .add-trip-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+}
+
 .trips-container {
   display: flex;
   flex-direction: column;

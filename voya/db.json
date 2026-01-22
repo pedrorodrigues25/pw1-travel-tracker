@@ -49,6 +49,12 @@
       "password": "123",
       "username": "mcaldas11",
       "id": "DdZKK__"
+    },
+    {
+      "email": "contanova@gmail.com",
+      "password": "123",
+      "username": "contanova",
+      "id": "28UbPiy"
     }
   ],
   "interests": [
@@ -101,6 +107,11 @@
       "id": "1768586279423wg0ltq",
       "interest": "Traveling with Friends",
       "userEmail": "miguelmeniciocaldas@gmail.com"
+    },
+    {
+      "id": "1769089480753et75jm",
+      "interest": "Traveling with Friends",
+      "userEmail": "contanova@gmail.com"
     }
   ],
   "selections": [
@@ -835,6 +846,34 @@
       "userEmail": "arroz@gmail.com",
       "createdAt": "2026-01-21T14:45:15.356Z",
       "id": "VJDGVrJ"
+    },
+    {
+      "destination": "Portugal",
+      "city": "Porto",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-06",
+      "endDate": "2026-01-14",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Puente_Don_Luis_I%2C_Oporto%2C_Portugal%2C_2012-05-09%2C_DD_13.JPG",
+      "imageLoaded": false,
+      "friends": [],
+      "userEmail": "contanova@gmail.com",
+      "createdAt": "2026-01-22T13:45:17.856Z",
+      "id": "mHHdgEs"
+    },
+    {
+      "destination": "Italy",
+      "city": "Milan",
+      "notes": "",
+      "status": "completed",
+      "startDate": "2026-01-03",
+      "endDate": "2026-01-12",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Milan_skyline_skyscrapers_of_Porta_Nuova_business_district_%28cropped%29.jpg",
+      "imageLoaded": false,
+      "friends": [],
+      "userEmail": "contanova@gmail.com",
+      "createdAt": "2026-01-22T13:46:52.154Z",
+      "id": "L65_D1e"
     }
   ],
   "destinations": [

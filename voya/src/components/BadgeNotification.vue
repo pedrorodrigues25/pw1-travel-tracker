@@ -4,24 +4,23 @@
       <div v-if="show" class="badge-notification-overlay" @click.self="close">
         <div class="badge-notification-modal">
           <div class="confetti-container">
-            <div class="confetti" v-for="i in 50" :key="i" :style="confettiStyle(i)"></div>
+            <div class="confetti" v-for="i in 30" :key="i" :style="confettiStyle(i)"></div>
           </div>
-          
+
           <button class="close-btn" @click="close">&times;</button>
-          
+
           <div class="notification-content">
-            <div class="celebration-icon">🎉</div>
-            <h2 class="notification-title">Parabéns!</h2>
-            <p class="notification-subtitle">Conquistaste uma nova badge!</p>
-            
+            <h2 class="notification-title">Congrats!</h2>
+            <p class="notification-subtitle">You earned a new badge!</p>
+
             <div class="badge-display">
               <img :src="badgeImageUrl" :alt="badge?.name" class="badge-image" />
             </div>
-            
+
             <h3 class="badge-name">{{ badge?.name }}</h3>
             <p class="badge-description">{{ badge?.description }}</p>
-            
-            <button class="continue-btn" @click="close">Continuar</button>
+
+            <button class="continue-btn" @click="close">Continue</button>
           </div>
         </div>
       </div>
@@ -65,7 +64,7 @@ function confettiStyle(index) {
   const duration = 2 + Math.random() * 2
   const size = 6 + Math.random() * 6
   const color = colors[index % colors.length]
-  
+
   return {
     left: `${left}%`,
     animationDelay: `${delay}s`,
@@ -167,7 +166,8 @@ function confettiStyle(index) {
 }
 
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -198,7 +198,8 @@ function confettiStyle(index) {
 }
 
 @keyframes badgePulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -238,7 +239,9 @@ function confettiStyle(index) {
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 1px;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .continue-btn:hover {

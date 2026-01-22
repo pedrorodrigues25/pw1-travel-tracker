@@ -24,11 +24,7 @@
     <div class="user-profile-card">
       <div class="profile-left">
         <div class="profile-avatar">
-          <img 
-            :src="avatarQuery" 
-            :alt="user?.username" 
-            class="avatar-img"
-          />
+          <img :src="avatarQuery" :alt="user?.username" class="avatar-img" />
         </div>
       </div>
       <div class="profile-center">
@@ -62,14 +58,20 @@
       <div class="badges-grid">
         <div
           class="badges-card your-badges has-bg clickable"
-          :style="lastCompletedTrip?.imageUrl ? { backgroundImage: `url(${lastCompletedTrip.imageUrl})` } : {}"
+          :style="
+            lastCompletedTrip?.imageUrl
+              ? { backgroundImage: `url(${lastCompletedTrip.imageUrl})` }
+              : {}
+          "
           @click="lastCompletedTrip && goToJournal(lastCompletedTrip.id)"
         >
           <div class="badge-label">YOUR LAST TRIP</div>
           <div class="badge-list">
             <div v-if="lastCompletedTrip" class="badge-trip">
               <h4 class="trip-title">
-                <template v-if="lastCompletedTrip.city">{{ lastCompletedTrip.city }}, {{ lastCompletedTrip.destination }}</template>
+                <template v-if="lastCompletedTrip.city"
+                  >{{ lastCompletedTrip.city }}, {{ lastCompletedTrip.destination }}</template
+                >
                 <template v-else>{{ lastCompletedTrip.destination }}</template>
               </h4>
               <p class="badge-trip-dates">{{ formatTripDates(lastCompletedTrip) }}</p>
@@ -80,7 +82,11 @@
 
         <div
           class="badges-card badges-to-unlock has-bg clickable"
-          :style="upcomingTrips[0]?.imageUrl ? { backgroundImage: `url(${upcomingTrips[0].imageUrl})` } : {}"
+          :style="
+            upcomingTrips[0]?.imageUrl
+              ? { backgroundImage: `url(${upcomingTrips[0].imageUrl})` }
+              : {}
+          "
           @click="upcomingTrips[0] && goToJournal(upcomingTrips[0].id)"
         >
           <div class="badge-label">NEXT TRIPS</div>
@@ -131,7 +137,7 @@
                   <div class="locked-badge-details">
                     <span class="locked-badge-name">{{ badge.name }}</span>
                     <span class="locked-badge-req">
-                      {{ badge.current }}/{{ badge.requirement }} 
+                      {{ badge.current }}/{{ badge.requirement }}
                       {{ badge.type === 'solo' ? 'solo trips' : 'trips with friends' }}
                     </span>
                   </div>
@@ -141,7 +147,7 @@
                 </div>
               </div>
             </div>
-            <p v-else class="empty-message">🎉 You've unlocked all badges!</p>
+            <p v-else class="empty-message">You've unlocked all badges!</p>
           </div>
         </div>
       </div>
@@ -178,9 +184,9 @@ const allFriends = ref([])
 
 // --- Lógica de Avatar ---
 const avatarQuery = computed(() => {
-  const seed = auth.user?.username || 'voya-user';
-  return `https://api.dicebear.com/9.x/identicon/png?seed=${seed}&scale=70&backgroundColor=#ffffff`;
-});
+  const seed = auth.user?.username || 'voya-user'
+  return `https://api.dicebear.com/9.x/identicon/png?seed=${seed}&scale=70&backgroundColor=#ffffff`
+})
 
 // --- Lógica de Progresso (Mesma do Profile) ---
 const tripCount = computed(() => selections.count || 0)
@@ -257,7 +263,12 @@ async function loadUserData() {
 
 loadUserData()
 
-watch(() => auth.user?.email, (val) => { if (val) loadUserData() })
+watch(
+  () => auth.user?.email,
+  (val) => {
+    if (val) loadUserData()
+  },
+)
 </script>
 
 <style scoped>
@@ -296,7 +307,7 @@ watch(() => auth.user?.email, (val) => { if (val) loadUserData() })
 
 .home-progress-fill {
   height: 100%;
-  background-color: #ffa27d; 
+  background-color: #ffa27d;
   transition: width 0.5s ease-in-out;
 }
 

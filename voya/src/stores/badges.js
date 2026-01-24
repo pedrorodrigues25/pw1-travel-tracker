@@ -62,10 +62,7 @@ export const useBadgesStore = defineStore('badges', () => {
   function countFriendTrips(trips) {
     return trips.filter(
       (trip) =>
-        trip.status === 'completed' &&
-        !trip.archived &&
-        trip.friends &&
-        trip.friends.length > 0
+        trip.status === 'completed' && !trip.archived && trip.friends && trip.friends.length > 0,
     ).length
   }
 
@@ -75,7 +72,7 @@ export const useBadgesStore = defineStore('badges', () => {
       (trip) =>
         trip.status === 'completed' &&
         !trip.archived &&
-        (!trip.friends || trip.friends.length === 0)
+        (!trip.friends || trip.friends.length === 0),
     ).length
   }
 
@@ -84,6 +81,34 @@ export const useBadgesStore = defineStore('badges', () => {
     const friendTripsCount = countFriendTrips(trips)
     const soloTripsCount = countSoloTrips(trips)
     const previousEarned = [...earnedBadges.value]
+
+    // Get the last completed friend trip and solo trip for badge association
+    const completedFriendTrips = trips
+      .filter(
+        (trip) =>
+          trip.status === 'completed' && !trip.archived && trip.friends && trip.friends.length > 0,
+      )
+      .sort(
+        (a, b) =>
+          new Date(b.endDate || b.startDate || b.createdAt) -
+          new Date(a.endDate || a.startDate || a.createdAt),
+      )
+
+    const completedSoloTrips = trips
+      .filter(
+        (trip) =>
+          trip.status === 'completed' &&
+          !trip.archived &&
+          (!trip.friends || trip.friends.length === 0),
+      )
+      .sort(
+        (a, b) =>
+          new Date(b.endDate || b.startDate || b.createdAt) -
+          new Date(a.endDate || a.startDate || a.createdAt),
+      )
+
+    const lastFriendTrip = completedFriendTrips[0] || null
+    const lastSoloTrip = completedSoloTrips[0] || null
 
     // Check each friend badge
     FRIEND_BADGES.forEach((badge) => {
@@ -94,6 +119,13 @@ export const useBadgesStore = defineStore('badges', () => {
           ...badge,
           earnedAt: new Date().toISOString(),
           userEmail,
+          associatedTrip: lastFriendTrip
+            ? {
+                id: lastFriendTrip.id,
+                destination: lastFriendTrip.destination,
+                city: lastFriendTrip.city || null,
+              }
+            : null,
         }
         earnedBadges.value.push(earnedBadge)
 
@@ -112,6 +144,13 @@ export const useBadgesStore = defineStore('badges', () => {
           ...badge,
           earnedAt: new Date().toISOString(),
           userEmail,
+          associatedTrip: lastSoloTrip
+            ? {
+                id: lastSoloTrip.id,
+                destination: lastSoloTrip.destination,
+                city: lastSoloTrip.city || null,
+              }
+            : null,
         }
         earnedBadges.value.push(earnedBadge)
 
@@ -140,7 +179,7 @@ export const useBadgesStore = defineStore('badges', () => {
 
     // Friend badges progress
     const lockedFriendBadges = FRIEND_BADGES.filter(
-      (badge) => !earnedBadges.value.some((b) => b.id === badge.id)
+      (badge) => !earnedBadges.value.some((b) => b.id === badge.id),
     ).map((badge) => ({
       ...badge,
       imageUrl: getBadgeImageUrl(badge.image),
@@ -151,7 +190,7 @@ export const useBadgesStore = defineStore('badges', () => {
 
     // Solo badges progress
     const lockedSoloBadges = SOLO_BADGES.filter(
-      (badge) => !earnedBadges.value.some((b) => b.id === badge.id)
+      (badge) => !earnedBadges.value.some((b) => b.id === badge.id),
     ).map((badge) => ({
       ...badge,
       imageUrl: getBadgeImageUrl(badge.image),

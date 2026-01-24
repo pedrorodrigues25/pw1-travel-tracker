@@ -124,7 +124,7 @@
           </div>
           <div class="form-group form-group-notes">
             <label>Notes (optional):</label>
-            <input v-model="form.notes" placeholder="" class="notes-input" />
+            <input v-model="form.notes" placeholder="" class="notes-input" maxlength="70" />
           </div>
         </div>
       </section>
@@ -203,7 +203,7 @@
           </div>
         </div>
         <label>Notes:</label>
-        <input v-model="editForm.notes" />
+        <input v-model="editForm.notes" maxlength="70" />
         <div class="edit-actions">
           <button class="btn" @click="confirmEdit">Save</button>
           <button class="btn small" @click="cancelEdit">Cancel</button>

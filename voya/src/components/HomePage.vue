@@ -29,7 +29,7 @@
       </div>
       <div class="profile-center">
         <h3 class="profile-name">{{ user?.username || 'Nome utilizador' }}</h3>
-        <p class="profile-interests-label">See all your achievements</p>
+        <br />
         <div class="profile-interests">
           <span
             v-for="(interest, idx) in userInterests.slice(0, 5)"
@@ -118,7 +118,12 @@
           <div class="badge-label">YOUR BADGES</div>
           <div class="badge-list badges-earned-list">
             <div v-if="unlockedBadges.length" class="earned-badges-container">
-              <div v-for="badge in unlockedBadges" :key="badge.id" class="earned-badge-item">
+              <div
+                v-for="badge in unlockedBadges"
+                :key="badge.id"
+                class="earned-badge-item clickable"
+                @click="openBadgeDetail(badge)"
+              >
                 <img :src="badge.imageUrl" :alt="badge.name" class="earned-badge-img" />
                 <span class="earned-badge-name">{{ badge.name }}</span>
               </div>
@@ -159,6 +164,58 @@
     :badge="badgesStore.newBadge"
     @close="badgesStore.closeNotification()"
   />
+
+  <!-- Badge Detail Modal -->
+  <Teleport to="body">
+    <Transition name="badge-detail">
+      <div v-if="showBadgeDetail" class="badge-detail-overlay" @click.self="closeBadgeDetail">
+        <div class="badge-detail-modal">
+          <button class="close-btn" @click="closeBadgeDetail">&times;</button>
+
+          <div class="badge-detail-content">
+            <div class="badge-detail-display">
+              <img
+                :src="selectedBadge?.imageUrl"
+                :alt="selectedBadge?.name"
+                class="badge-detail-image"
+              />
+            </div>
+
+            <h3 class="badge-detail-name">{{ selectedBadge?.name }}</h3>
+            <p class="badge-detail-description">{{ selectedBadge?.description }}</p>
+
+            <div class="badge-detail-info">
+              <div class="info-item">
+                <span class="info-label">Earned on</span>
+                <span class="info-value">{{ formatBadgeDate(selectedBadge?.earnedAt) }}</span>
+              </div>
+              <div v-if="selectedBadge?.associatedTrip" class="info-item">
+                <span class="info-label">Trip</span>
+                <span
+                  class="info-value trip-link"
+                  @click="goToTripFromBadge(selectedBadge.associatedTrip.id)"
+                >
+                  {{
+                    selectedBadge.associatedTrip.city
+                      ? `${selectedBadge.associatedTrip.city}, ${selectedBadge.associatedTrip.destination}`
+                      : selectedBadge.associatedTrip.destination
+                  }}
+                </span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Type</span>
+                <span class="info-value">{{
+                  selectedBadge?.id?.startsWith('friend') ? 'Trip with friends' : 'Solo trip'
+                }}</span>
+              </div>
+            </div>
+
+            <button class="badge-detail-btn" @click="closeBadgeDetail">Close</button>
+          </div>
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <script setup>
@@ -181,6 +238,10 @@ const badgesStore = useBadgesStore()
 const user = auth.user
 const userInterests = ref([])
 const allFriends = ref([])
+
+// Badge detail modal state
+const showBadgeDetail = ref(false)
+const selectedBadge = ref(null)
 
 // --- Lógica de Avatar ---
 const avatarQuery = computed(() => {
@@ -231,6 +292,32 @@ const upcomingTrips = computed(() => {
 // --- Funções e Ciclo de Vida ---
 function goToJournal(tripId) {
   if (tripId) router.push({ name: 'Journal', params: { tripId } })
+}
+
+function openBadgeDetail(badge) {
+  selectedBadge.value = badge
+  showBadgeDetail.value = true
+}
+
+function closeBadgeDetail() {
+  showBadgeDetail.value = false
+  selectedBadge.value = null
+}
+
+function goToTripFromBadge(tripId) {
+  closeBadgeDetail()
+  if (tripId) router.push({ name: 'Journal', params: { tripId } })
+}
+
+function formatBadgeDate(dateStr) {
+  if (!dateStr) return 'Unknown'
+  const d = new Date(dateStr)
+  if (Number.isNaN(d.getTime())) return 'Unknown'
+  return new Intl.DateTimeFormat('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  }).format(d)
 }
 
 function formatTripDates(trip) {

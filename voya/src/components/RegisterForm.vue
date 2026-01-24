@@ -10,10 +10,10 @@
 
     <div class="login-card register-mode">
       <img src="/src/img/Vector.png" alt="Decorative flight vector" class="vector-art" />
-      <img 
-        src="/src/img/logo.svg" 
-        alt="Voya Logo" 
-        class="login-logo clickable-logo" 
+      <img
+        src="/src/img/logo.svg"
+        alt="Voya Logo"
+        class="login-logo clickable-logo"
         @click="goToLanding"
       />
       <p class="auth-title">Create an account</p>

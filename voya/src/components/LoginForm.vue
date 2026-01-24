@@ -10,10 +10,10 @@
 
     <div class="login-card">
       <img src="/src/img/Vector.png" alt="Decorative flight vector" class="vector-art" />
-      <img 
-        src="/src/img/logo.svg" 
-        alt="Voya Logo" 
-        class="login-logo clickable-logo" 
+      <img
+        src="/src/img/logo.svg"
+        alt="Voya Logo"
+        class="login-logo clickable-logo"
         @click="goToLanding"
       />
       <p class="auth-title">Login to your account</p>
@@ -67,12 +67,12 @@ async function submit() {
 
   try {
     let userEmail = email.value.trim().toLowerCase()
-    
+
     // Convert "admin" to "admin@gmail.com"
     if (userEmail === 'admin') {
       userEmail = 'admin@gmail.com'
     }
-    
+
     await auth.login(userEmail, password.value)
 
     const selections = useSelectionsStore()

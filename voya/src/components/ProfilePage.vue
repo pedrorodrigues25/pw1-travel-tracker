@@ -16,7 +16,18 @@
     <div class="profile-content">
       <div class="profile-left-column">
         <div class="profile-card">
-          <div class="profile-cover"></div>
+          <div class="profile-cover" :style="coverStyle">
+            <template v-if="editMode">
+              <input
+                type="file"
+                ref="coverInput"
+                @change="onCoverChange"
+                style="display: none"
+                accept="image/*"
+              />
+              <button class="btn-change-cover" @click="triggerCoverUpload">Change Cover</button>
+            </template>
+          </div>
           <div class="profile-avatar-section">
             <div class="profile-avatar-wrapper">
               <img :src="avatarQuery" :alt="user?.username" class="profile-avatar-img" />
@@ -275,6 +286,16 @@ const editMode = ref(false)
 const editUsername = ref(user.value?.username || '')
 const editEmail = ref(user.value?.email || '')
 const previewPhoto = ref('')
+const coverPreview = ref('')
+const coverInput = ref(null)
+
+const coverStyle = computed(() => {
+  const imageUrl = coverPreview.value || user.value?.coverUrl
+  if (imageUrl) {
+    return { backgroundImage: `url(${imageUrl})` }
+  }
+  return {} // Returns an empty object, allowing the CSS gradient to apply
+})
 
 // Lógica de Avatar dinâmica baseada no username
 const avatarQuery = computed(() => {
@@ -282,21 +303,39 @@ const avatarQuery = computed(() => {
   return `https://api.dicebear.com/9.x/identicon/png?seed=${seed}&scale=70&backgroundColor=#ffffff`
 })
 
+function triggerCoverUpload() {
+  coverInput.value?.click()
+}
+
+function onCoverChange(event) {
+  const file = event.target.files?.[0]
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      coverPreview.value = e.target?.result
+    }
+    reader.readAsDataURL(file)
+  }
+}
+
 async function saveProfile() {
   const updatedFields = {
     username: editUsername.value,
     email: editEmail.value,
   }
   if (previewPhoto.value) updatedFields.photoUrl = previewPhoto.value
+  if (coverPreview.value) updatedFields.coverUrl = coverPreview.value
+
   if (user.value?.id) {
     const updated = await updateUser(user.value.id, updatedFields)
     if (updated) {
-      auth.user.username = updated.username
-      auth.user.email = updated.email
-      if (updated.photoUrl) auth.user.photoUrl = updated.photoUrl
+      auth.user = updated // Directly update the user object
     }
   }
+
   editMode.value = false
+  coverPreview.value = ''
+  previewPhoto.value = ''
 }
 
 async function saveAboutMe() {

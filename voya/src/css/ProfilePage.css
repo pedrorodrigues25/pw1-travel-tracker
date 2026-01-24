@@ -50,6 +50,28 @@
 .profile-cover {
   height: 90px;
   background: linear-gradient(135deg, #0d5678 0%, #1a8caa 50%, #2dd4bf 100%);
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.btn-change-cover {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #0d5678;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-change-cover:hover {
+  background: #fff;
 }
 
 .profile-avatar-section {

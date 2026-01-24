@@ -11,9 +11,6 @@
   font-weight: 600;
   margin: 0;
 }
-/* ========================================
-   PROFILE PAGE - MODERN REDESIGN
-   ======================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
@@ -289,8 +286,8 @@
   border-radius: 10px;
   font-size: 0.85rem;
   font-family: inherit;
-  resize: vertical;
-  min-height: 60px;
+  resize: none;
+  min-height: 90px;
   transition: border-color 0.2s;
   box-sizing: border-box;
 }
@@ -298,6 +295,14 @@
 .about-textarea:focus {
   outline: none;
   border-color: #0d5678;
+}
+
+.char-counter {
+  display: block;
+  text-align: right;
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 4px;
 }
 
 .btn-save-about {
@@ -773,6 +778,185 @@
   color: #ffffff;
 }
 
+/* Interests Header with Edit Button */
+.interests-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.interests-header h4 {
+  margin: 0;
+  color: #1a3a4a;
+  font-weight: 600;
+}
+
+.btn-edit-interests {
+  background: transparent;
+  border: 1px solid #014f76;
+  color: #014f76;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-edit-interests:hover {
+  background: #014f76;
+  color: #fff;
+}
+
+.empty-interests {
+  color: #888;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 10px 0;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.interests-modal {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #1a3a4a;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #333;
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 50vh;
+}
+
+.modal-hint {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0 0 16px 0;
+}
+
+.interests-tags-modal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.interest-tag-modal {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 2px solid #ddd;
+  background: #fff;
+  color: #333;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.interest-tag-modal:hover {
+  border-color: #014f76;
+  color: #014f76;
+}
+
+.interest-tag-modal.selected {
+  background: linear-gradient(135deg, #014f76 0%, #027ab5 100%);
+  border-color: #014f76;
+  color: #fff;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 20px;
+  border-top: 1px solid #eee;
+  background: #f9f9f9;
+}
+
+.btn-cancel {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #666;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-cancel:hover {
+  background: #f0f0f0;
+}
+
+.btn-save-interests {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #014f76 0%, #027ab5 100%);
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.btn-save-interests:hover {
+  filter: brightness(1.1);
+}
+
 /* Responsive */
 @media (max-width: 500px) {
   .profile-wrapper {
@@ -807,5 +991,16 @@
 
   .stat-number {
     font-size: 24px;
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: 10px;
+  }
+
+  .interests-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 }

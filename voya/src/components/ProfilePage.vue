@@ -75,12 +75,18 @@
             placeholder="Tell us about yourself..."
             rows="3"
             class="about-textarea"
+            maxlength="200"
+            style="resize: none"
           ></textarea>
+          <span class="char-counter">{{ aboutMe.length }}/200</span>
           <button class="btn-save-about" @click="saveAboutMe">Save</button>
 
-          <div v-if="userInterests.length > 0" class="interests-section">
-            <h4>My Interests</h4>
-            <div class="interests-grid">
+          <div class="interests-section">
+            <div class="interests-header">
+              <h4>My Interests</h4>
+              <button class="btn-edit-interests" @click="openInterestsModal">Edit</button>
+            </div>
+            <div v-if="userInterests.length > 0" class="interests-grid">
               <span
                 v-for="interest in userInterests"
                 :key="interest.id || interest"
@@ -88,6 +94,9 @@
               >
                 {{ typeof interest === 'object' ? interest.interest : interest }}
               </span>
+            </div>
+            <div v-else class="empty-interests">
+              <p>No interests yet. Add some!</p>
             </div>
           </div>
         </div>
@@ -161,6 +170,33 @@
         </div>
       </div>
     </div>
+
+    <!-- Interests Edit Modal -->
+    <div v-if="showInterestsModal" class="modal-overlay" @click.self="closeInterestsModal">
+      <div class="modal-content interests-modal">
+        <div class="modal-header">
+          <h3>Edit Interests</h3>
+          <button class="modal-close" @click="closeInterestsModal">×</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-hint">Select your interests</p>
+          <div class="interests-tags-modal">
+            <button
+              v-for="interest in availableInterests"
+              :key="interest"
+              :class="['interest-tag-modal', { selected: selectedInterests.includes(interest) }]"
+              @click="toggleInterest(interest)"
+            >
+              {{ interest }}
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-cancel" @click="closeInterestsModal">Cancel</button>
+          <button class="btn-save-interests" @click="saveInterests">Save Interests</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -171,7 +207,7 @@ import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
 import { useInterestsStore } from '../stores/interests'
 import { useBadgesStore } from '../stores/badges'
-import { updateUser, getUserFriends } from '../api/api'
+import { updateUser, getUserFriends, getAvailableInterests } from '../api/api'
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -182,6 +218,11 @@ const badgesStore = useBadgesStore()
 const user = computed(() => auth.user)
 const aboutMe = ref(user.value?.aboutMe || '')
 const friends = ref([])
+
+// Interests modal state
+const showInterestsModal = ref(false)
+const availableInterests = ref([])
+const selectedInterests = ref([])
 
 onMounted(async () => {
   if (auth.user?.email) {
@@ -284,6 +325,38 @@ function goToJournal(tripId) {
 function handleLogout() {
   auth.logout()
   router.push('/login')
+}
+
+// Interests modal functions
+async function openInterestsModal() {
+  // Load available interests
+  const interests = await getAvailableInterests()
+  availableInterests.value = interests.map((i) => i.name) || []
+
+  // Set currently selected interests
+  selectedInterests.value = userInterests.value.map((i) => (typeof i === 'object' ? i.interest : i))
+
+  showInterestsModal.value = true
+}
+
+function closeInterestsModal() {
+  showInterestsModal.value = false
+}
+
+function toggleInterest(interest) {
+  const index = selectedInterests.value.indexOf(interest)
+  if (index === -1) {
+    selectedInterests.value.push(interest)
+  } else {
+    selectedInterests.value.splice(index, 1)
+  }
+}
+
+async function saveInterests() {
+  if (!auth.user?.email) return
+  await interestsStore.setInterests(selectedInterests.value, auth.user.email)
+  await interestsStore.load(auth.user.email)
+  closeInterestsModal()
 }
 </script>
 

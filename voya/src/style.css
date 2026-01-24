@@ -308,3 +308,13 @@ input:focus {
     max-width: 460px;
   }
 }
+
+/* Clickable logo for Login/Register pages */
+.clickable-logo {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.clickable-logo:hover {
+  opacity: 0.8;
+}

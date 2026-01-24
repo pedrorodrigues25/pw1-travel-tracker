@@ -10,7 +10,12 @@
 
     <div class="login-card register-mode">
       <img src="/src/img/Vector.png" alt="Decorative flight vector" class="vector-art" />
-      <img src="/src/img/logo.svg" alt="Voya Logo" class="login-logo" />
+      <img 
+        src="/src/img/logo.svg" 
+        alt="Voya Logo" 
+        class="login-logo clickable-logo" 
+        @click="goToLanding"
+      />
       <p class="auth-title">Create an account</p>
 
       <label>Email</label>
@@ -43,6 +48,10 @@ import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
 const auth = useAuthStore()
+
+function goToLanding() {
+  router.push('/')
+}
 
 const email = ref('')
 const password = ref('')

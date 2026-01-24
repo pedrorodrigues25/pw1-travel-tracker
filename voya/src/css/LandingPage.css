@@ -29,7 +29,6 @@
 }
 
 .link {
-  color: #fffb01;
   opacity: 0.9;
   text-decoration: none;
   font-weight: 600;
@@ -186,7 +185,7 @@
 
 /* ===== Connection Section ===== */
 .connection-section {
-  background: #ED9875;
+  background: #ed9875;
   padding: 80px 32px;
   position: relative;
 }
@@ -198,7 +197,7 @@
   left: 0;
   right: 0;
   height: 100px;
-  background: #ED9875;
+  background: #ed9875;
   clip-path: ellipse(80% 100% at 50% 100%);
 }
 
@@ -296,7 +295,7 @@
 
 /* ===== Travel Section ===== */
 .travel-section {
-  background: #E8DDD4;
+  background: #e8ddd4;
   padding: 80px 32px;
   padding-top: 100px;
   position: relative;
@@ -309,7 +308,7 @@
   left: 0;
   right: 0;
   height: 100px;
-  background: #E8DDD4;
+  background: #e8ddd4;
   clip-path: ellipse(80% 100% at 50% 100%);
 }
 
@@ -457,7 +456,7 @@
 
 /* ===== Collect Section ===== */
 .collect-section {
-  background: #ED9875;
+  background: #ed9875;
   padding: 80px 32px;
   text-align: center;
 }

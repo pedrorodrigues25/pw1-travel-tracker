@@ -23,10 +23,9 @@
         </div>
         <div class="hero-right">
           <h1 class="hero-title">
-            <span class="title-light">TRACK EVERY</span><br />
-            <span class="title-bold">MILE</span>
+            <span class="title-bold">TRACK EVERY MILE</span>
           </h1>
-          <p class="hero-subtitle">DISCOVER EVERY WONDER</p>
+          <p class="title-light">DISCOVER EVERY <i>WONDER</i></p>
         </div>
       </div>
     </section>
@@ -134,11 +133,12 @@
     <footer class="landing-footer">
       <div class="footer-content">
         <img src="@/img/logo_deitada.png" alt="Voya" class="footer-logo" />
+        <!--
         <div class="footer-links">
           <span>POLICY</span>
           <span>RECOMMENDATIONS</span>
           <span>SUPPORT</span>
-        </div>
+        </div>-->
       </div>
     </footer>
   </div>

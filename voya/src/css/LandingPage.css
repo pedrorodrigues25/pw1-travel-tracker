@@ -167,7 +167,9 @@
 }
 
 .title-light {
+  color: #0c3959;
   font-weight: 400;
+  font-size: 35px;
 }
 
 .title-bold {

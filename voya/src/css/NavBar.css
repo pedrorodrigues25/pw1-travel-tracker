@@ -31,3 +31,90 @@
   color: #000;
   text-decoration: underline;
 }
+
+/* Logout Confirmation Modal */
+.logout-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+}
+
+.logout-modal {
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px 40px;
+  max-width: 380px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.logout-modal h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0d5678;
+  margin: 0 0 12px 0;
+}
+
+.logout-modal p {
+  font-size: 1rem;
+  color: #555;
+  margin: 0 0 24px 0;
+}
+
+.logout-modal-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.logout-modal-buttons .btn-no,
+.logout-modal-buttons .btn-yes {
+  padding: 12px 32px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.logout-modal-buttons .btn-no {
+  background: #e8ecef;
+  color: #333;
+}
+
+.logout-modal-buttons .btn-no:hover {
+  background: #d8dce0;
+}
+
+.logout-modal-buttons .btn-yes {
+  background: linear-gradient(135deg, #ff8b61 0%, #ffa27d 100%);
+  color: #fff;
+}
+
+.logout-modal-buttons .btn-yes:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+/* Logout modal transitions */
+.logout-modal-enter-active,
+.logout-modal-leave-active {
+  transition: all 0.3s ease;
+}
+
+.logout-modal-enter-from,
+.logout-modal-leave-to {
+  opacity: 0;
+}
+
+.logout-modal-enter-from .logout-modal,
+.logout-modal-leave-to .logout-modal {
+  transform: scale(0.9);
+}

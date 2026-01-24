@@ -1,9 +1,9 @@
 <template>
   <div class="profile-page">
     <nav class="navbar">
-      <router-link to="/" class="navbar-logo">
+      <a class="navbar-logo" @click.prevent="showLogoutModal = true" style="cursor: pointer">
         <img src="@/img/logo-pw1-voya.png" alt="Voya Logo" height="38" />
-      </router-link>
+      </a>
       <div class="navbar-links">
         <router-link to="/homepage" active-class="active">Home</router-link>
         <router-link to="/recommendations" active-class="active">Recommendations</router-link>
@@ -197,6 +197,26 @@
         </div>
       </div>
     </div>
+
+    <!-- Logout Confirmation Modal -->
+    <Teleport to="body">
+      <Transition name="logout-modal">
+        <div
+          v-if="showLogoutModal"
+          class="logout-modal-overlay"
+          @click.self="showLogoutModal = false"
+        >
+          <div class="logout-modal">
+            <h3>End Session?</h3>
+            <p>Are you sure you want to log out?</p>
+            <div class="logout-modal-buttons">
+              <button class="btn-no" @click="showLogoutModal = false">No</button>
+              <button class="btn-yes" @click="confirmLogout">Yes</button>
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
@@ -218,6 +238,14 @@ const badgesStore = useBadgesStore()
 const user = computed(() => auth.user)
 const aboutMe = ref(user.value?.aboutMe || '')
 const friends = ref([])
+
+// Logout modal state
+const showLogoutModal = ref(false)
+
+function confirmLogout() {
+  auth.logout()
+  router.push('/')
+}
 
 // Interests modal state
 const showInterestsModal = ref(false)

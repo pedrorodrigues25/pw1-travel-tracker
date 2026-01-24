@@ -18,6 +18,9 @@
       <img src="/src/img/Vector.png" alt="Decorative flight vector" class="vector-art-interests" />
 
       <h2 class="interests-title">Add your interests</h2>
+      <p class="interests-subtitle" :class="{ error: hasError }">
+        Select at least 2 interests to continue.
+      </p>
 
       <div class="interests-tags">
         <button
@@ -48,6 +51,7 @@ const interestsStore = useInterestsStore()
 
 const availableInterests = ref([])
 const selectedInterests = ref([])
+const hasError = ref(false)
 
 async function loadAvailableInterests() {
   const interests = await getAvailableInterests()
@@ -68,6 +72,11 @@ function toggleInterest(interest) {
 }
 
 async function handleContinue() {
+  if (selectedInterests.value.length < 2) {
+    hasError.value = true
+    return
+  }
+  hasError.value = false
   // Save interests to user profile
   const userEmail = auth.user?.email
   if (userEmail) {

@@ -62,6 +62,18 @@
       "password": "123",
       "username": "mari",
       "id": "jZG-_zu"
+    },
+    {
+      "email": "pedro@gmail.com",
+      "password": "123",
+      "username": "pedro1",
+      "id": "JnJLGag"
+    },
+    {
+      "email": "123€gmail.com",
+      "password": "123",
+      "username": "123",
+      "id": "GK4mtp3"
     }
   ],
   "interests": [
@@ -119,6 +131,26 @@
       "id": "1769089480753et75jm",
       "interest": "Traveling with Friends",
       "userEmail": "contanova@gmail.com"
+    },
+    {
+      "id": "1769271147031x8fech",
+      "interest": "Traveling with Friends",
+      "userEmail": "pedro@gmail.com"
+    },
+    {
+      "id": "1769271147062agpif0",
+      "interest": "Nature & Hiking",
+      "userEmail": "pedro@gmail.com"
+    },
+    {
+      "id": "1769284665174tylehu",
+      "interest": "Beach & Relaxation",
+      "userEmail": "123€gmail.com"
+    },
+    {
+      "id": "1769284665205rtosg5",
+      "interest": "Cultural Experiences",
+      "userEmail": "123€gmail.com"
     }
   ],
   "selections": [

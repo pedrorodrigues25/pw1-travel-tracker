@@ -56,7 +56,13 @@
       <section class="shared-trips">
         <h2>Your trips with friends</h2>
         <div class="trips-cards">
-          <div v-for="trip in sharedTrips" :key="trip.id" class="trip-card-small">
+          <div
+            v-for="trip in sharedTrips"
+            :key="trip.id"
+            class="trip-card-small clickable"
+            @click="goToJournal(trip.id)"
+            style="cursor: pointer"
+          >
             <div class="trip-image">
               <img v-if="trip.imageUrl" :src="trip.imageUrl" :alt="trip.destination" />
               <div v-else class="image-placeholder"></div>
@@ -179,6 +185,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import {
   getFriends,
@@ -199,6 +206,8 @@ const searchQuery = ref('')
 const showProfileModal = ref(false)
 const selectedPerson = ref(null)
 const shuffledRecommendations = ref([])
+
+const router = useRouter()
 
 const recommendationsToShow = computed(() => {
   return shuffledRecommendations.value.slice(0, 5)
@@ -335,6 +344,10 @@ function openPersonProfile(person) {
 function closeProfileModal() {
   showProfileModal.value = false
   selectedPerson.value = null
+}
+
+function goToJournal(tripId) {
+  if (tripId) router.push({ name: 'Journal', params: { tripId } })
 }
 
 async function addFriend(person) {

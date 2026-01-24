@@ -1,7 +1,7 @@
 
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { getSelections, saveSelection, deleteSelection } from '../api/api'
+import { getSelections, saveSelection, deleteSelection, updateSelection } from '../api/api'
 
 export const useSelectionsStore = defineStore('selections', () => {
   const items = ref([])
@@ -13,9 +13,27 @@ export const useSelectionsStore = defineStore('selections', () => {
     }
     try {
       items.value = await getSelections(email)
+      // Auto-update trip status based on dates
+      await autoUpdateTripStatus()
     } catch (e) {
       console.error('failed to load selections', e)
       items.value = []
+    }
+  }
+
+  // Automatically mark trips as completed if endDate has passed
+  async function autoUpdateTripStatus() {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+
+    for (const trip of items.value) {
+      if (trip.status === 'upcoming' && trip.endDate) {
+        const endDateObj = new Date(trip.endDate)
+        if (endDateObj < today) {
+          // Update to completed
+          await update(trip.id, { status: 'completed' })
+        }
+      }
     }
   }
 
@@ -30,15 +48,20 @@ export const useSelectionsStore = defineStore('selections', () => {
     }
     const saved = await saveSelection(newSelection)
     if (saved) items.value.push(saved)
+    return saved
   }
 
-  // update pode ser implementado via API se necessário
-  function update(id, patch) {
+  // update via API
+  async function update(id, patch) {
     const idx = items.value.findIndex((i) => i.id === id)
     if (idx !== -1) {
-      items.value[idx] = { ...items.value[idx], ...patch }
-      // TODO: implementar PATCH via API
+      const updated = await updateSelection(id, patch)
+      if (updated) {
+        items.value[idx] = { ...items.value[idx], ...updated }
+        return updated
+      }
     }
+    return null
   }
 
   async function remove(id) {
@@ -52,7 +75,6 @@ export const useSelectionsStore = defineStore('selections', () => {
 
   function clear() {
     items.value = []
-    // TODO: implementar clear via API
   }
 
   const count = computed(() => items.value.length)

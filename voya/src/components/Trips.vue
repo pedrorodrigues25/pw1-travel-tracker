@@ -1,126 +1,243 @@
 <template>
-  <div class="trips">
+  <div class="trips-container">
     <nav class="navbar">
-      <router-link to="/" class="navbar-logo">
+      <a class="navbar-logo" @click.prevent="showLogoutModal = true" style="cursor: pointer">
         <img src="@/img/logo-pw1-voya.png" alt="Voya Logo" height="38" />
-      </router-link>
+      </a>
       <div class="navbar-links">
-        <router-link to="/destinations" active-class="active">Home</router-link>
+        <router-link to="/homepage" active-class="active">Home</router-link>
         <router-link to="/recommendations" active-class="active">Recommendations</router-link>
         <router-link to="/trips" active-class="active">Trips</router-link>
         <router-link to="/friends" active-class="active">Friends</router-link>
         <router-link to="/profile" active-class="active">Profile</router-link>
       </div>
     </nav>
+    <div class="trips-main">
+      <h2 class="voya-section-title">Choose Destinations</h2>
+      <!-- Formulário compacto para adicionar trip -->
+      <section class="create-trip-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Destination:</label>
+            <div class="input-wrapper">
+              <input
+                v-model="countryQuery"
+                @input="onCountryInput"
+                @focus="onCountryInput"
+                placeholder="Ex: Portugal"
+                autocomplete="off"
+                class="country-search-input"
+              />
+              <ul v-if="showSuggestions && countryResults.length" class="country-suggestions">
+                <li
+                  v-for="country in countryResults"
+                  :key="country.code"
+                  @click="selectCountry(country)"
+                >
+                  <img v-if="country.flag" :src="country.flag" alt="flag" class="country-flag" />
+                  {{ country.name }}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>City:</label>
+            <div class="input-wrapper">
+              <input
+                v-model="form.city"
+                @focus="showCitySuggestions = true"
+                placeholder="Ex: Porto"
+                autocomplete="off"
+                class="city-search-input"
+              />
+              <ul v-if="showCitySuggestions && cityResults.length" class="city-suggestions">
+                <li v-for="city in cityResults" :key="city" @click="selectCity(city)">
+                  {{ city }}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Friends Button with Dropdown -->
+          <div class="form-group form-group-friends">
+            <label>Friends:</label>
+            <div class="friends-btn-wrapper">
+              <button
+                type="button"
+                class="friends-add-btn"
+                @click="showFriendsDropdown = !showFriendsDropdown"
+              >
+                <span v-if="selectedFriends.length">{{ selectedFriends.length }} selected</span>
+                <span v-else>Add friends</span>
+              </button>
+              <!-- Selected friends avatars -->
+              <div v-if="selectedFriends.length" class="selected-friends-mini">
+                <span
+                  v-for="friendId in selectedFriends.slice(0, 3)"
+                  :key="friendId"
+                  class="mini-avatar"
+                  :title="getFriendName(friendId)"
+                  >{{ getFriendInitial(friendId) }}</span
+                >
+                <span v-if="selectedFriends.length > 3" class="mini-avatar more"
+                  >+{{ selectedFriends.length - 3 }}</span
+                >
+              </div>
+              <!-- Dropdown -->
+              <div v-if="showFriendsDropdown" class="friends-dropdown-form">
+                <div v-if="userFriends.length === 0" class="no-friends-msg">
+                  No friends yet. Add friends in the Friends page.
+                </div>
+                <div
+                  v-for="friend in userFriends"
+                  :key="friend.id"
+                  class="friend-option"
+                  :class="{ selected: selectedFriends.includes(friend.id) }"
+                  @click="toggleFriendSelection(friend.id)"
+                >
+                  <span class="friend-avatar">{{
+                    friend.username?.charAt(0).toUpperCase() || '?'
+                  }}</span>
+                  <span class="friend-name">{{ friend.username }}</span>
+                  <span v-if="selectedFriends.includes(friend.id)" class="friend-check">✓</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="btn add-trip-btn" @click="addSelection" :disabled="!form.destination">
+            <span class="plus-icon">+</span> Add Trip
+          </button>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Start date:</label>
+            <input type="date" v-model="form.startDate" required class="date-input" />
+          </div>
+          <div class="form-group">
+            <label>End date:</label>
+            <input
+              type="date"
+              v-model="form.endDate"
+              :min="form.startDate"
+              required
+              class="date-input"
+            />
+          </div>
+          <div class="form-group form-group-notes">
+            <label>Notes (optional):</label>
+            <input v-model="form.notes" placeholder="" class="notes-input" maxlength="70" />
+          </div>
+        </div>
+      </section>
+
+      <section class="list">
+        <h3>My selections ({{ activeTripCount }})</h3>
+        <div class="cards-container">
+          <div v-for="it in activeTrips" :key="it.id" class="trip-card">
+            <div class="card-icons"></div>
+            <div class="trip-cover">
+              <div v-if="it.imageUrl && !it.imageLoaded" class="trip-cover-loading">
+                <div class="loading-spinner"></div>
+              </div>
+              <img
+                v-if="it.imageUrl"
+                :src="it.imageUrl"
+                :alt="it.city || it.destination"
+                :class="{ loaded: it.imageLoaded }"
+                @load="onImageLoad(it)"
+                @error="onImageError(it)"
+              />
+              <div v-else class="trip-cover-placeholder"></div>
+            </div>
+            <div class="trip-info">
+              <div class="trip-title-row">
+                <h4 class="trip-title">
+                  <template v-if="it.city">{{ it.city }}, {{ it.destination }}</template>
+                  <template v-else>{{ it.destination }}</template>
+                </h4>
+                <span class="trip-status pill" :class="it.status">{{
+                  it.status === 'completed' ? 'Completed' : 'Upcoming'
+                }}</span>
+              </div>
+              <div class="trip-date">{{ formatMonthYear(it.startDate || it.createdAt) }}</div>
+              <div class="trip-updates">
+                {{ getUpdatesCount(it) }} New Update{{ getUpdatesCount(it) !== 1 ? 's' : '' }}
+              </div>
+              <div v-if="it.friends && it.friends.length" class="trip-avatars">
+                <span
+                  class="avatar tiny"
+                  v-for="friendId in it.friends.slice(0, 5)"
+                  :key="friendId"
+                  :title="getFriendName(friendId)"
+                  >{{ getFriendInitial(friendId) }}</span
+                >
+              </div>
+            </div>
+            <div class="trip-actions">
+              <button class="open-journal-btn pill" @click="goToJournal(it.id)">
+                Open the Journal
+              </button>
+            </div>
+          </div>
+        </div>
+        <div v-if="activeTripCount === 0">You haven't saved any destinations yet.</div>
+      </section>
+      <section v-if="editing" class="edit-panel">
+        <h3>Edit selection</h3>
+        <label>Destination:</label>
+        <div class="destination-search">
+          <input
+            v-model="countryQuery"
+            @input="onCountryInput"
+            placeholder="Search for a country..."
+            class="country-input"
+          />
+          <div v-if="showSuggestions" class="suggestions-list">
+            <div
+              v-for="country in countryResults"
+              :key="country.code"
+              class="suggestion-item"
+              @click="selectCountry(country)"
+            >
+              {{ country.name }}
+            </div>
+          </div>
+        </div>
+        <label>Notes:</label>
+        <input v-model="editForm.notes" maxlength="70" />
+        <div class="edit-actions">
+          <button class="btn" @click="confirmEdit">Save</button>
+          <button class="btn small" @click="cancelEdit">Cancel</button>
+        </div>
+      </section>
+    </div>
   </div>
-  <h2 style="margin-top: 18px">Choose Destinations</h2>
-  <!-- Conteúdo principal da antiga DestinationsList.vue -->
-  <section class="create">
-    <label>Destination (Country):</label>
-    <input
-      v-model="countryQuery"
-      @input="onCountryInput"
-      @focus="onCountryInput"
-      placeholder="Type a country..."
-      autocomplete="off"
-      class="country-search-input"
-    />
-    <ul v-if="showSuggestions && countryResults.length" class="country-suggestions">
-      <li v-for="country in countryResults" :key="country.code" @click="selectCountry(country)">
-        <img v-if="country.flag" :src="country.flag" alt="flag" class="country-flag" />
-        {{ country.name }}
-      </li>
-    </ul>
-    <label v-if="form.destination">City:</label>
-    <input
-      v-if="form.destination"
-      v-model="form.city"
-      @focus="showCitySuggestions = true"
-      placeholder="Type or select a city..."
-      autocomplete="off"
-      class="city-search-input"
-    />
-    <ul v-if="showCitySuggestions && cityResults.length" class="city-suggestions">
-      <li v-for="city in cityResults" :key="city" @click="selectCity(city)">{{ city }}</li>
-    </ul>
-    <label>Notes (optional):</label>
-    <input v-model="form.notes" placeholder="Notes about the trip" />
-    <label>Status:</label>
-    <select v-model="form.status">
-      <option value="upcoming">Upcoming</option>
-      <option value="completed">Completed</option>
-    </select>
-    <label>Start Date:</label>
-    <input type="date" v-model="form.startDate" required />
-    <label>End Date:</label>
-    <input type="date" v-model="form.endDate" :min="form.startDate" required />
-    <button class="btn" @click="addSelection" :disabled="!form.destination">Save</button>
-  </section>
-  <section class="list">
-    <h3>My selections ({{ activeTripCount }})</h3>
-    <div class="cards-container">
-      <div v-for="it in activeTrips" :key="it.id" class="trip-card">
-        <div class="card-icons">
-          
-        </div>
-        <div class="trip-cover">
-          <img v-if="it.imageUrl" :src="it.imageUrl" :alt="it.city || it.destination" />
-          <div v-else class="trip-cover-placeholder"></div>
-        </div>
-        <div class="trip-info">
-          <div class="trip-title-row">
-            <h4 class="trip-title">
-              <template v-if="it.city">{{ it.city }}, {{ it.destination }}</template>
-              <template v-else>{{ it.destination }}</template>
-            </h4>
-            <span class="trip-status pill" :class="it.status">{{ it.status === 'completed' ? 'Completed' : 'Upcoming' }}</span>
-          </div>
-          <div class="trip-date">{{ formatMonthYear(it.startDate || it.createdAt) }}</div>
-          <div class="trip-updates">0 New Updates</div>
-          <div class="trip-avatars">
-            <span class="avatar tiny" v-for="n in 3" :key="n"></span>
+
+  <!-- Badge Notification -->
+  <BadgeNotification
+    :show="badgesStore.showNotification"
+    :badge="badgesStore.newBadge"
+    @close="badgesStore.closeNotification()"
+  />
+
+  <!-- Logout Confirmation Modal -->
+  <Teleport to="body">
+    <Transition name="logout-modal">
+      <div
+        v-if="showLogoutModal"
+        class="logout-modal-overlay"
+        @click.self="showLogoutModal = false"
+      >
+        <div class="logout-modal">
+          <h3>End Session?</h3>
+          <p>Are you sure you want to log out?</p>
+          <div class="logout-modal-buttons">
+            <button class="btn-no" @click="showLogoutModal = false">No</button>
+            <button class="btn-yes" @click="confirmLogout">Yes</button>
           </div>
         </div>
-        <div class="trip-actions">
-          <button class="open-journal-btn pill" @click="goToJournal(it.id)">Open the Journal</button>
-        </div>
       </div>
-    </div>
-    <div v-if="activeTripCount === 0">You haven't saved any destinations yet.</div>
-  </section>
-  <section v-if="editing" class="edit-panel">
-    <h3>Edit selection</h3>
-    <label>Destination:</label>
-    <div class="destination-search">
-      <input
-        v-model="countryQuery"
-        @input="onCountryInput"
-        placeholder="Search for a country..."
-        class="country-input"
-      />
-      <div v-if="showSuggestions" class="suggestions-list">
-        <div
-          v-for="country in countryResults"
-          :key="country.code"
-          class="suggestion-item"
-          @click="selectCountry(country)"
-        >
-          {{ country.name }}
-        </div>
-      </div>
-    </div>
-    <label>Notes:</label>
-    <input v-model="editForm.notes" />
-    <label>Status:</label>
-    <select v-model="editForm.status">
-      <option value="upcoming">Upcoming</option>
-      <option value="completed">Completed</option>
-    </select>
-    <div class="edit-actions">
-      <button class="btn" @click="confirmEdit">Save</button>
-      <button class="btn small" @click="cancelEdit">Cancel</button>
-    </div>
-  </section>
+    </Transition>
+  </Teleport>
 </template>
 
 <script setup>
@@ -130,28 +247,150 @@ import { reactive, ref, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useSelectionsStore } from '../stores/selections'
+import { useBadgesStore } from '../stores/badges'
 import { searchCountries } from '../api/countries'
 import { fetchCountryWikipediaSummary } from '../api/countries'
+import { getFriends, getUserFriends } from '../api/api'
+import BadgeNotification from './BadgeNotification.vue'
 
 const router = useRouter()
 const auth = useAuthStore()
 const selections = useSelectionsStore()
+const badgesStore = useBadgesStore()
 
 const user = auth.user
 const showLoginAlert = ref(false)
+
+// Logout modal state
+const showLogoutModal = ref(false)
+
+function confirmLogout() {
+  auth.logout()
+  router.push('/')
+}
+
+// Friends data for avatar display
+const allFriends = ref([])
+// User's added friends for trip creation
+const userFriends = ref([])
+// Search query for friends
+const friendSearchQuery = ref('')
+const showFriendsDropdown = ref(false)
+
+async function loadFriends() {
+  try {
+    allFriends.value = await getFriends()
+    // Load user's added friends
+    if (user?.email) {
+      userFriends.value = await getUserFriends(user.email)
+    }
+  } catch (e) {
+    console.error('Error loading friends:', e)
+  }
+}
+
+// Filtered friends based on search query
+const filteredUserFriends = computed(() => {
+  if (!friendSearchQuery.value.trim()) {
+    return userFriends.value
+  }
+  const query = friendSearchQuery.value.toLowerCase()
+  return userFriends.value.filter(
+    (friend) =>
+      friend.username?.toLowerCase().includes(query) || friend.email?.toLowerCase().includes(query),
+  )
+})
+
+// Toggle friend selection
+function toggleFriendSelection(friendId) {
+  const idx = selectedFriends.value.indexOf(friendId)
+  if (idx === -1) {
+    selectedFriends.value.push(friendId)
+  } else {
+    selectedFriends.value.splice(idx, 1)
+  }
+  friendSearchQuery.value = ''
+  // Keep dropdown open to allow multiple selections
+}
+
+// Remove friend from selection
+function removeFriend(friendId) {
+  const idx = selectedFriends.value.indexOf(friendId)
+  if (idx !== -1) {
+    selectedFriends.value.splice(idx, 1)
+  }
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  const wrapper = document.querySelector('.friends-btn-wrapper')
+  if (wrapper && !wrapper.contains(e.target)) {
+    showFriendsDropdown.value = false
+  }
+})
+
+loadFriends()
+
+function getFriendById(friendId) {
+  return allFriends.value.find((f) => f.id === friendId)
+}
+
+function getFriendInitial(friendId) {
+  const friend = getFriendById(friendId)
+  if (friend && friend.username) {
+    return friend.username.charAt(0).toUpperCase()
+  }
+  return '?'
+}
+
+function getFriendName(friendId) {
+  const friend = getFriendById(friendId)
+  return friend?.username || 'Unknown'
+}
+
+// Conta updates de uma viagem (fotos, customText, etc.)
+function getUpdatesCount(trip) {
+  let count = 0
+  // Conta fotos
+  if (trip.photos && Array.isArray(trip.photos)) {
+    count += trip.photos.length
+  }
+  // Conta customText como 1 update se existir
+  if (trip.customText && trip.customText.trim()) {
+    count += 1
+  }
+  // Conta entradas de journal se existirem
+  if (trip.journalEntries && Array.isArray(trip.journalEntries)) {
+    count += trip.journalEntries.length
+  }
+  return count
+}
 
 // Filter out archived trips from display
 const activeTrips = computed(() => selections.items.filter((t) => !t.archived))
 const activeTripCount = computed(() => activeTrips.value.length)
 
+function onImageLoad(trip) {
+  trip.imageLoaded = true
+  console.log('Image loaded successfully for:', trip.destination)
+}
+
+function onImageError(trip) {
+  trip.imageLoaded = true
+  console.error('Failed to load image for trip:', trip.destination, 'URL:', trip.imageUrl)
+}
+
 const form = reactive({
   destination: '',
   city: '',
   notes: '',
-  status: 'upcoming',
   startDate: '',
   endDate: '',
+  status: 'upcoming',
 })
+
+// Selected friends for new trip
+const selectedFriends = ref([])
 
 // Unused edit state - kept for potential future use
 // const editing = ref(false)
@@ -172,7 +411,15 @@ watch(
 )
 
 function ensureLoaded() {
-  if (user && user.email) selections.load(user.email)
+  if (user && user.email) {
+    selections.load(user.email)
+    // Initialize imageLoaded state for existing trips
+    selections.items.forEach((trip) => {
+      if (!('imageLoaded' in trip)) {
+        trip.imageLoaded = false
+      }
+    })
+  }
 }
 
 ensureLoaded()
@@ -180,7 +427,17 @@ ensureLoaded()
 watch(
   () => auth.user && auth.user.email,
   (val) => {
-    if (val) selections.load(val)
+    if (val) {
+      selections.load(val)
+      // Initialize imageLoaded for loaded trips
+      setTimeout(() => {
+        selections.items.forEach((trip) => {
+          if (trip.imageUrl && !('imageLoaded' in trip)) {
+            trip.imageLoaded = false
+          }
+        })
+      }, 100)
+    }
   },
 )
 
@@ -248,10 +505,12 @@ async function addSelection() {
   try {
     const wikiResult = await fetchCountryWikipediaSummary(wikiQuery)
     imageUrl = wikiResult?.originalimage?.source || ''
+    console.log('Fetched image for', wikiQuery, ':', imageUrl)
   } catch (e) {
-    console.error(e)
+    console.error('Error fetching wiki image:', e)
   }
-  selections.add(
+
+  const newTrip = await selections.add(
     {
       destination: form.destination,
       city: form.city,
@@ -260,15 +519,27 @@ async function addSelection() {
       startDate: form.startDate,
       endDate: form.endDate,
       imageUrl,
+      imageLoaded: false,
+      friends: selectedFriends.value.length > 0 ? [...selectedFriends.value] : [],
     },
     user.email,
   )
+
+  // Check for new badges after adding a trip
+  if (newTrip && user.email) {
+    badgesStore.loadBadges(user.email)
+    badgesStore.checkBadges(selections.items, user.email)
+  }
+
+  // Reset form
+  selectedFriends.value = []
+
   form.destination = ''
   form.city = ''
   form.notes = ''
-  form.status = 'upcoming'
   form.startDate = ''
   form.endDate = ''
+  form.status = 'upcoming'
   countryQuery.value = ''
 }
 
@@ -279,10 +550,22 @@ function goToJournal(tripId) {
 function formatMonthYear(dateStr) {
   const d = new Date(dateStr)
   if (Number.isNaN(d.getTime())) return ''
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December']
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
   return `${months[d.getMonth()]} ${d.getFullYear()}`
 }
-
 
 window.addEventListener('beforeunload', () => {
   if (user && user.email) selections.save(user.email)

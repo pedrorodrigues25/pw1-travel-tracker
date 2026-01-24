@@ -128,13 +128,13 @@
 }
 
 .interest-tag {
-  padding: 10px 20px;
+  padding: 10px 15px;
   border: 1.5px solid #014f76;
   border-radius: 25px;
   background: transparent;
   color: #014f76;
   font-family: 'Montserrat', sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.25s ease;

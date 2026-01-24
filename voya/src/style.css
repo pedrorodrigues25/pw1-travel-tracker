@@ -5,6 +5,28 @@ html {
   background-color: #b9c6d1; /* tom ligeiro para contraste com card */
 }
 
+.voya-section-title {
+  color: #0d5678;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.voya-no-transform {
+  text-transform: none;
+}
+
+@media (max-width: 768px) {
+  .voya-section-title {
+    font-size: 18px;
+  }
+}
+
 /* Container principal */
 .container {
   position: relative;
@@ -62,7 +84,9 @@ html {
 }
 
 /* Ajuste para espaço extra quando há mais campos (register) */
-.login-card.register-mode { gap: 16px; }
+.login-card.register-mode {
+  gap: 16px;
+}
 
 /* Inputs */
 input {
@@ -272,7 +296,25 @@ input:focus {
 }
 
 @media (max-width: 850px) {
-  .container { justify-content:center; }
-  .vector-art { display:none; }
-  .login-card { margin-right:0; width:92%; max-width:460px; }
+  .container {
+    justify-content: center;
+  }
+  .vector-art {
+    display: none;
+  }
+  .login-card {
+    margin-right: 0;
+    width: 92%;
+    max-width: 460px;
+  }
+}
+
+/* Clickable logo for Login/Register pages */
+.clickable-logo {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.clickable-logo:hover {
+  opacity: 0.8;
 }

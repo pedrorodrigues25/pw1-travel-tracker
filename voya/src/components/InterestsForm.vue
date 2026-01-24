@@ -16,12 +16,12 @@
     <!-- Right Panel - Interests Selection -->
     <div class="interests-card">
       <img src="/src/img/Vector.png" alt="Decorative flight vector" class="vector-art-interests" />
-      
+
       <h2 class="interests-title">Add your interests</h2>
 
       <div class="interests-tags">
-        <button 
-          v-for="interest in availableInterests" 
+        <button
+          v-for="interest in availableInterests"
           :key="interest"
           :class="['interest-tag', { selected: selectedInterests.includes(interest) }]"
           @click="toggleInterest(interest)"
@@ -36,29 +36,27 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useInterestsStore } from '../stores/interests'
+import { getAvailableInterests } from '../api/api'
 
 const router = useRouter()
 const auth = useAuthStore()
 const interestsStore = useInterestsStore()
 
-const availableInterests = [
-  'Traveling with Friends',
-  'Solo Adventure',
-  'Family Trips',
-  'Beach & Relaxation',
-  'City Exploration',
-  'Nature & Hiking',
-  'Cultural Experiences',
-  'Food & Gastronomy',
-  'Photography',
-  'Road Trips'
-]
-
+const availableInterests = ref([])
 const selectedInterests = ref([])
+
+async function loadAvailableInterests() {
+  const interests = await getAvailableInterests()
+  availableInterests.value = interests.map(i => i.name) || []
+}
+
+onMounted(() => {
+  loadAvailableInterests()
+})
 
 function toggleInterest(interest) {
   const index = selectedInterests.value.indexOf(interest)
@@ -75,7 +73,7 @@ async function handleContinue() {
   if (userEmail) {
     await interestsStore.setInterests(selectedInterests.value, userEmail)
   }
-  router.push('/destinations')
+  router.push('/homepage')
 }
 
 function goBack() {

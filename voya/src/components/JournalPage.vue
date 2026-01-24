@@ -32,123 +32,139 @@
               <span v-if="trip.endDate">{{ trip.endDate }}</span>
             </template>
           </div>
-          <!-- <div class="figma-journal-avatars">
-            <img
-              v-for="n in 5"
-              :key="n"
-              :src="`/src/img/avatar${n}.png`"
-              class="figma-avatar"
-              alt="avatar"
-            />
-          </div> -->
         </div>
         <div class="figma-journal-main">
           <div class="figma-journal-image-block">
-            <img
-              v-if="wikiInfo?.originalimage?.source"
-              :src="wikiInfo.originalimage.source"
-              :alt="wikiInfo.title"
-              style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px"
-            />
+            <div class="journal-hero">
+              <div v-if="showHeroLoading" class="journal-hero-loading" aria-live="polite">
+                <div class="loading-spinner" aria-hidden="true"></div>
+              </div>
+              <img
+                v-if="wikiInfo?.originalimage?.source"
+                class="journal-hero-main"
+                :class="{ loaded: heroImageLoaded }"
+                :src="wikiInfo.originalimage.source"
+                :alt="wikiInfo.title || 'Destination image'"
+                @load="onHeroLoad"
+                @error="onHeroError"
+              />
+            </div>
           </div>
           <div class="figma-journal-day-block">
             <div class="figma-journal-day-title">About the destination</div>
             <div class="figma-journal-day-text">
-              <template v-if="trip?.customText">{{ trip.customText }}</template>
-              <template v-else-if="wikiInfo">{{ wikiInfo.extract }}</template>
+              <template v-if="wikiInfo">{{ wikiInfo.extract }}</template>
               <template v-else>Information not available.</template>
             </div>
           </div>
         </div>
-        
-        <!-- Secção de amigos na viagem -->
-        <div v-if="tripFriendsDetails.length > 0" class="figma-trip-friends">
-          <h3>Friends on this trip</h3>
-          <div class="friends-avatars">
-            <div v-for="friend in tripFriendsDetails" :key="friend.id" class="friend-avatar-item">
-              <div class="friend-avatar">
-                <div v-if="!friend.photo" class="avatar-placeholder">
-                  {{ friend.username.charAt(0).toUpperCase() }}
+
+        <!-- User Notes Section -->
+        <div v-if="trip?.notes" class="notes-section">
+          <div class="notes-header">
+            <span class="notes-title">My Notes</span>
+          </div>
+          <div class="notes-content">{{ trip.notes }}</div>
+        </div>
+
+        <!-- Secção de amigos e fotos lado a lado -->
+        <div class="figma-friends-photos-row">
+          <!-- Secção de amigos na viagem -->
+          <div v-if="tripFriendsDetails.length > 0" class="figma-trip-friends">
+            <h3>Friends on this trip</h3>
+            <div class="friends-avatars">
+              <div
+                v-for="friend in tripFriendsDetails"
+                :key="friend.id"
+                class="friend-avatar-item clickable"
+                @click="openPersonProfile(friend)"
+              >
+                <div class="friend-avatar">
+                  <div v-if="!friend.photo" class="avatar-placeholder">
+                    {{ friend.username.charAt(0).toUpperCase() }}
+                  </div>
+                  <img v-else :src="friend.photo" :alt="friend.username" />
                 </div>
-                <img v-else :src="friend.photo" :alt="friend.username" />
               </div>
-              <span class="friend-name">{{ friend.username }}</span>
+            </div>
+          </div>
+
+          <!-- Secção de fotos polaroid -->
+          <div class="figma-journal-polaroids">
+            <div v-for="(photo, index) in photos" :key="index" class="figma-polaroid">
+              <img v-if="photo" :src="photo" alt="Foto da viagem" class="polaroid-photo" />
+            </div>
+            <!-- Slots vazios para completar 4 -->
+            <div
+              v-for="n in Math.max(0, 4 - photos.length)"
+              :key="'empty-' + n"
+              class="figma-polaroid empty"
+              @click="triggerFileInput"
+            >
+              <span class="add-photo-icon">+</span>
             </div>
           </div>
         </div>
-        
-        <!-- Secção de fotos polaroid -->
-        <div class="figma-journal-polaroids">
-          <div 
-            v-for="(photo, index) in photos" 
-            :key="index" 
-            class="figma-polaroid"
-          >
-            <img 
-              v-if="photo" 
-              :src="photo" 
-              alt="Foto da viagem" 
-              class="polaroid-photo"
-            />
-          </div>
-          <!-- Slots vazios para completar 4 -->
-          <div 
-            v-for="n in Math.max(0, 4 - photos.length)" 
-            :key="'empty-' + n" 
-            class="figma-polaroid empty"
-            @click="triggerFileInput"
-          >
-            <span class="add-photo-icon">+</span>
-          </div>
-        </div>
-        
+
         <!-- Input escondido para upload de fotos -->
-        <input 
-          type="file" 
-          ref="fileInput" 
-          @change="handleFileUpload" 
-          accept="image/*" 
-          multiple 
-          style="display: none;"
+        <input
+          type="file"
+          ref="fileInput"
+          @change="handleFileUpload"
+          accept="image/*"
+          multiple
+          style="display: none"
         />
 
         <!-- Edit Panel -->
-        <div v-if="editingPanel" class="edit-panel-overlay">
+        <div v-if="editingPanel" class="edit-panel-overlay" @click.self="cancelEdit">
           <div class="edit-panel-modal">
-            <h3>Edit Trip Information</h3>
-            
+            <div class="edit-modal-header">
+              <h3>Edit Trip</h3>
+              <button class="edit-close-btn" @click="cancelEdit">×</button>
+            </div>
+
             <div class="edit-section">
-              <label>About the destination:</label>
-              <textarea 
-                v-model="editedText" 
-                rows="6"
+              <label> My Notes</label>
+              <textarea
+                v-model="editedNotes"
+                rows="5"
                 class="edit-textarea"
-                placeholder="Edit the destination description..."
+                placeholder="Write your personal notes, memories, tips..."
               ></textarea>
             </div>
 
             <div class="edit-section">
-              <label>Add Friends to this trip:</label>
+              <label>Friends on this trip</label>
               <div class="friends-list">
-                <div 
-                  v-for="friend in availableFriends" 
+                <label
+                  v-for="friend in availableFriends"
                   :key="friend.id"
-                  class="friend-item"
+                  class="friend-checkbox-item"
+                  :class="{ selected: tripFriends.includes(friend.id) }"
                 >
-                  <input 
-                    type="checkbox" 
-                    :id="'friend-' + friend.id"
+                  <input
+                    type="checkbox"
                     :checked="tripFriends.includes(friend.id)"
                     @change="toggleFriend(friend.id)"
                   />
-                  <label :for="'friend-' + friend.id">{{ friend.username }}</label>
-                </div>
+                  <div class="friend-avatar-mini">
+                    <img v-if="friend.photo" :src="friend.photo" :alt="friend.username" />
+                    <span v-else class="avatar-letter">{{ friend.username.charAt(0).toUpperCase() }}</span>
+                  </div>
+                  <span class="friend-name">{{ friend.username }}</span>
+                </label>
               </div>
-              <p v-if="availableFriends.length === 0" class="no-friends">No friends available.</p>
+              <p v-if="availableFriends.length === 0" class="no-friends">
+                <span class="no-friends-icon">😔</span>
+                You don't have any friends yet. Add some in the Friends page!
+              </p>
             </div>
 
             <div class="edit-actions">
-              <button class="btn-save" @click="saveEdits">Save</button>
+              <button class="btn-save" @click="saveEdits">
+                 Save Changes
+              </button>
               <button class="btn-cancel" @click="cancelEdit">Cancel</button>
             </div>
           </div>
@@ -157,30 +173,77 @@
       <div v-else class="journal-not-found">
         <p>Viagem não encontrada.</p>
       </div>
+
+      <!-- Profile Modal -->
+      <div
+        v-if="showProfileModal && selectedPerson"
+        class="profile-modal-overlay"
+        @click.self="closeProfileModal"
+      >
+        <div class="profile-modal">
+          <button class="modal-close" @click="closeProfileModal">×</button>
+          <div class="profile-modal-header">
+            <div class="person-avatar modal-avatar">
+              <img
+                v-if="selectedPerson.photo"
+                :src="selectedPerson.photo"
+                :alt="selectedPerson.username"
+              />
+              <div v-else class="avatar-placeholder">
+                {{ selectedPerson.username.charAt(0).toUpperCase() }}
+              </div>
+            </div>
+            <div class="profile-meta">
+              <h3>{{ selectedPerson.username }}</h3>
+              <p class="profile-email" v-if="selectedPerson.email">{{ selectedPerson.email }}</p>
+            </div>
+          </div>
+          <p class="profile-about" v-if="selectedPerson.aboutMe">{{ selectedPerson.aboutMe }}</p>
+          <div
+            v-if="selectedPerson.interests && selectedPerson.interests.length"
+            class="profile-interests"
+          >
+            <span v-for="interest in selectedPerson.interests" :key="interest" class="chip">{{
+              interest
+            }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- Badge Notification -->
+  <BadgeNotification
+    :show="badgesStore.showNotification"
+    :badge="badgesStore.newBadge"
+    @close="badgesStore.closeNotification()"
+  />
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSelectionsStore } from '../stores/selections'
+import { useBadgesStore } from '../stores/badges'
 import { fetchCountryWikipediaSummary, fetchWikipediaImages } from '../api/countries'
 import { useAuthStore } from '../stores/auth'
 import { getUserFriends, getFriends } from '../api/api'
+import BadgeNotification from './BadgeNotification.vue'
 import '../css/Journal.css'
+import '../css/FriendsPage.css'
 
 const API_BASE = 'http://localhost:3001'
 
 const props = defineProps({ tripId: [String, Number] })
 const router = useRouter()
 const selections = useSelectionsStore()
+const badgesStore = useBadgesStore()
 const auth = useAuthStore()
 const trip = computed(() => selections.items.find((t) => t.id == props.tripId))
 
 const tripFriendsDetails = computed(() => {
   if (!trip.value || !trip.value.friends || trip.value.friends.length === 0) return []
-  return allFriendsData.value.filter(f => trip.value.friends.includes(f.id))
+  return allFriendsData.value.filter((f) => trip.value.friends.includes(f.id))
 })
 
 // Fotos da viagem
@@ -189,10 +252,14 @@ const fileInput = ref(null)
 
 // Edit panel state
 const editingPanel = ref(false)
-const editedText = ref('')
+const editedNotes = ref('')
 const availableFriends = ref([])
 const tripFriends = ref([])
 const allFriendsData = ref([])
+
+// Profile modal state
+const showProfileModal = ref(false)
+const selectedPerson = ref(null)
 
 // Carregar fotos da viagem do servidor
 async function loadPhotos() {
@@ -204,22 +271,22 @@ async function loadPhotos() {
 // Guardar fotos no servidor
 async function savePhotos() {
   if (!trip.value) return
-  
+
   try {
     const response = await fetch(`${API_BASE}/selections/${props.tripId}`, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        photos: photos.value
-      })
+        photos: photos.value,
+      }),
     })
-    
+
     if (response.ok) {
       // Atualizar a store local
       const updatedTrip = await response.json()
-      const index = selections.items.findIndex(t => t.id == props.tripId)
+      const index = selections.items.findIndex((t) => t.id == props.tripId)
       if (index !== -1) {
         selections.items[index] = updatedTrip
       }
@@ -235,14 +302,24 @@ function editTrip() {
     return
   }
   editingPanel.value = true
-  editedText.value = trip.value?.customText || wikiInfo.value?.extract || ''
+  editedNotes.value = trip.value?.notes || ''
   tripFriends.value = trip.value?.friends || []
 }
 
 function cancelEdit() {
   editingPanel.value = false
-  editedText.value = ''
+  editedNotes.value = ''
   tripFriends.value = []
+}
+
+function openPersonProfile(person) {
+  selectedPerson.value = person
+  showProfileModal.value = true
+}
+
+function closeProfileModal() {
+  showProfileModal.value = false
+  selectedPerson.value = null
 }
 
 function toggleFriend(friendId) {
@@ -261,15 +338,20 @@ async function saveEdits() {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        customText: editedText.value,
-        friends: tripFriends.value
-      })
+        notes: editedNotes.value,
+        friends: tripFriends.value,
+      }),
     })
     if (response.ok) {
       const updatedTrip = await response.json()
-      const index = selections.items.findIndex(t => t.id == props.tripId)
+      const index = selections.items.findIndex((t) => t.id == props.tripId)
       if (index !== -1) selections.items[index] = updatedTrip
       editingPanel.value = false
+
+      // Check for new badges after adding friends to a trip
+      if (auth.user?.email) {
+        badgesStore.checkBadges(selections.items, auth.user.email)
+      }
     } else {
       alert('Could not save changes.')
     }
@@ -327,11 +409,11 @@ async function archiveTrip() {
     const response = await fetch(`${API_BASE}/selections/${props.tripId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ archived: true })
+      body: JSON.stringify({ archived: true }),
     })
     if (response.ok) {
       const updatedTrip = await response.json()
-      const index = selections.items.findIndex(t => t.id == props.tripId)
+      const index = selections.items.findIndex((t) => t.id == props.tripId)
       if (index !== -1) selections.items[index] = updatedTrip
     } else {
       alert('Could not archive this trip. Please try again.')
@@ -352,11 +434,11 @@ async function unarchiveTrip() {
     const response = await fetch(`${API_BASE}/selections/${props.tripId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ archived: false })
+      body: JSON.stringify({ archived: false }),
     })
     if (response.ok) {
       const updatedTrip = await response.json()
-      const index = selections.items.findIndex(t => t.id == props.tripId)
+      const index = selections.items.findIndex((t) => t.id == props.tripId)
       if (index !== -1) selections.items[index] = updatedTrip
     } else {
       alert('Could not unarchive this trip. Please try again.')
@@ -372,10 +454,37 @@ const wikiLoading = ref(false)
 const wikiError = ref(null)
 const wikiImages = ref([])
 
+const heroImageLoaded = ref(false)
+const heroImageError = ref(false)
+
+const showHeroLoading = computed(() => {
+  if (wikiLoading.value) return true
+  if (!wikiInfo.value?.originalimage?.source) return false
+  return !heroImageLoaded.value && !heroImageError.value
+})
+
+function onHeroLoad() {
+  heroImageError.value = false
+  heroImageLoaded.value = true
+}
+
+function onHeroError() {
+  heroImageLoaded.value = false
+  heroImageError.value = true
+}
+
+watch(
+  () => wikiInfo.value?.originalimage?.source,
+  () => {
+    heroImageLoaded.value = false
+    heroImageError.value = false
+  },
+)
+
 onMounted(async () => {
   // Carregar fotos guardadas
   loadPhotos()
-  
+
   // Carregar dados de todos os amigos para resolução de avatares
   try {
     const allFriends = await getFriends()
@@ -383,7 +492,7 @@ onMounted(async () => {
   } catch (e) {
     console.error('Erro ao carregar dados de amigos:', e)
   }
-  
+
   // Carregar amigos do utilizador (apenas os amigos adicionados)
   const userEmail = auth.user?.email
   if (userEmail) {
@@ -394,12 +503,14 @@ onMounted(async () => {
       console.error('Erro ao carregar amigos:', e)
     }
   }
-  
+
   let query = trip.value?.city || trip.value?.destination
   if (query) {
     wikiLoading.value = true
     wikiError.value = null
     wikiInfo.value = null
+    heroImageLoaded.value = false
+    heroImageError.value = false
     const result = await fetchCountryWikipediaSummary(query)
     if (result.error) {
       wikiError.value = result.error

@@ -52,6 +52,38 @@
   margin: 0 auto;
 }
 
+.loading-state {
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.loading-spinner {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 5px solid rgba(1, 79, 118, 0.18);
+  border-top-color: #014f76;
+  animation: voya-spin 0.95s linear infinite;
+}
+
+.loading-text {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #014f76;
+}
+
+@keyframes voya-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .section-title {
   font-size: 20px;
   font-weight: 700;
@@ -80,7 +112,9 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   cursor: pointer;
 }
 
@@ -90,6 +124,45 @@
 }
 
 /* Card Image */
+.trip-cover {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background-color: #e8f4f8;
+}
+
+.trip-cover-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e8f4f8;
+  z-index: 1;
+}
+
+.trip-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.trip-cover img.loaded {
+  opacity: 1;
+}
+
+.trip-cover.clickable {
+  cursor: pointer;
+}
+
+.trip-cover.clickable:hover img {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
 .card-image {
   cursor: pointer;
 }

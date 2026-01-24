@@ -6,7 +6,7 @@
         <img src="@/img/logo-pw1-voya.png" alt="Voya Logo" height="40" class="admin-logo" />
       </div>
       <div class="admin-header-right">
-        <span class="admin-badge">👤 Admin</span>
+        <span class="admin-badge">Admin</span>
         <button class="logout-btn" @click="logout">Log Out</button>
       </div>
     </header>
@@ -21,21 +21,18 @@
       <!-- Stats Grid -->
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-icon users-icon">👥</div>
           <div class="stat-content">
             <h3>Total Users</h3>
             <p class="stat-number">{{ totalUsers }}</p>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon banned-icon">🚫</div>
           <div class="stat-content">
             <h3>Banned Users</h3>
             <p class="stat-number">{{ bannedUsers }}</p>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon active-icon">✅</div>
           <div class="stat-content">
             <h3>Active Users</h3>
             <p class="stat-number">{{ activeUsers }}</p>
@@ -76,7 +73,11 @@
               <tr v-for="user in filteredUsers" :key="user.id" :class="getRowClass(user)">
                 <td class="user-cell">
                   <div class="user-info">
-                    <div class="avatar">{{ user.username.charAt(0).toUpperCase() }}</div>
+                    <img 
+                      :src="`https://api.dicebear.com/9.x/identicon/png?seed=${user.username}&scale=70`" 
+                      :alt="user.username" 
+                      class="avatar-img"
+                    />
                     <span>{{ user.username }}</span>
                   </div>
                 </td>
@@ -93,18 +94,10 @@
                   <span v-else class="text-muted">-</span>
                 </td>
                 <td class="actions">
-                  <button
-                    v-if="!isBanned(user)"
-                    class="btn btn-ban"
-                    @click="openBanModal(user)"
-                  >
+                  <button v-if="!isBanned(user)" class="btn btn-ban" @click="openBanModal(user)">
                     Ban
                   </button>
-                  <button
-                    v-if="isBanned(user)"
-                    class="btn btn-unban"
-                    @click="unbanUser(user)"
-                  >
+                  <button v-if="isBanned(user)" class="btn btn-unban" @click="unbanUser(user)">
                     Unban
                   </button>
                   <button class="btn btn-delete" @click="openDeleteModal(user)">Delete</button>
@@ -116,11 +109,13 @@
       </section>
 
       <!-- Interests Management Section -->
-      <section class="users-section" style="margin-top: 30px;">
+      <section class="users-section" style="margin-top: 30px">
         <h2>Interests Management</h2>
-        <p style="color: #666; margin-bottom: 20px;">Add or remove interests that appear for users</p>
-        
-        <div class="admin-controls" style="margin-bottom: 20px;">
+        <p style="color: #666; margin-bottom: 20px">
+          Add or remove interests that appear for users
+        </p>
+
+        <div class="admin-controls" style="margin-bottom: 20px">
           <input
             v-model="newInterestName"
             type="text"
@@ -134,7 +129,9 @@
         <div class="interests-grid">
           <div v-for="interest in availableInterests" :key="interest.id" class="interest-item">
             <span class="interest-name">{{ interest.name }}</span>
-            <button class="btn btn-delete btn-small" @click="handleDeleteInterest(interest.id)">✕</button>
+            <button class="btn btn-delete btn-small" @click="handleDeleteInterest(interest.id)">
+              ✕
+            </button>
           </div>
         </div>
       </section>
@@ -168,11 +165,15 @@
     </div>
 
     <!-- Delete Modal -->
-    <div v-if="showDeleteModal && selectedUser" class="modal-overlay" @click.self="closeDeleteModal">
+    <div
+      v-if="showDeleteModal && selectedUser"
+      class="modal-overlay"
+      @click.self="closeDeleteModal"
+    >
       <div class="modal modal-danger">
         <button class="modal-close" @click="closeDeleteModal">×</button>
         <h3>Delete User: {{ selectedUser.username }}</h3>
-        <p class="warning">⚠️ This action is permanent and cannot be undone.</p>
+        <p class="warning">This action is permanent and cannot be undone.</p>
 
         <div class="modal-actions">
           <button class="btn-cancel" @click="closeDeleteModal">Cancel</button>
@@ -187,7 +188,15 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
-import { getUsers, updateUser, getAvailableInterests, addAvailableInterest, deleteAvailableInterest } from '../api/api'
+import {
+  getUsers,
+  updateUser,
+  getAvailableInterests,
+  addAvailableInterest,
+  deleteAvailableInterest,
+  getFriends,
+  updateFriend,
+} from '../api/api'
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -213,10 +222,20 @@ const banDurations = [
   { hours: 168, label: '1 Week' },
 ]
 
-// Load users
+// Load users (real users + fictional friends)
 async function loadUsers() {
   const allUsers = await getUsers()
-  users.value = allUsers || []
+  const allFriends = await getFriends()
+  
+  // Mark friends as fictional and add default fields if missing
+  const friendsAsUsers = allFriends.map(f => ({
+    ...f,
+    isFictional: true,
+    bannedUntil: f.bannedUntil || null,
+  }))
+  
+  // Combine real users and fictional users
+  users.value = [...(allUsers || []), ...friendsAsUsers]
 }
 
 // Load available interests
@@ -246,12 +265,13 @@ const bannedUsers = computed(() => users.value.filter((u) => isBanned(u)).length
 const activeUsers = computed(() => users.value.filter((u) => !isBanned(u)).length)
 
 const filteredUsers = computed(() => {
-  let filtered = users.value
+  // Exclude admin account from the list
+  let filtered = users.value.filter((u) => u.email !== 'admin@gmail.com')
 
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase()
     filtered = filtered.filter(
-      (u) => u.username.toLowerCase().includes(query) || u.email.toLowerCase().includes(query)
+      (u) => u.username.toLowerCase().includes(query) || u.email.toLowerCase().includes(query),
     )
   }
 
@@ -314,13 +334,15 @@ async function confirmBan() {
 
   const now = new Date()
   const banExpiryTime = new Date(now.getTime() + selectedBanDuration.value * 60 * 60 * 1000)
-  
+
   console.log('Banning user:', selectedUser.value.username)
   console.log('Ban expiry time:', banExpiryTime.toISOString())
   console.log('Current time:', now.toISOString())
   console.log('Duration in hours:', selectedBanDuration.value)
 
-  const result = await updateUser(selectedUser.value.id, {
+  // Use updateFriend for fictional users, updateUser for real users
+  const updateFn = selectedUser.value.isFictional ? updateFriend : updateUser
+  const result = await updateFn(selectedUser.value.id, {
     bannedUntil: banExpiryTime.toISOString(),
   })
 
@@ -329,21 +351,23 @@ async function confirmBan() {
   if (result) {
     const idx = users.value.findIndex((u) => u.id === selectedUser.value.id)
     if (idx !== -1) {
-      users.value[idx] = result
+      users.value[idx] = { ...users.value[idx], ...result }
     }
     closeBanModal()
   }
 }
 
 async function unbanUser(user) {
-  const result = await updateUser(user.id, {
+  // Use updateFriend for fictional users, updateUser for real users
+  const updateFn = user.isFictional ? updateFriend : updateUser
+  const result = await updateFn(user.id, {
     bannedUntil: null,
   })
 
   if (result) {
     const idx = users.value.findIndex((u) => u.id === user.id)
     if (idx !== -1) {
-      users.value[idx] = result
+      users.value[idx] = { ...users.value[idx], ...result }
     }
   }
 }
@@ -361,9 +385,10 @@ function closeDeleteModal() {
 async function confirmDelete() {
   if (!selectedUser.value) return
 
-  // Delete via API (precisa de implementar no backend)
+  // Delete via API - use correct endpoint based on user type
   try {
-    await fetch(`http://localhost:3001/users/${selectedUser.value.id}`, {
+    const endpoint = selectedUser.value.isFictional ? 'friends' : 'users'
+    await fetch(`http://localhost:3001/${endpoint}/${selectedUser.value.id}`, {
       method: 'DELETE',
     })
     users.value = users.value.filter((u) => u.id !== selectedUser.value.id)

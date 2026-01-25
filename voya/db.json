@@ -135,16 +135,6 @@
       "userEmail": "contanova@gmail.com"
     },
     {
-      "id": "1769271147031x8fech",
-      "interest": "Traveling with Friends",
-      "userEmail": "pedro@gmail.com"
-    },
-    {
-      "id": "1769271147062agpif0",
-      "interest": "Nature & Hiking",
-      "userEmail": "pedro@gmail.com"
-    },
-    {
       "id": "1769284665174tylehu",
       "interest": "Beach & Relaxation",
       "userEmail": "123€gmail.com"
@@ -153,6 +143,11 @@
       "id": "1769284665205rtosg5",
       "interest": "Cultural Experiences",
       "userEmail": "123€gmail.com"
+    },
+    {
+      "id": "1769359041536lb6v6u",
+      "interest": "Traveling with Friends",
+      "userEmail": "pedro@gmail.com"
     }
   ],
   "selections": [

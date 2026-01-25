@@ -1,3 +1,8 @@
+
+<p align="center">
+   <img src="voya/src/img//logo_deitada.png" alt="Voya Logo" width="100" />
+</p>
+
 # Voya - Travel Tracker
 
 A modern web application for tracking, sharing, and managing your travel experiences. Voya helps you preserve memories, plan trips, connect with friends, and visualize your travel journey around the world.

@@ -152,7 +152,7 @@
                     <img v-if="friend.photo" :src="friend.photo" :alt="friend.username" />
                     <span v-else class="avatar-letter">{{ friend.username.charAt(0).toUpperCase() }}</span>
                   </div>
-                  <span class="friend-name">{{ friend.username }}</span>
+                  <p class="friend-name">{{ friend.username }}</p>
                 </label>
               </div>
               <p v-if="availableFriends.length === 0" class="no-friends">

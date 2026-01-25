@@ -949,6 +949,54 @@
       "userEmail": "contanova@gmail.com",
       "createdAt": "2026-01-22T14:22:41.659Z",
       "id": "tYHu3le"
+    },
+    {
+      "destination": "United States",
+      "city": "Miami",
+      "notes": "dh 4th r",
+      "status": "completed",
+      "startDate": "2026-01-20",
+      "endDate": "2026-01-22",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/25/Villa_Vizcaya_20110228.jpg",
+      "imageLoaded": false,
+      "friends": [],
+      "userEmail": "pedro@gmail.com",
+      "createdAt": "2026-01-24T20:16:32.972Z",
+      "id": "DsD3hNl"
+    },
+    {
+      "destination": "Portugal",
+      "city": "lisboa",
+      "notes": "f dtmet",
+      "status": "upcoming",
+      "startDate": "2026-01-20",
+      "endDate": "2026-01-28",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Lisboa_-_Portugal_%2852597836992%29.jpg",
+      "imageLoaded": false,
+      "friends": [
+        "f19",
+        "f14"
+      ],
+      "userEmail": "pedro@gmail.com",
+      "createdAt": "2026-01-24T20:18:30.679Z",
+      "id": "xQqv5qZ"
+    },
+    {
+      "destination": "Portugal",
+      "city": "lisboa",
+      "notes": "f dtmet",
+      "status": "upcoming",
+      "startDate": "2026-01-20",
+      "endDate": "2026-01-28",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Lisboa_-_Portugal_%2852597836992%29.jpg",
+      "imageLoaded": false,
+      "friends": [
+        "f15",
+        "f14"
+      ],
+      "userEmail": "pedro@gmail.com",
+      "createdAt": "2026-01-24T20:18:30.680Z",
+      "id": "u7iZ_4C"
     }
   ],
   "destinations": [
@@ -1594,6 +1642,21 @@
       "userEmail": "contanova@gmail.com",
       "friendId": "f5",
       "id": "5Y_H8Jd"
+    },
+    {
+      "userEmail": "pedro@gmail.com",
+      "friendId": "f19",
+      "id": "NFBMRWi"
+    },
+    {
+      "userEmail": "pedro@gmail.com",
+      "friendId": "f15",
+      "id": "M71sfva"
+    },
+    {
+      "userEmail": "pedro@gmail.com",
+      "friendId": "f14",
+      "id": "376usG9"
     }
   ],
   "availableInterests": [

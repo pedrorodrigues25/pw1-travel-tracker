@@ -30,22 +30,22 @@
                 <h3 class="friend-name">{{ friend.name || friend.username }}</h3>
                 <p class="friend-username">@{{ friend.username }}</p>
               </div>
-              <span class="friend-date">{{ formatLastTripDate(friend) }}</span>
             </div>
             <div class="friend-card-body">
-              <img
-                v-if="friend.lastTrip && friend.lastTrip.imageUrl"
-                :src="friend.lastTrip.imageUrl"
-                :alt="friend.lastTrip.city || friend.lastTrip.destination"
-                class="friend-trip-image"
-              />
+              <div v-if="friend.trips && friend.trips.length > 0" class="friend-trips-list">
+                <div v-for="(trip, index) in friend.trips.slice(0, 3)" :key="index" class="friend-trip-item">
+                  <div class="friend-trip-circle">
+                    <span>{{ (trip.city || trip.destination).charAt(0).toUpperCase() }}</span>
+                  </div>
+                  <div class="friend-trip-info">
+                    <span class="friend-trip-destination">{{ trip.city || trip.destination }}</span>
+                    <span class="friend-trip-dates">{{ formatTripDates(trip.startDate, trip.endDate) }}</span>
+                  </div>
+                  <span class="friend-trip-status" :class="trip.status">{{ trip.status }}</span>
+                </div>
+              </div>
               <div v-else class="no-trip-placeholder">
                 <span>No trips yet</span>
-              </div>
-              <div v-if="friend.lastTrip" class="friend-trip-overlay">
-                <span class="trip-location">{{
-                  friend.lastTrip.city || friend.lastTrip.destination
-                }}</span>
               </div>
             </div>
           </div>
@@ -164,6 +164,24 @@
             interest
           }}</span>
         </div>
+        
+        <!-- Trips List -->
+        <div v-if="selectedPerson.trips && selectedPerson.trips.length" class="profile-trips">
+          <h4 class="trips-title">Trips</h4>
+          <div class="trips-list">
+            <div v-for="(trip, index) in selectedPerson.trips" :key="index" class="trip-list-item">
+              <div class="trip-circle-image">
+                <span class="trip-initial">{{ (trip.city || trip.destination).charAt(0).toUpperCase() }}</span>
+              </div>
+              <div class="trip-list-info">
+                <span class="trip-list-destination">{{ trip.city || trip.destination }}</span>
+                <span class="trip-list-dates">{{ formatTripDates(trip.startDate, trip.endDate) }}</span>
+              </div>
+              <span class="trip-list-status" :class="trip.status">{{ trip.status }}</span>
+            </div>
+          </div>
+        </div>
+        
         <button
           v-if="selectedPerson && !isPersonFriend"
           class="add-friend-btn"
@@ -270,13 +288,15 @@ async function loadFriendsData() {
   // Fetch last trip for each friend
   const friendsWithTrips = await Promise.all(
     userFriendsList.map(async (friend) => {
-      console.log('Loading trips for friend:', friend.username, friend.email)
-      const friendTrips = await getSelections(friend.email)
+      console.log('Loading trips for friend:', friend.username)
+
+      // Use trips from the friend object directly (from db.json)
+      const friendTrips = friend.trips || []
       console.log('Friend trips:', friendTrips)
 
-      // Get the most recent trip (by createdAt or startDate)
-      const sortedTrips = friendTrips.sort(
-        (a, b) => new Date(b.createdAt || b.startDate) - new Date(a.createdAt || a.startDate),
+      // Get the most recent trip (by startDate)
+      const sortedTrips = [...friendTrips].sort(
+        (a, b) => new Date(b.startDate) - new Date(a.startDate),
       )
 
       let lastTrip = sortedTrips[0] || null
@@ -355,6 +375,35 @@ function formatLastTripDate(friend) {
   const month = months[now.getMonth()]
   const year = now.getFullYear()
   return `${month} ${year}`
+}
+
+function formatTripDates(startDate, endDate) {
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ]
+  
+  if (!startDate) return ''
+  
+  const start = new Date(startDate)
+  const startMonth = months[start.getMonth()]
+  const startYear = start.getFullYear()
+  
+  if (!endDate) return `${startMonth} ${startYear}`
+  
+  const end = new Date(endDate)
+  const endMonth = months[end.getMonth()]
+  const endYear = end.getFullYear()
+  
+  if (startMonth === endMonth && startYear === endYear) {
+    return `${startMonth} ${startYear}`
+  }
+  
+  if (startYear === endYear) {
+    return `${startMonth} - ${endMonth} ${startYear}`
+  }
+  
+  return `${startMonth} ${startYear} - ${endMonth} ${endYear}`
 }
 
 const filteredFriends = computed(() => {

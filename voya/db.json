@@ -1310,6 +1310,29 @@
         "City Exploration",
         "Cultural Experiences",
         "Food & Gastronomy"
+      ],
+      "trips": [
+        {
+          "destination": "Japan",
+          "city": "Tokyo",
+          "status": "completed",
+          "startDate": "2025-10-15",
+          "endDate": "2025-10-25"
+        },
+        {
+          "destination": "Italy",
+          "city": "Florence",
+          "status": "completed",
+          "startDate": "2025-08-01",
+          "endDate": "2025-08-10"
+        },
+        {
+          "destination": "France",
+          "city": "Paris",
+          "status": "upcoming",
+          "startDate": "2026-03-20",
+          "endDate": "2026-03-28"
+        }
       ]
     },
     {
@@ -1322,6 +1345,29 @@
         "Water Sports",
         "Solo Adventure",
         "Road Trips"
+      ],
+      "trips": [
+        {
+          "destination": "Indonesia",
+          "city": "Bali",
+          "status": "completed",
+          "startDate": "2025-07-10",
+          "endDate": "2025-07-25"
+        },
+        {
+          "destination": "Portugal",
+          "city": "Ericeira",
+          "status": "completed",
+          "startDate": "2025-09-01",
+          "endDate": "2025-09-05"
+        },
+        {
+          "destination": "Australia",
+          "city": "Gold Coast",
+          "status": "upcoming",
+          "startDate": "2026-04-10",
+          "endDate": "2026-04-20"
+        }
       ]
     },
     {
@@ -1334,6 +1380,29 @@
         "Cultural Experiences",
         "City Exploration",
         "Wine Tasting"
+      ],
+      "trips": [
+        {
+          "destination": "Spain",
+          "city": "San Sebastián",
+          "status": "completed",
+          "startDate": "2025-06-15",
+          "endDate": "2025-06-22"
+        },
+        {
+          "destination": "Italy",
+          "city": "Bologna",
+          "status": "completed",
+          "startDate": "2025-11-05",
+          "endDate": "2025-11-12"
+        },
+        {
+          "destination": "Thailand",
+          "city": "Bangkok",
+          "status": "upcoming",
+          "startDate": "2026-02-10",
+          "endDate": "2026-02-18"
+        }
       ]
     },
     {
@@ -1346,6 +1415,29 @@
         "Nature & Wildlife",
         "Adventure Sports",
         "Photography"
+      ],
+      "trips": [
+        {
+          "destination": "Nepal",
+          "city": "Kathmandu",
+          "status": "completed",
+          "startDate": "2025-04-01",
+          "endDate": "2025-04-20"
+        },
+        {
+          "destination": "Switzerland",
+          "city": "Zermatt",
+          "status": "completed",
+          "startDate": "2025-08-15",
+          "endDate": "2025-08-22"
+        },
+        {
+          "destination": "Peru",
+          "city": "Cusco",
+          "status": "upcoming",
+          "startDate": "2026-05-01",
+          "endDate": "2026-05-15"
+        }
       ]
     },
     {
@@ -1358,6 +1450,29 @@
         "Cultural Experiences",
         "Solo Adventure",
         "Beach & Relaxation"
+      ],
+      "trips": [
+        {
+          "destination": "Portugal",
+          "city": "Lisbon",
+          "status": "completed",
+          "startDate": "2025-03-01",
+          "endDate": "2025-04-30"
+        },
+        {
+          "destination": "Mexico",
+          "city": "Playa del Carmen",
+          "status": "completed",
+          "startDate": "2025-11-01",
+          "endDate": "2025-12-15"
+        },
+        {
+          "destination": "Vietnam",
+          "city": "Ho Chi Minh City",
+          "status": "upcoming",
+          "startDate": "2026-02-01",
+          "endDate": "2026-03-15"
+        }
       ]
     },
     {
@@ -1370,6 +1485,29 @@
         "City Exploration",
         "Food & Gastronomy",
         "Photography"
+      ],
+      "trips": [
+        {
+          "destination": "United States",
+          "city": "Los Angeles",
+          "status": "completed",
+          "startDate": "2025-06-01",
+          "endDate": "2025-06-20"
+        },
+        {
+          "destination": "Iceland",
+          "city": "Reykjavík",
+          "status": "completed",
+          "startDate": "2025-09-10",
+          "endDate": "2025-09-18"
+        },
+        {
+          "destination": "New Zealand",
+          "city": "Auckland",
+          "status": "upcoming",
+          "startDate": "2026-04-05",
+          "endDate": "2026-04-25"
+        }
       ]
     },
     {
@@ -1382,6 +1520,29 @@
         "History & Architecture",
         "City Exploration",
         "Photography"
+      ],
+      "trips": [
+        {
+          "destination": "Greece",
+          "city": "Athens",
+          "status": "completed",
+          "startDate": "2025-05-10",
+          "endDate": "2025-05-18"
+        },
+        {
+          "destination": "Egypt",
+          "city": "Cairo",
+          "status": "completed",
+          "startDate": "2025-10-01",
+          "endDate": "2025-10-10"
+        },
+        {
+          "destination": "Turkey",
+          "city": "Istanbul",
+          "status": "upcoming",
+          "startDate": "2026-03-15",
+          "endDate": "2026-03-22"
+        }
       ]
     },
     {
@@ -1394,6 +1555,29 @@
         "Beach & Relaxation",
         "Nature & Wildlife",
         "Adventure Sports"
+      ],
+      "trips": [
+        {
+          "destination": "Maldives",
+          "city": "Malé",
+          "status": "completed",
+          "startDate": "2025-02-10",
+          "endDate": "2025-02-20"
+        },
+        {
+          "destination": "Philippines",
+          "city": "Cebu",
+          "status": "completed",
+          "startDate": "2025-07-05",
+          "endDate": "2025-07-15"
+        },
+        {
+          "destination": "Australia",
+          "city": "Cairns",
+          "status": "upcoming",
+          "startDate": "2026-06-01",
+          "endDate": "2026-06-12"
+        }
       ]
     },
     {
@@ -1406,6 +1590,29 @@
         "Wellness & Yoga",
         "Nature & Wildlife",
         "Cultural Experiences"
+      ],
+      "trips": [
+        {
+          "destination": "India",
+          "city": "Rishikesh",
+          "status": "completed",
+          "startDate": "2025-01-10",
+          "endDate": "2025-01-25"
+        },
+        {
+          "destination": "Thailand",
+          "city": "Koh Samui",
+          "status": "completed",
+          "startDate": "2025-09-01",
+          "endDate": "2025-09-15"
+        },
+        {
+          "destination": "Bali",
+          "city": "Ubud",
+          "status": "upcoming",
+          "startDate": "2026-03-01",
+          "endDate": "2026-03-20"
+        }
       ]
     },
     {
@@ -1418,6 +1625,29 @@
         "Mountain Hiking",
         "Water Sports",
         "Solo Adventure"
+      ],
+      "trips": [
+        {
+          "destination": "New Zealand",
+          "city": "Queenstown",
+          "status": "completed",
+          "startDate": "2025-03-15",
+          "endDate": "2025-03-25"
+        },
+        {
+          "destination": "South Africa",
+          "city": "Cape Town",
+          "status": "completed",
+          "startDate": "2025-08-01",
+          "endDate": "2025-08-12"
+        },
+        {
+          "destination": "Costa Rica",
+          "city": "La Fortuna",
+          "status": "upcoming",
+          "startDate": "2026-04-15",
+          "endDate": "2026-04-28"
+        }
       ]
     },
     {
@@ -1430,6 +1660,29 @@
         "Wine Tasting",
         "Food & Gastronomy",
         "Spa & Wellness"
+      ],
+      "trips": [
+        {
+          "destination": "Monaco",
+          "city": "Monte Carlo",
+          "status": "completed",
+          "startDate": "2025-05-20",
+          "endDate": "2025-05-28"
+        },
+        {
+          "destination": "United Arab Emirates",
+          "city": "Dubai",
+          "status": "completed",
+          "startDate": "2025-12-01",
+          "endDate": "2025-12-10"
+        },
+        {
+          "destination": "Maldives",
+          "city": "Malé",
+          "status": "upcoming",
+          "startDate": "2026-02-14",
+          "endDate": "2026-02-24"
+        }
       ]
     },
     {
@@ -1442,6 +1695,29 @@
         "Cultural Experiences",
         "City Exploration",
         "Food & Gastronomy"
+      ],
+      "trips": [
+        {
+          "destination": "Vietnam",
+          "city": "Hanoi",
+          "status": "completed",
+          "startDate": "2025-02-01",
+          "endDate": "2025-02-28"
+        },
+        {
+          "destination": "Colombia",
+          "city": "Medellín",
+          "status": "completed",
+          "startDate": "2025-07-10",
+          "endDate": "2025-08-05"
+        },
+        {
+          "destination": "Morocco",
+          "city": "Marrakech",
+          "status": "upcoming",
+          "startDate": "2026-03-05",
+          "endDate": "2026-03-25"
+        }
       ]
     },
     {
@@ -1454,6 +1730,29 @@
         "Photography",
         "Mountain Hiking",
         "Eco-Tourism"
+      ],
+      "trips": [
+        {
+          "destination": "Kenya",
+          "city": "Nairobi",
+          "status": "completed",
+          "startDate": "2025-06-01",
+          "endDate": "2025-06-15"
+        },
+        {
+          "destination": "Costa Rica",
+          "city": "Monteverde",
+          "status": "completed",
+          "startDate": "2025-10-10",
+          "endDate": "2025-10-22"
+        },
+        {
+          "destination": "Tanzania",
+          "city": "Arusha",
+          "status": "upcoming",
+          "startDate": "2026-05-20",
+          "endDate": "2026-06-05"
+        }
       ]
     },
     {
@@ -1466,6 +1765,29 @@
         "City Exploration",
         "Cultural Experiences",
         "Nightlife"
+      ],
+      "trips": [
+        {
+          "destination": "Netherlands",
+          "city": "Amsterdam",
+          "status": "completed",
+          "startDate": "2025-07-18",
+          "endDate": "2025-07-22"
+        },
+        {
+          "destination": "Spain",
+          "city": "Barcelona",
+          "status": "completed",
+          "startDate": "2025-08-12",
+          "endDate": "2025-08-18"
+        },
+        {
+          "destination": "United States",
+          "city": "Las Vegas",
+          "status": "upcoming",
+          "startDate": "2026-05-15",
+          "endDate": "2026-05-22"
+        }
       ]
     },
     {
@@ -1478,6 +1800,29 @@
         "Cultural Experiences",
         "City Exploration",
         "Photography"
+      ],
+      "trips": [
+        {
+          "destination": "Peru",
+          "city": "Machu Picchu",
+          "status": "completed",
+          "startDate": "2025-04-10",
+          "endDate": "2025-04-22"
+        },
+        {
+          "destination": "Jordan",
+          "city": "Petra",
+          "status": "completed",
+          "startDate": "2025-09-20",
+          "endDate": "2025-09-28"
+        },
+        {
+          "destination": "Cambodia",
+          "city": "Siem Reap",
+          "status": "upcoming",
+          "startDate": "2026-02-28",
+          "endDate": "2026-03-10"
+        }
       ]
     },
     {
@@ -1490,6 +1835,29 @@
         "Solo Adventure",
         "Nature & Wildlife",
         "Photography"
+      ],
+      "trips": [
+        {
+          "destination": "France",
+          "city": "Nice",
+          "status": "completed",
+          "startDate": "2025-06-05",
+          "endDate": "2025-06-25"
+        },
+        {
+          "destination": "Netherlands",
+          "city": "Amsterdam",
+          "status": "completed",
+          "startDate": "2025-08-01",
+          "endDate": "2025-08-10"
+        },
+        {
+          "destination": "Japan",
+          "city": "Kyoto",
+          "status": "upcoming",
+          "startDate": "2026-04-01",
+          "endDate": "2026-04-18"
+        }
       ]
     },
     {
@@ -1502,6 +1870,29 @@
         "Food & Gastronomy",
         "Cultural Experiences",
         "Road Trips"
+      ],
+      "trips": [
+        {
+          "destination": "France",
+          "city": "Bordeaux",
+          "status": "completed",
+          "startDate": "2025-05-01",
+          "endDate": "2025-05-12"
+        },
+        {
+          "destination": "Argentina",
+          "city": "Mendoza",
+          "status": "completed",
+          "startDate": "2025-10-15",
+          "endDate": "2025-10-25"
+        },
+        {
+          "destination": "Portugal",
+          "city": "Porto",
+          "status": "upcoming",
+          "startDate": "2026-03-10",
+          "endDate": "2026-03-18"
+        }
       ]
     },
     {
@@ -1514,6 +1905,29 @@
         "Mountain Hiking",
         "Adventure Sports",
         "Photography"
+      ],
+      "trips": [
+        {
+          "destination": "Switzerland",
+          "city": "Zermatt",
+          "status": "completed",
+          "startDate": "2025-01-15",
+          "endDate": "2025-01-25"
+        },
+        {
+          "destination": "Japan",
+          "city": "Niseko",
+          "status": "completed",
+          "startDate": "2025-12-20",
+          "endDate": "2026-01-05"
+        },
+        {
+          "destination": "Canada",
+          "city": "Whistler",
+          "status": "upcoming",
+          "startDate": "2026-02-10",
+          "endDate": "2026-02-22"
+        }
       ]
     },
     {
@@ -1526,6 +1940,29 @@
         "Eco-Tourism",
         "Solo Adventure",
         "Community Service"
+      ],
+      "trips": [
+        {
+          "destination": "Guatemala",
+          "city": "Antigua",
+          "status": "completed",
+          "startDate": "2025-03-01",
+          "endDate": "2025-03-28"
+        },
+        {
+          "destination": "Nepal",
+          "city": "Pokhara",
+          "status": "completed",
+          "startDate": "2025-09-01",
+          "endDate": "2025-09-30"
+        },
+        {
+          "destination": "Ghana",
+          "city": "Accra",
+          "status": "upcoming",
+          "startDate": "2026-06-01",
+          "endDate": "2026-06-28"
+        }
       ]
     },
     {
@@ -1538,6 +1975,29 @@
         "Beach & Relaxation",
         "Nature & Wildlife",
         "Adventure Sports"
+      ],
+      "trips": [
+        {
+          "destination": "Croatia",
+          "city": "Split",
+          "status": "completed",
+          "startDate": "2025-07-01",
+          "endDate": "2025-07-15"
+        },
+        {
+          "destination": "Greece",
+          "city": "Santorini",
+          "status": "completed",
+          "startDate": "2025-08-20",
+          "endDate": "2025-09-02"
+        },
+        {
+          "destination": "Caribbean",
+          "city": "St. Lucia",
+          "status": "upcoming",
+          "startDate": "2026-04-10",
+          "endDate": "2026-04-25"
+        }
       ]
     },
     {
@@ -1550,6 +2010,29 @@
         "Beach & Relaxation",
         "Wellness & Yoga",
         "Food & Gastronomy"
+      ],
+      "trips": [
+        {
+          "destination": "Hungary",
+          "city": "Budapest",
+          "status": "completed",
+          "startDate": "2025-04-15",
+          "endDate": "2025-04-22"
+        },
+        {
+          "destination": "Iceland",
+          "city": "Blue Lagoon",
+          "status": "completed",
+          "startDate": "2025-11-10",
+          "endDate": "2025-11-18"
+        },
+        {
+          "destination": "Austria",
+          "city": "Vienna",
+          "status": "upcoming",
+          "startDate": "2026-05-01",
+          "endDate": "2026-05-10"
+        }
       ]
     },
     {
@@ -1562,6 +2045,29 @@
         "Cultural Experiences",
         "Photography",
         "Nightlife"
+      ],
+      "trips": [
+        {
+          "destination": "Germany",
+          "city": "Berlin",
+          "status": "completed",
+          "startDate": "2025-05-10",
+          "endDate": "2025-05-18"
+        },
+        {
+          "destination": "United Kingdom",
+          "city": "London",
+          "status": "completed",
+          "startDate": "2025-09-05",
+          "endDate": "2025-09-12"
+        },
+        {
+          "destination": "Colombia",
+          "city": "Bogotá",
+          "status": "upcoming",
+          "startDate": "2026-03-20",
+          "endDate": "2026-03-30"
+        }
       ]
     },
     {
@@ -1574,6 +2080,29 @@
         "Mountain Hiking",
         "Solo Adventure",
         "Photography"
+      ],
+      "trips": [
+        {
+          "destination": "Norway",
+          "city": "Bergen",
+          "status": "completed",
+          "startDate": "2025-06-20",
+          "endDate": "2025-07-05"
+        },
+        {
+          "destination": "United States",
+          "city": "Yosemite",
+          "status": "completed",
+          "startDate": "2025-09-10",
+          "endDate": "2025-09-22"
+        },
+        {
+          "destination": "Canada",
+          "city": "Banff",
+          "status": "upcoming",
+          "startDate": "2026-07-01",
+          "endDate": "2026-07-15"
+        }
       ]
     }
   ],
@@ -1657,6 +2186,11 @@
       "userEmail": "pedro@gmail.com",
       "friendId": "f14",
       "id": "376usG9"
+    },
+    {
+      "userEmail": "pedro@gmail.com",
+      "friendId": "f17",
+      "id": "hFDs8YN"
     }
   ],
   "availableInterests": [

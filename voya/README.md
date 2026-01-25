@@ -38,6 +38,7 @@ A modern web application for tracking, sharing, and managing your travel experie
 | **Vue Router**  | Client-side routing                     |
 | **json-server** | Mock REST API for development           |
 | **CSS3**        | Styling with animations & gradients     |
+| **Vitest**      | Unit testing framework                  |
 
 ---
 
@@ -58,13 +59,15 @@ A modern web application for tracking, sharing, and managing your travel experie
 
 ## Project structure
 
+
 - `src/` — application source
-  - `components/` — reusable UI components
-  - `views/` — main pages (Login, Register, Home, Admin, etc.)
-  - `stores/` — Pinia stores for global state
-  - `api/` — API wrappers for local and external APIs
-  - `css/` — global and page-specific styles
-  - `router/` — Vue Router configuration
+   - `components/` — reusable UI components
+   - `views/` — main pages (Login, Register, Home, Admin, etc.)
+   - `stores/` — Pinia stores for global state
+   - `api/` — API wrappers for local and external APIs
+   - `css/` — global and page-specific styles
+   - `router/` — Vue Router configuration
+   - `tests/` — unit and integration tests
 - `db.json` — local database (mock)
 - `public/` — static assets
 - `vite.config.js` — Vite configuration
@@ -163,4 +166,4 @@ A modern web application for tracking, sharing, and managing your travel experie
 
 ## License
 
-This project was created for educational purposes as part of the Web Programming 1 course (ESMAD).
+This project was developed for educational purposes as part of the Web Programming 1 unit within the Web Information Systems and Technologies (TSIW) degree at ESMAD.

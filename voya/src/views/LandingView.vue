@@ -153,7 +153,7 @@ const auth = useAuthStore()
 
 function enterAsGuest() {
   auth.enterAsGuest()
-  router.push('/destinations')
+  router.push('/homepage')
 }
 
 // Avatars and Badges

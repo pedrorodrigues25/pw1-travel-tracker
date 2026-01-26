@@ -290,16 +290,6 @@ async function loadFriends() {
 }
 
 // Filtered friends based on search query
-const filteredUserFriends = computed(() => {
-  if (!friendSearchQuery.value.trim()) {
-    return userFriends.value
-  }
-  const query = friendSearchQuery.value.toLowerCase()
-  return userFriends.value.filter(
-    (friend) =>
-      friend.username?.toLowerCase().includes(query) || friend.email?.toLowerCase().includes(query),
-  )
-})
 
 // Toggle friend selection
 function toggleFriendSelection(friendId) {
@@ -311,14 +301,6 @@ function toggleFriendSelection(friendId) {
   }
   friendSearchQuery.value = ''
   // Keep dropdown open to allow multiple selections
-}
-
-// Remove friend from selection
-function removeFriend(friendId) {
-  const idx = selectedFriends.value.indexOf(friendId)
-  if (idx !== -1) {
-    selectedFriends.value.splice(idx, 1)
-  }
 }
 
 // Close dropdown when clicking outside

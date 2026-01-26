@@ -4,5 +4,5 @@
 </template>
 
 <script setup>
-import Trips from '../components/Trips.vue'
+import Trips from '../components/TripsPage.vue'
 </script>

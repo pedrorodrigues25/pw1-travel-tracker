@@ -45,7 +45,7 @@ const SOLO_BADGES = [
 ]
 
 // All badges combined
-const ALL_BADGES = [...FRIEND_BADGES, ...SOLO_BADGES]
+// (Removed unused ALL_BADGES constant)
 
 export const useBadgesStore = defineStore('badges', () => {
   // State
@@ -75,12 +75,12 @@ export const useBadgesStore = defineStore('badges', () => {
         (!trip.friends || trip.friends.length === 0),
     ).length
   }
-  
+
   // Check and update badges based on trips
   function checkBadges(trips, userEmail) {
     const friendTripsCount = countFriendTrips(trips)
     const soloTripsCount = countSoloTrips(trips)
-    const previousEarned = [...earnedBadges.value]
+    // Removed unused variable 'previousEarned'
 
     // Get the last completed friend trip and solo trip for badge association
     const completedFriendTrips = trips
@@ -223,7 +223,7 @@ export const useBadgesStore = defineStore('badges', () => {
     if (stored) {
       try {
         earnedBadges.value = JSON.parse(stored)
-      } catch (e) {
+      } catch {
         earnedBadges.value = []
       }
     } else {

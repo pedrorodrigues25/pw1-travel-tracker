@@ -19,11 +19,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-
-
-
-  // saveUsers removido, pois agora é feito via saveUser
-
   async function register(email, password, username) {
     await loadUsers();
     const normalizedEmail = email.trim().toLowerCase();

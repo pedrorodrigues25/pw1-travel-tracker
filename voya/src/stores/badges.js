@@ -51,7 +51,7 @@ export const useBadgesStore = defineStore('badges', () => {
   // State
   const earnedBadges = ref([])
   const newBadge = ref(null) // For showing notification
-  const showNotification = ref(false)
+  const showNotification = ref(true)
 
   // Get badge image URL
   function getBadgeImageUrl(imageName) {
@@ -75,7 +75,7 @@ export const useBadgesStore = defineStore('badges', () => {
         (!trip.friends || trip.friends.length === 0),
     ).length
   }
-
+  
   // Check and update badges based on trips
   function checkBadges(trips, userEmail) {
     const friendTripsCount = countFriendTrips(trips)

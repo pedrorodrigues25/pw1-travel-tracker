@@ -1,4 +1,3 @@
-
 <p align="center">
    <img src="voya/src/img//logo_deitada.png" alt="Voya Logo" width="100" />
 </p>
@@ -39,6 +38,15 @@ A modern web application for tracking, sharing, and managing your travel experie
 | **json-server** | Mock REST API for development           |
 | **CSS3**        | Styling with animations & gradients     |
 | **Vitest**      | Unit testing framework                  |
+
+---
+
+## External APIs used
+
+- **DiceBear Avatars** — Dynamic user avatar generation: [https://www.dicebear.com/](https://www.dicebear.com/)
+- **Wikipedia API** — Automatic fetching of destination images: [https://www.wikipedia.org/](https://www.wikipedia.org/)
+- **REST Countries API** — Country data (name, flag, population, etc): [https://restcountries.com/](https://restcountries.com/)
+- **Wikidata API** — Structured data about destinations and countries: [https://www.wikidata.org/](https://www.wikidata.org/)
 
 ---
 

@@ -149,9 +149,8 @@ A modern web application for tracking, sharing, and managing your travel experie
 
 ## Default admin account
 
-- Email: `admin@gmail.com`
+- User: `admin`
 - Password: `admin123`
-- Use the "Admin Login" button on the login page.
 
 ---
 
